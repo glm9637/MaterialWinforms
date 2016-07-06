@@ -4,11 +4,11 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialWinforms.Animations;
-
+using System;
 namespace MaterialWinforms.Controls
 {
 
-    public class MaterialFloatingActionButton : Button, IMaterialControl
+    public class MaterialFloatingActionButton : Button, IShadowedMaterialControl
     {
 
         private Image _Icon;
@@ -30,6 +30,10 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        public int Elevation { get; set; }
+        [Browsable(false)]
+        public GraphicsPath ShadowBorder { get; set; }
+
         [Browsable(false)]
         [DefaultValue (typeof(int),"48")]
         public int Breite { get { return this.Width; } set { this.Width = value; } }
@@ -45,6 +49,7 @@ namespace MaterialWinforms.Controls
         {
             Height = 48;
             Width = 48;
+            Elevation = 5;
             BackColor = Color.Transparent;
             
             animationManager = new AnimationManager(false)
@@ -59,6 +64,45 @@ namespace MaterialWinforms.Controls
             };
             hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
             animationManager.OnAnimationProgress += sender => Invalidate();
+            SizeChanged += Redraw;
+            LocationChanged += Redraw;
+            ParentChanged += new System.EventHandler(Redraw);
+            MouseEnter += MaterialCard_MouseEnter;
+            MouseLeave += MaterialCard_MouseLeave;
+        }
+
+        void MaterialCard_MouseLeave(object sender, System.EventArgs e)
+        {
+            Elevation /= 2;
+            Redraw(null, null);
+        }
+
+        void MaterialCard_MouseEnter(object sender, System.EventArgs e)
+        {
+            Elevation *= 2;
+            Redraw(null, null);
+        }
+
+        private void Redraw(object sender, System.EventArgs e)
+        {
+            ShadowBorder = new GraphicsPath();
+            ShadowBorder = DrawHelper.CreateCircle(Location.X ,
+                                    Location.Y,
+                                    ClientRectangle.Width/2 -1);
+            if (Width != Height)
+            {
+                Width = Math.Min(Width, Height);
+                Height = Math.Min(Width, Height);
+            }
+
+            Invalidate();
+            if (Parent != null)
+            {
+                Parent.BackColorChanged += new System.EventHandler(Redraw);
+                BackColor = SkinManager.GetCardsColor();
+                Parent.Invalidate();
+            }
+
         }
 
         protected override void OnMouseUp(MouseEventArgs mevent)
@@ -70,7 +114,6 @@ namespace MaterialWinforms.Controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            int ShadowDepth = 5;
             int iCropping = ClientRectangle.Width / 3;
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -79,23 +122,15 @@ namespace MaterialWinforms.Controls
 
 
             g.Clear(Parent.BackColor);
-            for (int i = 0; i < ShadowDepth; i++)
-            {
-                using (var backgroundPath = DrawHelper.CreateCircle(ClientRectangle.X+i,
-                                    ClientRectangle.Y+i,
-                                    ClientRectangle.Width /2 -i))
-                {
-                    g.FillPath(new SolidBrush(Color.FromArgb((50 / ShadowDepth-1) * i, Color.Black)), backgroundPath);
-                }
-            }
+           
 
-            Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X + 4,
-                                    ClientRectangle.Y + 4,
-                                    ClientRectangle.Width / 2 - 4));
+            Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X ,
+                                    ClientRectangle.Y ,
+                                    ClientRectangle.Width / 2));
 
-            using (var backgroundPath = DrawHelper.CreateCircle(ClientRectangle.X + ShadowDepth,
-                    ClientRectangle.Y + ShadowDepth,
-                    ClientRectangle.Width /2- ShadowDepth))
+            using (var backgroundPath = DrawHelper.CreateCircle(ClientRectangle.X ,
+                    ClientRectangle.Y ,
+                    ClientRectangle.Width / 2))
                 {
                     g.FillPath(SkinManager.ColorScheme.AccentBrush, backgroundPath);
                 }

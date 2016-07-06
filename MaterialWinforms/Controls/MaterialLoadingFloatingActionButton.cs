@@ -9,7 +9,7 @@ using System;
 namespace MaterialWinforms.Controls
 {
 
-    public class MaterialLoadingFloatingActionButton : Button, IMaterialControl
+    public class MaterialLoadingFloatingActionButton : Button, IShadowedMaterialControl
     {
 
         private Image _Icon;
@@ -30,6 +30,11 @@ namespace MaterialWinforms.Controls
                 _Icon = value;
             }
         }
+
+        public int Elevation { get; set; }
+        [Browsable(false)]
+        public GraphicsPath ShadowBorder { get; set; }
+
 
         [Browsable(false)]
         [DefaultValue(typeof(int), "48")]
@@ -63,6 +68,7 @@ namespace MaterialWinforms.Controls
             }
             Height = 48;
             Width = 48;
+            Elevation = 5;
             BackColor = Color.Transparent;
             ProgressBackgroundPen = new Pen(MaterialSkinManager.Instance.ColorScheme.LightPrimaryBrush);
             ProgressBackgroundPen.Width = 0;
@@ -88,6 +94,45 @@ namespace MaterialWinforms.Controls
             };
             hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
             animationManager.OnAnimationProgress += sender => Invalidate();
+            SizeChanged += Redraw;
+            LocationChanged += Redraw;
+            ParentChanged += new System.EventHandler(Redraw);
+            MouseEnter += MaterialCard_MouseEnter;
+            MouseLeave += MaterialCard_MouseLeave;
+        }
+
+        void MaterialCard_MouseLeave(object sender, System.EventArgs e)
+        {
+            Elevation /= 2;
+            Redraw(null, null);
+        }
+
+        void MaterialCard_MouseEnter(object sender, System.EventArgs e)
+        {
+            Elevation *= 2;
+            Redraw(null, null);
+        }
+
+        private void Redraw(object sender, System.EventArgs e)
+        {
+            ShadowBorder = new GraphicsPath();
+            ShadowBorder = DrawHelper.CreateCircle(Location.X+5,
+                                    Location.Y+5,
+                                    ClientRectangle.Width / 2 -6);
+
+            if (Width != Height)
+            {
+                Width = Math.Min(Width, Height);
+                Height = Math.Min(Width, Height);
+            }
+            Invalidate();
+            if (Parent != null)
+            {
+                Parent.BackColorChanged += new System.EventHandler(Redraw);
+                BackColor = SkinManager.GetCardsColor();
+                Parent.Invalidate();
+            }
+
         }
 
         void ProgressTimer_Tick(object sender, System.EventArgs e)
@@ -200,17 +245,7 @@ namespace MaterialWinforms.Controls
 
 
             g.Clear(Parent.BackColor);
-            for (int i = 0; i < ShadowDepth; i++)
-            {
-                using (var backgroundPath = DrawHelper.CreateCircle(ClientRectangle.X + i,
-                                    ClientRectangle.Y + i,
-                                    ClientRectangle.Width / 2 - i))
-                {
-                    g.FillPath(new SolidBrush(Color.FromArgb((50 / ShadowDepth - 1) * i, Color.Black)), backgroundPath);
-                }
-            }
-
-
+          
             using (var backgroundPath = DrawHelper.CreateCircle(ClientRectangle.X + ShadowDepth,
                     ClientRectangle.Y + ShadowDepth,
                     ClientRectangle.Width / 2 - ShadowDepth))
@@ -246,9 +281,9 @@ namespace MaterialWinforms.Controls
                 {
                     g.DrawLine(new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2), new Point(Convert.ToInt32(Width / 2.4), Height / 2), new Point(Width / 2, Convert.ToInt32(Height / 1.8)));
                     g.DrawLine(new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2), new Point(Convert.ToInt32(Width / 1.6), Convert.ToInt32(Height / 2.8)), new Point(Width / 2, Convert.ToInt32(Height / 1.8)));
-                    Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X + 4,
-                                ClientRectangle.Y + 4,
-                                ClientRectangle.Width / 2 - 4));
+                    Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X + ShadowDepth,
+                                ClientRectangle.Y + ShadowDepth,
+                                ClientRectangle.Width / 2 - ShadowDepth));
                 }
                 else
                 {
@@ -261,9 +296,9 @@ namespace MaterialWinforms.Controls
             }
             else
             {
-                Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X + 4,
-                                   ClientRectangle.Y + 4,
-                                   ClientRectangle.Width / 2 - 4));
+                Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X + ShadowDepth,
+                                   ClientRectangle.Y + ShadowDepth,
+                                   ClientRectangle.Width / 2 - ShadowDepth));
             }
 
         }

@@ -116,5 +116,10 @@ namespace MaterialWinformsExample
 
         }
 
+        private void materialLoadingFloatingActionButton1_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

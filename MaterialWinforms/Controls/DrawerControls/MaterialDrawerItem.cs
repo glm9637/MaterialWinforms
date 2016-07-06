@@ -20,6 +20,9 @@ namespace MaterialWinforms.Controls
 
         public bool Accent { get; set; }
 
+        [Browsable(false)]
+        public bool Selected { get; set; }
+
         private readonly AnimationManager animationManager;
         private readonly AnimationManager hoverAnimationManager;
 
@@ -57,18 +60,47 @@ namespace MaterialWinforms.Controls
             {
                 base.Text = value;
                 textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                if (IconImage != null)
+                    textSize = new Size((int)textSize.Width + (int)ClientRectangle.Height, (int)textSize.Height);
                 if (AutoSize)
-                //    Size = GetPreferredSize();
+                    Size = GetPreferredSize();
+                Invalidate();
+            }
+        }
+
+        public Image IconImage
+        {
+            get { return base.Image; }
+            set
+            {
+                base.Image = value;
+                textSize = CreateGraphics().MeasureString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                if (IconImage != null)
+                    textSize = new Size((int)textSize.Width + (int)textSize.Height, (int)textSize.Height);
+                if (AutoSize)
+                    Size = GetPreferredSize();
                 Invalidate();
             }
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
+            bool ImageDrawn = false;
             var g = pevent.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(Parent.BackColor);
+
+            if (Image != null)
+            {
+                ImageDrawn = true;
+                g.DrawImage(Image, 8, 2, Height - 4, Height - 4);
+            }
+
+            if (Selected)
+            {
+                g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), ClientRectangle);
+            }
 
             //Hover
             Color c = SkinManager.GetFlatButtonHoverBackgroundColor();
@@ -92,7 +124,17 @@ namespace MaterialWinforms.Controls
                 }
                 g.SmoothingMode = SmoothingMode.None;
             }
-			g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ?  SkinManager.ColorScheme.PrimaryBrush : Accent ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : Accent ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
+        }
+
+        private Size GetPreferredSize()
+        {
+            return GetPreferredSize(new Size(0, 0));
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            return new Size((int)textSize.Width + 8, 36);
         }
 
         protected override void OnCreateControl()

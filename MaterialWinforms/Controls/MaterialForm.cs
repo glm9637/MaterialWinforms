@@ -21,10 +21,9 @@ namespace MaterialWinforms.Controls
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
         private MaterialContextMenuStrip _SideDrawer;
-        private MaterialFlatButton _LastSelected;
 
         public bool _SideDrawerFixiert;
-
+        public bool _SideDrawerUnterTabLeiste;
         public bool SideDrawerFixiert
         {
             get
@@ -42,6 +41,21 @@ namespace MaterialWinforms.Controls
                 {
                     SideDrawerPanel.Size = new Size(0, SideDrawerPanel.Height);
                 }
+
+
+            }
+        }
+
+        public bool SideDrawerUnterTabLeiste
+        {
+            get
+            {
+                return _SideDrawerUnterTabLeiste;
+            }
+            set
+            {
+                _SideDrawerUnterTabLeiste = value;
+                SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT + (_SideDrawerUnterTabLeiste ? 48 : 0));
 
 
             }
@@ -240,6 +254,7 @@ namespace MaterialWinforms.Controls
             DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             DrawerOpen = false;
+            Padding = new Padding(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT, 0, 0);
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
@@ -256,14 +271,25 @@ namespace MaterialWinforms.Controls
             SideDrawerPanel.MaximumSize = new Size(Math.Min(Width * 80, ACTION_BAR_HEIGHT * 5), Height - ACTION_BAR_HEIGHT);
             SideDrawerPanel.Width = _SideDrawerFixiert ? SideDrawerPanel.MaximumSize.Width : 0;
             SideDrawerPanel.Height = Height - ACTION_BAR_HEIGHT - STATUS_BAR_HEIGHT;
-            SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT);
+            SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT+ (_SideDrawerUnterTabLeiste?48:0));
             SideDrawerPanel.MinimumSize = new Size(0, SideDrawerPanel.MaximumSize.Height);
-
-            SideDrawerPanel.BringToFront();
+            
+          
             Controls.Add(SideDrawerPanel);
-
-
+            SideDrawerPanel.BringToFront();
+            Layout += MaterialForm_Layout;
         }
+
+        void MaterialForm_Layout(object sender, LayoutEventArgs e)
+        {
+            if (SideDrawerPanel != null)
+            {
+                SideDrawerPanel.BringToFront();
+            }
+        }
+
+        
+
 
         void DarkBackgroundControl_Click(object sender, EventArgs e)
         {
@@ -305,9 +331,11 @@ namespace MaterialWinforms.Controls
                             if (t.DropDownItems.Count > 0)
                             {
                                 Verarbeitet = true;
+                                if (SideDrawerPanel.Controls.Count > 0) { 
                                 MaterialDivider objTopDivider = new MaterialDivider();
                                 objTopDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
                                 SideDrawerPanel.Controls.Add(objTopDivider);
+                            }
                                 MaterialLabel objLabel = new MaterialLabel();
                                 objLabel.Text = objMenuItem.Text;
                                 objLabel.Tag = objMenuItem.Tag;
@@ -317,12 +345,16 @@ namespace MaterialWinforms.Controls
 
                                 foreach (ToolStripItem objSubMenuItem in t.DropDownItems)
                                 {
-                                    MaterialFlatButton objSubItem = new MaterialFlatButton();
+                                    MaterialDrawerItem objSubItem = new MaterialDrawerItem();
                                     objSubItem.Text = objSubMenuItem.Text;
                                     objSubItem.Tag = objSubMenuItem;
                                     objSubItem.Enabled = objSubMenuItem.Enabled;
                                     objSubItem.AutoSize = false;
                                     objSubItem.Margin = new Padding(10, 0, 0, 0);
+                                    if (objSubMenuItem.GetType() == typeof(MaterialToolStripMenuItem))
+                                    {
+                                        objSubItem.IconImage = ((MaterialToolStripMenuItem)objSubMenuItem).Image;
+                                    }
                                     objSubItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
                                     objSubItem.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth - 10, 40);
 
@@ -876,6 +908,15 @@ namespace MaterialWinforms.Controls
                     t.AddLine(new Point(SideDrawerPanel.Width, SideDrawerPanel.Location.Y), new Point(SideDrawerPanel.Width, Height));
                     DrawHelper.drawShadow(g, t, 10, BackColor);
 
+                }
+            }
+
+            foreach (Control objChild in Controls)
+            {
+                if (typeof(IShadowedMaterialControl).IsAssignableFrom(objChild.GetType()))
+                {
+                    IShadowedMaterialControl objCurrent = (IShadowedMaterialControl)objChild;
+                    DrawHelper.drawShadow(g, objCurrent.ShadowBorder, objCurrent.Elevation, BackColor);
                 }
             }
 

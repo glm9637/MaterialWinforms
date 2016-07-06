@@ -7,11 +7,4 @@
         MouseState MouseState { get; set; }
 
     }
-
-    public enum MouseState
-    {
-        HOVER,
-        DOWN,
-        OUT
-    }
 }

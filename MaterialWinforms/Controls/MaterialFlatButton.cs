@@ -60,6 +60,23 @@ namespace MaterialWinforms.Controls
             {
                 base.Text = value;
                 textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                if(IconImage!= null)
+                textSize = new Size((int)textSize.Width + (int)ClientRectangle.Height, (int)textSize.Height);
+                if (AutoSize)
+                    Size = GetPreferredSize();
+                Invalidate();
+            }
+        }
+
+        public  Image IconImage
+        {
+            get { return base.Image; }
+            set
+            {
+                base.Image = value;
+                textSize = CreateGraphics().MeasureString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                if (IconImage != null)
+                textSize = new Size((int)textSize.Width + (int)textSize.Height, (int)textSize.Height);
                 if (AutoSize)
                     Size = GetPreferredSize();
                 Invalidate();
@@ -68,10 +85,17 @@ namespace MaterialWinforms.Controls
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
+            bool ImageDrawn = false;
             var g = pevent.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             g.Clear(Parent.BackColor);
+
+            if (Image != null)
+            {
+                ImageDrawn = true;
+                g.DrawImage(Image, 8, 2, Height-4, Height-4);
+            }
 
             if (Selected)
             {
@@ -100,7 +124,7 @@ namespace MaterialWinforms.Controls
                 }
                 g.SmoothingMode = SmoothingMode.None;
             }
-			g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ?  SkinManager.ColorScheme.PrimaryBrush : Accent ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : Accent ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = (IconImage == null ? StringAlignment.Center : StringAlignment.Far), LineAlignment = StringAlignment.Center });
         }
 
         private Size GetPreferredSize()
