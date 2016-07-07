@@ -61,6 +61,21 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        private bool _HideSideDrawer;
+        public bool HideSideDrawer
+        {
+            get
+            {
+                return _HideSideDrawer;
+            }
+            set
+            {
+                _HideSideDrawer = value;
+                SideDrawerPanel.Visible = !value;
+
+
+            }
+        }
 
         public MaterialContextMenuStrip SideDrawer
         {
@@ -74,6 +89,13 @@ namespace MaterialWinforms.Controls
                 initSideDrawer();
             }
         }
+
+        public MaterialContextMenuStrip ActionBarMenu
+        {
+            get;
+            set;
+        }
+
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
@@ -203,10 +225,12 @@ namespace MaterialWinforms.Controls
             MaxOver,
             MinOver,
             DrawerOver,
+            MenuOver,
             XDown,
             MaxDown,
             MinDown,
             DrawerDown,
+            MenuDown,
             None
         }
 
@@ -218,6 +242,7 @@ namespace MaterialWinforms.Controls
         private Rectangle actionBarBounds;
         private Rectangle statusBarBounds;
         private Rectangle drawerButtonBounds;
+        private Rectangle menuButtonBounds;
 
         private bool Maximized;
         private Size previousSize;
@@ -271,10 +296,10 @@ namespace MaterialWinforms.Controls
             SideDrawerPanel.MaximumSize = new Size(Math.Min(Width * 80, ACTION_BAR_HEIGHT * 5), Height - ACTION_BAR_HEIGHT);
             SideDrawerPanel.Width = _SideDrawerFixiert ? SideDrawerPanel.MaximumSize.Width : 0;
             SideDrawerPanel.Height = Height - ACTION_BAR_HEIGHT - STATUS_BAR_HEIGHT;
-            SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT+ (_SideDrawerUnterTabLeiste?48:0));
+            SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT + (_SideDrawerUnterTabLeiste ? 48 : 0));
             SideDrawerPanel.MinimumSize = new Size(0, SideDrawerPanel.MaximumSize.Height);
-            
-          
+
+
             Controls.Add(SideDrawerPanel);
             SideDrawerPanel.BringToFront();
             Layout += MaterialForm_Layout;
@@ -287,8 +312,6 @@ namespace MaterialWinforms.Controls
                 SideDrawerPanel.BringToFront();
             }
         }
-
-        
 
 
         void DarkBackgroundControl_Click(object sender, EventArgs e)
@@ -308,6 +331,7 @@ namespace MaterialWinforms.Controls
 
         private void initSideDrawer()
         {
+            bool LastControlWasDivider = false;
             if (_SideDrawer != null)
             {
 
@@ -320,6 +344,7 @@ namespace MaterialWinforms.Controls
                         MaterialDivider objDivider = new MaterialDivider();
                         objDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
                         SideDrawerPanel.Controls.Add(objDivider);
+                        LastControlWasDivider=true;
                     }
                     else
                     {
@@ -331,16 +356,19 @@ namespace MaterialWinforms.Controls
                             if (t.DropDownItems.Count > 0)
                             {
                                 Verarbeitet = true;
-                                if (SideDrawerPanel.Controls.Count > 0) { 
-                                MaterialDivider objTopDivider = new MaterialDivider();
-                                objTopDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
-                                SideDrawerPanel.Controls.Add(objTopDivider);
-                            }
+                                if (SideDrawerPanel.Controls.Count > 0 && !LastControlWasDivider)
+                                {
+                                        MaterialDivider objTopDivider = new MaterialDivider();
+                                        objTopDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
+                                        SideDrawerPanel.Controls.Add(objTopDivider); 
+                                    LastControlWasDivider=true;
+                                }
                                 MaterialLabel objLabel = new MaterialLabel();
                                 objLabel.Text = objMenuItem.Text;
                                 objLabel.Tag = objMenuItem.Tag;
                                 objLabel.Margin = new Padding(0);
                                 objLabel.Font = SkinManager.ROBOTO_MEDIUM_10;
+                                LastControlWasDivider=false;
                                 SideDrawerPanel.Controls.Add(objLabel);
 
                                 foreach (ToolStripItem objSubMenuItem in t.DropDownItems)
@@ -361,28 +389,31 @@ namespace MaterialWinforms.Controls
                                     objSubItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
 
                                     SideDrawerPanel.Controls.Add(objSubItem);
+                                    LastControlWasDivider=false;
                                     objSubItem.Location = new Point(10, objSubItem.Location.Y);
                                 }
 
                                 MaterialDivider objBottomDivider = new MaterialDivider();
                                 objBottomDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
                                 SideDrawerPanel.Controls.Add(objBottomDivider);
+                                LastControlWasDivider=true;
                             }
                         }
-                        if (!Verarbeitet) { }
-                        MaterialFlatButton objItem = new MaterialFlatButton();
-                        objItem.Text = objMenuItem.Text;
-                        objItem.Tag = objMenuItem;
-                        objItem.Enabled = objMenuItem.Enabled;
-                        objItem.AutoSize = false;
-                        objItem.Margin = new Padding(0, 0, 0, 0);
-                        objItem.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 40);
-                        objItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
-
-                        SideDrawerPanel.Controls.Add(objItem);
+                        if (!Verarbeitet)
+                        {
+                            MaterialFlatButton objItem = new MaterialFlatButton();
+                            objItem.Text = objMenuItem.Text;
+                            objItem.Tag = objMenuItem;
+                            objItem.Enabled = objMenuItem.Enabled;
+                            objItem.AutoSize = false;
+                            objItem.Margin = new Padding(0, 0, 0, 0);
+                            objItem.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 40);
+                            objItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
+                            LastControlWasDivider = false;
+                            SideDrawerPanel.Controls.Add(objItem);
+                        }
                     }
                 }
-
             }
         }
 
@@ -396,9 +427,25 @@ namespace MaterialWinforms.Controls
                     objItem.Selected = false;
                     objItem.Invalidate();
                 }
+                else if (objSideControl.GetType() == typeof(MaterialDrawerItem))
+                {
+                    MaterialDrawerItem t = (MaterialDrawerItem)objSideControl;
+                    t.Selected = false;
+                    t.Invalidate();
+                }
             }
-            MaterialFlatButton t = (MaterialFlatButton)sender;
-            t.Selected = true;
+
+            if (sender.GetType() == typeof(MaterialDrawerItem))
+            {
+                MaterialDrawerItem t = (MaterialDrawerItem)sender;
+                t.Selected = true;
+            }
+            else
+            {
+                MaterialFlatButton t = (MaterialFlatButton)sender;
+                t.Selected = true;
+            }
+
 
             if (onSideDrawerItemClicked != null)
             {
@@ -632,6 +679,8 @@ namespace MaterialWinforms.Controls
                     buttonState = ButtonState.XDown;
                 else if (drawerButtonBounds.Contains(e.Location))
                     buttonState = ButtonState.DrawerDown;
+                else if (menuButtonBounds.Contains(e.Location))
+                    buttonState = ButtonState.MenuDown;
                 else
                     buttonState = ButtonState.None;
             }
@@ -675,6 +724,14 @@ namespace MaterialWinforms.Controls
                         AnimationDirection = DrawerOpen;
                         DrawerAnimationTimer.Start();
 
+                    }
+                }
+                else if(menuButtonBounds.Contains(e.Location))
+                {
+                    buttonState = ButtonState.MenuOver;
+                    if (oldState == ButtonState.MenuDown)
+                    {
+                        ActionBarMenu.Show(e.Location);
                     }
                 }
 
@@ -757,6 +814,7 @@ namespace MaterialWinforms.Controls
             statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
             drawerButtonBounds = new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
+            menuButtonBounds = new Rectangle(Width - SkinManager.FORM_PADDING - ACTION_BAR_HEIGHT, STATUS_BAR_HEIGHT, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
             if (SideDrawerPanel != null)
             {
                 SideDrawerPanel.Height = Height - ACTION_BAR_HEIGHT - STATUS_BAR_HEIGHT;
@@ -808,11 +866,15 @@ namespace MaterialWinforms.Controls
 
             if (buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, xButtonBounds);
+            
             if (buttonState == ButtonState.DrawerOver)
-            {
                 g.FillEllipse(hoverBrush, drawerButtonBounds);
-            }
 
+            if (buttonState == ButtonState.MenuOver && ActionBarMenu != null)
+                g.FillEllipse(hoverBrush, menuButtonBounds);
+
+
+            
             using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
             {
                 // Minimize button.
@@ -862,7 +924,10 @@ namespace MaterialWinforms.Controls
                         xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
                 }
             }
+            try
+            {
 
+            
             if (_SideDrawer != null && !_SideDrawerFixiert)
             {
                 using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT, 2))
@@ -890,7 +955,34 @@ namespace MaterialWinforms.Controls
                 }
             }
 
+            if (ActionBarMenu != null)
+            {
+                using (var MenuButtonBrush = new SolidBrush(Color.White))
+                {
+                    int CircleRadius = 5;
+                    g.FillEllipse(
+                       MenuButtonBrush,
+                       menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5)-CircleRadius/2,
+                       menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.3) - CircleRadius / 2,
+                      CircleRadius, CircleRadius);
+                    g.FillEllipse(
+                       MenuButtonBrush,
+                       menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5) - CircleRadius/2,
+                       menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.5) - CircleRadius / 2,
+                      CircleRadius, CircleRadius);
+                    g.FillEllipse(
+                      MenuButtonBrush,
+                      menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5) - CircleRadius/2,
+                      menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.7) - CircleRadius / 2,
+                     CircleRadius, CircleRadius);
+                }
+            }
 
+            }
+            catch (Exception ex)
+            {
+                MaterialDialog.Show(this,ex.StackTrace);
+            }
 
             //Form title
 

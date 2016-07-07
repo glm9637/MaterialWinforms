@@ -44,21 +44,8 @@ namespace MaterialWinforms.Controls
             SizeChanged += Redraw;
             LocationChanged += Redraw;
             ParentChanged += new System.EventHandler(Redraw);
-            MouseEnter += MaterialCard_MouseEnter;
-            MouseLeave += MaterialCard_MouseLeave;
         }
 
-        void MaterialCard_MouseLeave(object sender, System.EventArgs e)
-        {
-            Elevation /=2;
-            Redraw(null, null);    
-        }
-
-        void MaterialCard_MouseEnter(object sender, System.EventArgs e)
-        {
-            Elevation *=2;
-            Redraw(null,null);
-        }
 
         private void Redraw(object sender, System.EventArgs e)
         {
