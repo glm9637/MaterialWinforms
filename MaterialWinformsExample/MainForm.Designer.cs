@@ -34,6 +34,7 @@ namespace MaterialWinformsExample
         private void InitializeComponent()
         {
             System.Drawing.Drawing2D.GraphicsPath graphicsPath1 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -51,7 +52,17 @@ namespace MaterialWinformsExample
             this.tmi_Uebersicht = new System.Windows.Forms.ToolStripMenuItem();
             this.tmi_Funktionen = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
             this.tmi_UebersichtFunktionen = new System.Windows.Forms.ToolStripMenuItem();
+            this.materialStyledTabControl1 = new MaterialWinforms.Controls.MaterialStyledTabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.materialCard1 = new MaterialWinforms.Controls.MaterialCard();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.materialContextMenuStrip1.SuspendLayout();
+            this.materialStyledTabControl1.SuspendLayout();
+            this.materialCard1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialFlatButton3
@@ -247,6 +258,86 @@ namespace MaterialWinformsExample
             this.tmi_UebersichtFunktionen.Size = new System.Drawing.Size(124, 22);
             this.tmi_UebersichtFunktionen.Text = "Übersicht";
             // 
+            // materialStyledTabControl1
+            // 
+            this.materialStyledTabControl1.Controls.Add(this.tabPage1);
+            this.materialStyledTabControl1.Controls.Add(this.tabPage2);
+            this.materialStyledTabControl1.Depth = 0;
+            this.materialStyledTabControl1.ItemSize = new System.Drawing.Size(150, 40);
+            this.materialStyledTabControl1.Location = new System.Drawing.Point(26, 71);
+            this.materialStyledTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialStyledTabControl1.Name = "materialStyledTabControl1";
+            this.materialStyledTabControl1.SelectedIndex = 0;
+            this.materialStyledTabControl1.Size = new System.Drawing.Size(670, 100);
+            this.materialStyledTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.materialStyledTabControl1.TabIndex = 22;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 44);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(662, 52);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 44);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(662, 52);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // materialCard1
+            // 
+            this.materialCard1.BackColor = System.Drawing.Color.White;
+            this.materialCard1.Controls.Add(this.materialStyledTabControl1);
+            this.materialCard1.Depth = 0;
+            this.materialCard1.Elevation = 5;
+            this.materialCard1.Location = new System.Drawing.Point(123, 145);
+            this.materialCard1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialCard1.Name = "materialCard1";
+            this.materialCard1.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
+            graphicsPath2.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard1.ShadowBorder = graphicsPath2;
+            this.materialCard1.Size = new System.Drawing.Size(774, 292);
+            this.materialCard1.TabIndex = 23;
+            this.materialCard1.Title = null;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Location = new System.Drawing.Point(186, 510);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(348, 100);
+            this.tabControl1.TabIndex = 24;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(340, 74);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(192, 74);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.ActionBarMenu = this.materialContextMenuStrip1;
@@ -254,6 +345,8 @@ namespace MaterialWinformsExample
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1086, 833);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.materialCard1);
             this.Controls.Add(this.materialFloatingActionButton1);
             this.Controls.Add(this.materialFlatButton3);
             this.Controls.Add(this.materialFlatButton2);
@@ -269,7 +362,12 @@ namespace MaterialWinformsExample
             this.Controls.SetChildIndex(this.materialFlatButton2, 0);
             this.Controls.SetChildIndex(this.materialFlatButton3, 0);
             this.Controls.SetChildIndex(this.materialFloatingActionButton1, 0);
+            this.Controls.SetChildIndex(this.materialCard1, 0);
+            this.Controls.SetChildIndex(this.tabControl1, 0);
             this.materialContextMenuStrip1.ResumeLayout(false);
+            this.materialStyledTabControl1.ResumeLayout(false);
+            this.materialCard1.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,5 +392,12 @@ namespace MaterialWinformsExample
         private ToolStripMenuItem tmi_Uebersicht;
         private MaterialToolStripMenuItem tmi_Funktionen;
         private ToolStripMenuItem tmi_UebersichtFunktionen;
+        private MaterialStyledTabControl materialStyledTabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private MaterialCard materialCard1;
+        private TabControl tabControl1;
+        private TabPage tabPage3;
+        private TabPage tabPage4;
     }
 }

@@ -21,6 +21,42 @@ namespace MaterialWinforms
             return gp;
         }
 
+
+        public static GraphicsPath CreateTopCornerRoundRect(float x, float y, float width, float height, float radius)
+        {
+            GraphicsPath gp = new GraphicsPath();
+            gp.AddLine(x + radius, y, x + width - (radius * 2), y);
+            gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90);
+            gp.AddLine(x + width, y + radius, x + width, y + height);
+            gp.AddLine(x + width , y + height, x , y +height);
+            gp.AddLine(x, y + height, x, y + radius);
+            gp.AddArc(x, y, radius * 2, radius * 2, 180, 90);
+            gp.CloseFigure();
+            return gp;
+        }
+
+        public static GraphicsPath CreateTopCornerRoundRect(Rectangle rect, float radius)
+        {
+            return CreateTopCornerRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);
+        }
+
+        public static GraphicsPath CreateTopCornerRoundRectWithoutBottom(float x, float y, float width, float height, float radius)
+        {
+            GraphicsPath gp = new GraphicsPath();
+            gp.AddLine(x + radius, y, x + width - (radius * 2), y);
+            gp.AddArc(x + width - (radius * 2), y, radius * 2, radius * 2, 270, 90);
+            gp.AddLine(x + width, y + radius, x + width, y + height);
+            gp.AddLine(x, y + height, x, y + radius);
+            gp.AddArc(x, y, radius * 2, radius * 2, 180, 90);
+            gp.CloseFigure();
+            return gp;
+        }
+
+        public static GraphicsPath CreateTopCornerRoundRectWithoutBottom(Rectangle rect, float radius)
+        {
+            return CreateTopCornerRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);
+        }
+
         public static GraphicsPath CreateRoundRect(Rectangle rect, float radius)
         {
             return CreateRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);

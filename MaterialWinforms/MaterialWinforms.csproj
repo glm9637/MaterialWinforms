@@ -107,6 +107,9 @@
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\TabControls\MaterialStyledTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TabControls\MaterialTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
