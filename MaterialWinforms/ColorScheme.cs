@@ -40,7 +40,24 @@ namespace MaterialWinforms
             AccentBrush = new SolidBrush(AccentColor);
             TextBrush = new SolidBrush(TextColor);
         }
+
+        public static ColorScheme BluePink()
+        {
+            return new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
+           
+        }
+
+        public static ColorScheme GreenOrange()
+        {
+            return new ColorScheme(Primary.Green600, Primary.Green700, Primary.Green200, Accent.Red100, TextShade.WHITE);
+        }
+
+        public static ColorScheme BlueGrey()
+        {
+            return new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+        }
     }
+
 
     public static class ColorExtension
     {

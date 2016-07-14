@@ -12,6 +12,9 @@ namespace MaterialWinforms.Controls
 {
     public class MaterialForm : Form, IMaterialControl
     {
+
+
+
         [Browsable(false)]
         public int Depth { get; set; }
         [Browsable(false)]
@@ -20,64 +23,8 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
-        private MaterialContextMenuStrip _SideDrawer;
-
-        public bool _SideDrawerFixiert;
-        public bool _SideDrawerUnterTabLeiste;
-        public bool SideDrawerFixiert
-        {
-            get
-            {
-                return _SideDrawerFixiert;
-            }
-            set
-            {
-                _SideDrawerFixiert = value;
-                if (_SideDrawerFixiert)
-                {
-                    SideDrawerPanel.Size = new Size(SideDrawerPanel.MaximumSize.Width, SideDrawerPanel.Height);
-                }
-                else
-                {
-                    SideDrawerPanel.Size = new Size(0, SideDrawerPanel.Height);
-                }
-
-
-            }
-        }
-
-        public bool SideDrawerUnterTabLeiste
-        {
-            get
-            {
-                return _SideDrawerUnterTabLeiste;
-            }
-            set
-            {
-                _SideDrawerUnterTabLeiste = value;
-                SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT + (_SideDrawerUnterTabLeiste ? 48 : 0));
-
-
-            }
-        }
-
-        private bool _HideSideDrawer;
-        public bool HideSideDrawer
-        {
-            get
-            {
-                return _HideSideDrawer;
-            }
-            set
-            {
-                _HideSideDrawer = value;
-                SideDrawerPanel.Visible = !value;
-
-
-            }
-        }
-
-        public MaterialContextMenuStrip SideDrawer
+        private MaterialSideDrawer _SideDrawer; 
+        public MaterialSideDrawer SideDrawer
         {
             get
             {
@@ -86,15 +33,28 @@ namespace MaterialWinforms.Controls
             set
             {
                 _SideDrawer = value;
-                initSideDrawer();
             }
         }
 
-        public MaterialContextMenuStrip ActionBarMenu
+        private MaterialActionBar _ActionBar;
+        public MaterialActionBar ActionBar
         {
-            get;
-            set;
+            get
+            {
+                return _ActionBar;
+            }
+            set
+            {
+                _ActionBar = value;
+                _ActionBar.onSideDrawerButtonClicked += _ActionBar_onSideDrawerButtonClicked;
+            }
         }
+
+        void _ActionBar_onSideDrawerButtonClicked()
+        {
+            DrawerAnimationTimer.Start();
+        }
+
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -116,6 +76,8 @@ namespace MaterialWinforms.Controls
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
+
+
         private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
 
         private enum ScrollBarDirection
@@ -167,8 +129,7 @@ namespace MaterialWinforms.Controls
         };
 
         private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
-        private const int STATUS_BAR_HEIGHT = 24;
-        private const int ACTION_BAR_HEIGHT = 40;
+        public const int STATUS_BAR_HEIGHT = 24;
 
         private const uint TPM_LEFTALIGN = 0x0000;
         private const uint TPM_RETURNCMD = 0x0100;
@@ -230,7 +191,6 @@ namespace MaterialWinforms.Controls
             MaxDown,
             MinDown,
             DrawerDown,
-            MenuDown,
             None
         }
 
@@ -239,38 +199,18 @@ namespace MaterialWinforms.Controls
         private Rectangle minButtonBounds;
         private Rectangle maxButtonBounds;
         private Rectangle xButtonBounds;
-        private Rectangle actionBarBounds;
         private Rectangle statusBarBounds;
         private Rectangle drawerButtonBounds;
-        private Rectangle menuButtonBounds;
 
         private bool Maximized;
         private Size previousSize;
         private Point previousLocation;
         private bool headerMouseDown;
-        private bool DrawerOpen;
         private bool AnimationDirection;
         private int DrawerAnimationProgress;
         private Timer DrawerAnimationTimer;
-        private FlowLayoutPanel SideDrawerPanel;
 
-        public delegate void SideDrawerEventHandler(object sender, SideDrawerEventArgs e);
-
-        public class SideDrawerEventArgs : EventArgs
-        {
-            private ToolStripItem EventInfo;
-            public SideDrawerEventArgs(ToolStripItem pClickedItem)
-            {
-                EventInfo = pClickedItem;
-            }
-
-            public ToolStripItem getClickedItem()
-            {
-                return EventInfo;
-            }
-        }
-
-        public event SideDrawerEventHandler onSideDrawerItemClicked;
+     
 
         public MaterialForm()
         {
@@ -278,8 +218,7 @@ namespace MaterialWinforms.Controls
             Sizable = true;
             DoubleBuffered = true;
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
-            DrawerOpen = false;
-            Padding = new Padding(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT, 0, 0);
+            Padding = new Padding(0, STATUS_BAR_HEIGHT, 0, 0);
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
@@ -287,171 +226,30 @@ namespace MaterialWinforms.Controls
             DrawerAnimationTimer = new Timer();
             DrawerAnimationTimer.Interval = 10;
             DrawerAnimationProgress = 0;
-            AnimationDirection = false;
+            AnimationDirection = true;
             DrawerAnimationTimer.Tick += DrawerAnimationTimer_Tick;
             this.ControlAdded += MaterialForm_ControlAdded;
-            SideDrawerPanel = new FlowLayoutPanel();
 
-            SideDrawerPanel.AutoScroll = true;
-            SideDrawerPanel.MaximumSize = new Size(Math.Min(Width * 80, ACTION_BAR_HEIGHT * 5), Height - ACTION_BAR_HEIGHT);
-            SideDrawerPanel.Width = _SideDrawerFixiert ? SideDrawerPanel.MaximumSize.Width : 0;
-            SideDrawerPanel.Height = Height - ACTION_BAR_HEIGHT - STATUS_BAR_HEIGHT;
-            SideDrawerPanel.Location = new Point(0, ACTION_BAR_HEIGHT + STATUS_BAR_HEIGHT + (_SideDrawerUnterTabLeiste ? 48 : 0));
-            SideDrawerPanel.MinimumSize = new Size(0, SideDrawerPanel.MaximumSize.Height);
-
-
-            Controls.Add(SideDrawerPanel);
-            SideDrawerPanel.BringToFront();
             Layout += MaterialForm_Layout;
         }
 
         void MaterialForm_Layout(object sender, LayoutEventArgs e)
         {
-            if (SideDrawerPanel != null)
+            if (_SideDrawer != null)
             {
-                SideDrawerPanel.BringToFront();
+                _SideDrawer.BringToFront();
             }
-        }
-
-
-        void DarkBackgroundControl_Click(object sender, EventArgs e)
-        {
-            DrawerAnimationTimer.Start();
         }
 
 
         private void MaterialForm_ControlAdded(object sender, ControlEventArgs e)
         {
-            if (SideDrawerPanel != null)
-            {
-                SideDrawerPanel.BringToFront();
-            }
-        }
-
-
-        private void initSideDrawer()
-        {
-            bool LastControlWasDivider = false;
             if (_SideDrawer != null)
             {
-
-                SideDrawerPanel.Controls.Clear();
-
-                foreach (ToolStripItem objMenuItem in _SideDrawer.Items)
-                {
-                    if (objMenuItem.GetType() == typeof(ToolStripSeparator))
-                    {
-                        MaterialDivider objDivider = new MaterialDivider();
-                        objDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
-                        SideDrawerPanel.Controls.Add(objDivider);
-                        LastControlWasDivider=true;
-                    }
-                    else
-                    {
-                        bool Verarbeitet = false;
-
-                        if (objMenuItem.GetType() == typeof(MaterialToolStripMenuItem))
-                        {
-                            ToolStripMenuItem t = (ToolStripMenuItem)objMenuItem;
-                            if (t.DropDownItems.Count > 0)
-                            {
-                                Verarbeitet = true;
-                                if (SideDrawerPanel.Controls.Count > 0 && !LastControlWasDivider)
-                                {
-                                        MaterialDivider objTopDivider = new MaterialDivider();
-                                        objTopDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
-                                        SideDrawerPanel.Controls.Add(objTopDivider); 
-                                    LastControlWasDivider=true;
-                                }
-                                MaterialLabel objLabel = new MaterialLabel();
-                                objLabel.Text = objMenuItem.Text;
-                                objLabel.Tag = objMenuItem.Tag;
-                                objLabel.Margin = new Padding(0);
-                                objLabel.Font = SkinManager.ROBOTO_MEDIUM_10;
-                                LastControlWasDivider=false;
-                                SideDrawerPanel.Controls.Add(objLabel);
-
-                                foreach (ToolStripItem objSubMenuItem in t.DropDownItems)
-                                {
-                                    MaterialDrawerItem objSubItem = new MaterialDrawerItem();
-                                    objSubItem.Text = objSubMenuItem.Text;
-                                    objSubItem.Tag = objSubMenuItem;
-                                    objSubItem.Enabled = objSubMenuItem.Enabled;
-                                    objSubItem.AutoSize = false;
-                                    objSubItem.Margin = new Padding(10, 0, 0, 0);
-                                    if (objSubMenuItem.GetType() == typeof(MaterialToolStripMenuItem))
-                                    {
-                                        objSubItem.IconImage = ((MaterialToolStripMenuItem)objSubMenuItem).Image;
-                                    }
-                                    objSubItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
-                                    objSubItem.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth - 10, 40);
-
-                                    objSubItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
-
-                                    SideDrawerPanel.Controls.Add(objSubItem);
-                                    LastControlWasDivider=false;
-                                    objSubItem.Location = new Point(10, objSubItem.Location.Y);
-                                }
-
-                                MaterialDivider objBottomDivider = new MaterialDivider();
-                                objBottomDivider.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 2);
-                                SideDrawerPanel.Controls.Add(objBottomDivider);
-                                LastControlWasDivider=true;
-                            }
-                        }
-                        if (!Verarbeitet)
-                        {
-                            MaterialFlatButton objItem = new MaterialFlatButton();
-                            objItem.Text = objMenuItem.Text;
-                            objItem.Tag = objMenuItem;
-                            objItem.Enabled = objMenuItem.Enabled;
-                            objItem.AutoSize = false;
-                            objItem.Margin = new Padding(0, 0, 0, 0);
-                            objItem.Size = new Size(SideDrawerPanel.MaximumSize.Width - SideDrawerPanel.Margin.Left - SideDrawerPanel.Margin.Right - SystemInformation.VerticalScrollBarWidth, 40);
-                            objItem.MouseClick += new MouseEventHandler(DrawerItemClicked);
-                            LastControlWasDivider = false;
-                            SideDrawerPanel.Controls.Add(objItem);
-                        }
-                    }
-                }
+                _SideDrawer.BringToFront();
             }
         }
 
-        private void DrawerItemClicked(object sender, EventArgs e)
-        {
-            foreach (Control objSideControl in SideDrawerPanel.Controls)
-            {
-                if (objSideControl.GetType() == typeof(MaterialFlatButton))
-                {
-                    MaterialFlatButton objItem = (MaterialFlatButton)objSideControl;
-                    objItem.Selected = false;
-                    objItem.Invalidate();
-                }
-                else if (objSideControl.GetType() == typeof(MaterialDrawerItem))
-                {
-                    MaterialDrawerItem t = (MaterialDrawerItem)objSideControl;
-                    t.Selected = false;
-                    t.Invalidate();
-                }
-            }
-
-            if (sender.GetType() == typeof(MaterialDrawerItem))
-            {
-                MaterialDrawerItem t = (MaterialDrawerItem)sender;
-                t.Selected = true;
-            }
-            else
-            {
-                MaterialFlatButton t = (MaterialFlatButton)sender;
-                t.Selected = true;
-            }
-
-
-            if (onSideDrawerItemClicked != null)
-            {
-                onSideDrawerItemClicked(sender, new SideDrawerEventArgs((ToolStripItem)sender));
-            }
-        }
 
         private void DrawerAnimationTimer_Tick(object sender, EventArgs e)
         {
@@ -460,6 +258,7 @@ namespace MaterialWinforms.Controls
             {
                 if (DrawerAnimationProgress == 100 - AnimationStep)
                 {
+                    AnimationDirection = false;
                     DrawerAnimationTimer.Stop();
                 }
                 DrawerAnimationProgress += AnimationStep;
@@ -469,11 +268,15 @@ namespace MaterialWinforms.Controls
                 if (DrawerAnimationProgress == AnimationStep)
                 {
                     DrawerAnimationTimer.Stop();
+                    AnimationDirection = true;
                 }
                 DrawerAnimationProgress -= AnimationStep;
             }
 
-
+            if (_ActionBar != null)
+            {
+                _ActionBar.setDrawerAnimationProgress(DrawerAnimationProgress);
+            }
             Invalidate();
 
 
@@ -489,7 +292,7 @@ namespace MaterialWinforms.Controls
                 MaximizeWindow(!Maximized);
             }
             else if (m.Msg == WM_MOUSEMOVE && Maximized &&
-                (statusBarBounds.Contains(PointToClient(Cursor.Position)) || actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
+                statusBarBounds.Contains(PointToClient(Cursor.Position)) &&
                 !(minButtonBounds.Contains(PointToClient(Cursor.Position)) || maxButtonBounds.Contains(PointToClient(Cursor.Position)) || xButtonBounds.Contains(PointToClient(Cursor.Position))))
             {
                 if (headerMouseDown)
@@ -513,7 +316,7 @@ namespace MaterialWinforms.Controls
                 }
             }
             else if (m.Msg == WM_LBUTTONDOWN &&
-                (statusBarBounds.Contains(PointToClient(Cursor.Position)) || actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
+                statusBarBounds.Contains(PointToClient(Cursor.Position)) &&
                 !(minButtonBounds.Contains(PointToClient(Cursor.Position)) || maxButtonBounds.Contains(PointToClient(Cursor.Position)) || xButtonBounds.Contains(PointToClient(Cursor.Position))))
             {
                 if (!Maximized)
@@ -572,10 +375,13 @@ namespace MaterialWinforms.Controls
         {
             get
             {
+                const int CS_DROPSHADOW = 0x20000;
                 CreateParams par = base.CreateParams;
                 // WS_SYSMENU: Trigger the creation of the system menu
                 // WS_MINIMIZEBOX: Allow minimizing from taskbar
                 par.Style = par.Style | WS_MINIMIZEBOX | WS_SYSMENU; // Turn on the WS_MINIMIZEBOX style flag
+
+                par.ClassStyle |= CS_DROPSHADOW;
                 return par;
             }
         }
@@ -679,8 +485,6 @@ namespace MaterialWinforms.Controls
                     buttonState = ButtonState.XDown;
                 else if (drawerButtonBounds.Contains(e.Location))
                     buttonState = ButtonState.DrawerDown;
-                else if (menuButtonBounds.Contains(e.Location))
-                    buttonState = ButtonState.MenuDown;
                 else
                     buttonState = ButtonState.None;
             }
@@ -714,25 +518,6 @@ namespace MaterialWinforms.Controls
 
                     if (oldState == ButtonState.XDown)
                         Close();
-                }
-                else if (drawerButtonBounds.Contains(e.Location))
-                {
-                    buttonState = ButtonState.DrawerOver;
-                    if (oldState == ButtonState.DrawerDown)
-                    {
-                        DrawerOpen = !DrawerOpen;
-                        AnimationDirection = DrawerOpen;
-                        DrawerAnimationTimer.Start();
-
-                    }
-                }
-                else if(menuButtonBounds.Contains(e.Location))
-                {
-                    buttonState = ButtonState.MenuOver;
-                    if (oldState == ButtonState.MenuDown)
-                    {
-                        ActionBarMenu.Show(e.Location);
-                    }
                 }
 
                 else buttonState = ButtonState.None;
@@ -807,20 +592,10 @@ namespace MaterialWinforms.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-
+            statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             minButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             maxButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
-            actionBarBounds = new Rectangle(0, STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT);
-            drawerButtonBounds = new Rectangle(SkinManager.FORM_PADDING, STATUS_BAR_HEIGHT, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
-            menuButtonBounds = new Rectangle(Width - SkinManager.FORM_PADDING - ACTION_BAR_HEIGHT, STATUS_BAR_HEIGHT, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
-            if (SideDrawerPanel != null)
-            {
-                SideDrawerPanel.Height = Height - ACTION_BAR_HEIGHT - STATUS_BAR_HEIGHT;
-                SideDrawerPanel.MaximumSize = new Size(Math.Min(Convert.ToInt32(Width * 0.8), ACTION_BAR_HEIGHT * 5), Height - ACTION_BAR_HEIGHT - STATUS_BAR_HEIGHT);
-                SideDrawerPanel.Width = SideDrawerPanel.MaximumSize.Width;
-            }
+            xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);           
         }
 
 
@@ -832,15 +607,16 @@ namespace MaterialWinforms.Controls
 
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, statusBarBounds);
-            g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, actionBarBounds);
 
+            if (_ActionBar == null) { 
             //Draw border
             using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
             {
-                g.DrawLine(borderPen, new Point(0, actionBarBounds.Bottom), new Point(0, Height - 2));
-                g.DrawLine(borderPen, new Point(Width - 1, actionBarBounds.Bottom), new Point(Width - 1, Height - 2));
+                g.DrawLine(borderPen, new Point(0, statusBarBounds.Bottom), new Point(0, Height - 2));
+                g.DrawLine(borderPen, new Point(Width - 1, statusBarBounds.Bottom), new Point(Width - 1, Height - 2));
                 g.DrawLine(borderPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
             }
+        }
 
             // Determine whether or not we even should be drawing the buttons.
             bool showMin = MinimizeBox && ControlBox;
@@ -866,15 +642,10 @@ namespace MaterialWinforms.Controls
 
             if (buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, xButtonBounds);
-            
+
             if (buttonState == ButtonState.DrawerOver)
                 g.FillEllipse(hoverBrush, drawerButtonBounds);
 
-            if (buttonState == ButtonState.MenuOver && ActionBarMenu != null)
-                g.FillEllipse(hoverBrush, menuButtonBounds);
-
-
-            
             using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
             {
                 // Minimize button.
@@ -924,94 +695,34 @@ namespace MaterialWinforms.Controls
                         xButtonBounds.Y + (int)(xButtonBounds.Height * 0.66));
                 }
             }
-            try
-            {
-
-            
-            if (_SideDrawer != null && !_SideDrawerFixiert)
-            {
-                using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT, 2))
-                {
-
-
-                    g.DrawLine(
-                       DrawerButtonPen,
-                       drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.2 + (0.3 * DrawerAnimationProgress / 100))),
-                       drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.35 + (0.3 * DrawerAnimationProgress / 100))),
-                       drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.8 - (0.6 * DrawerAnimationProgress / 100))),
-                       drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.35 + (0.15 * DrawerAnimationProgress / 100))));
-                    g.DrawLine(
-                       DrawerButtonPen,
-                       drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.2 + (0.6 * DrawerAnimationProgress / 100))),
-                       drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.65 - (0.3 * Math.Abs(DrawerAnimationProgress - 50) / 100))),
-                       drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.8 - (0.6 * DrawerAnimationProgress / 100))),
-                       drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.35 + (0.3 * Math.Abs(DrawerAnimationProgress - 50) / 100))));
-                    g.DrawLine(
-                      DrawerButtonPen,
-                      drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.8 - (0.9 * Math.Abs(DrawerAnimationProgress - 66) / 100))),
-                      drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.65 - (0.3 * DrawerAnimationProgress / 100))),
-                      drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.8 - (0.6 * DrawerAnimationProgress / 100))),
-                      drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.36 + (0.45 * Math.Abs(DrawerAnimationProgress - 66) / 100))));
-                }
-            }
-
-            if (ActionBarMenu != null)
-            {
-                using (var MenuButtonBrush = new SolidBrush(Color.White))
-                {
-                    int CircleRadius = 5;
-                    g.FillEllipse(
-                       MenuButtonBrush,
-                       menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5)-CircleRadius/2,
-                       menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.3) - CircleRadius / 2,
-                      CircleRadius, CircleRadius);
-                    g.FillEllipse(
-                       MenuButtonBrush,
-                       menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5) - CircleRadius/2,
-                       menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.5) - CircleRadius / 2,
-                      CircleRadius, CircleRadius);
-                    g.FillEllipse(
-                      MenuButtonBrush,
-                      menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5) - CircleRadius/2,
-                      menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.7) - CircleRadius / 2,
-                     CircleRadius, CircleRadius);
-                }
-            }
-
-            }
-            catch (Exception ex)
-            {
-                MaterialDialog.Show(this,ex.StackTrace);
-            }
 
             //Form title
 
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING + (true ? drawerButtonBounds.Width + drawerButtonBounds.X : 0), STATUS_BAR_HEIGHT, Width, ACTION_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING + (true ? drawerButtonBounds.Width + drawerButtonBounds.X : 0), 0, Width, STATUS_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
 
-            if (SideDrawerPanel != null)
+            if (_SideDrawer != null)
             {
-                if (!_SideDrawerFixiert)
+                if (!_SideDrawer.SideDrawerFixiert)
                 {
-                    SideDrawerPanel.Width = SideDrawerPanel.MaximumSize.Width * DrawerAnimationProgress / 100;
+                    _SideDrawer.Width = _SideDrawer.MaximumSize.Width * DrawerAnimationProgress / 100;
                 }
-                if (SideDrawerPanel.Width > 0)
-                {
-                    GraphicsPath t = new GraphicsPath();
-                    t.AddLine(new Point(SideDrawerPanel.Width, SideDrawerPanel.Location.Y), new Point(SideDrawerPanel.Width, Height));
-                    DrawHelper.drawShadow(g, t, 10, BackColor);
 
-                }
             }
+
+            //Schatten Zeichnen
+            GraphicsPath ActionBarShadow = new GraphicsPath();
+            ActionBarShadow.AddLine(new Point(0, STATUS_BAR_HEIGHT ), new Point(Width, STATUS_BAR_HEIGHT ));
+            DrawHelper.drawShadow(g, ActionBarShadow, 10, BackColor);
 
             foreach (Control objChild in Controls)
             {
                 if (typeof(IShadowedMaterialControl).IsAssignableFrom(objChild.GetType()))
                 {
                     IShadowedMaterialControl objCurrent = (IShadowedMaterialControl)objChild;
-                    DrawHelper.drawShadow(g, objCurrent.ShadowBorder, objCurrent.Elevation, BackColor);
+                    DrawHelper.drawShadow(g, objCurrent.ShadowBorder, objCurrent.Elevation, SkinManager.GetApplicationBackgroundColor());
                 }
+            
             }
-
         }
 
         private void InitializeComponent()

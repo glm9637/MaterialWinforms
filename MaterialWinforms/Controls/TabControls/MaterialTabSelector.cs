@@ -138,6 +138,7 @@ namespace MaterialWinforms.Controls
                     textBrush, 
                     tabRects[currentTabIndex], 
                     new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+
                 textBrush.Dispose();
             }
 

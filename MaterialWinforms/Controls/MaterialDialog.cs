@@ -46,7 +46,6 @@ namespace MaterialWinforms.Controls
             _flpButtons.FlowDirection = FlowDirection.RightToLeft;
             _flpButtons.Dock = DockStyle.Fill;
             pnl_Footer.Controls.Add(_flpButtons);
-            HideSideDrawer = true;
             lbl_Title.ForeColor = SkinManager.ColorScheme.AccentColor;
         }
 
@@ -518,7 +517,6 @@ namespace MaterialWinforms.Controls
             this.ClientSize = new System.Drawing.Size(350, 300);
             this.Controls.Add(this.pnl_Footer);
             this.Controls.Add(this.pnl_Top);
-            this.HideSideDrawer = true;
             this.Name = "MaterialDialog";
             this.Padding = new System.Windows.Forms.Padding(0);
             this.Controls.SetChildIndex(this.pnl_Top, 0);

@@ -35,34 +35,46 @@ namespace MaterialWinformsExample
         {
             System.Drawing.Drawing2D.GraphicsPath graphicsPath1 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath3 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath4 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
             this.materialRaisedButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
             this.materialFloatingActionButton1 = new MaterialWinforms.Controls.MaterialFloatingActionButton();
             this.materialFlatButton2 = new MaterialWinforms.Controls.MaterialFlatButton();
-            this.materialContextMenuStrip1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
+            this.SideDrawer = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.tmi_Tabellen = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
             this.tmi_UebersichtTabellen = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmi_Artikel = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmi_Struktur = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmi_Sichten = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
-            this.tmi_UebersichtSichten = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmi_Prozeduren = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
-            this.tmi_Uebersicht = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmi_Funktionen = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
-            this.tmi_UebersichtFunktionen = new System.Windows.Forms.ToolStripMenuItem();
-            this.materialStyledTabControl1 = new MaterialWinforms.Controls.MaterialStyledTabControl();
+            this.sichtenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.prozedurenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.funktionenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.triggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.materialSideDrawer3 = new MaterialWinforms.Controls.MaterialSideDrawer();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.materialCard1 = new MaterialWinforms.Controls.MaterialCard();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.materialContextMenuStrip1.SuspendLayout();
-            this.materialStyledTabControl1.SuspendLayout();
-            this.materialCard1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.materialTabControl1 = new MaterialWinforms.Controls.MaterialTabControl();
+            this.materialTabPage1 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialActionBar1 = new MaterialWinforms.Controls.MaterialActionBar();
+            this.ActionBarMenu = new MaterialWinforms.Controls.MaterialContextMenuStrip();
+            this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.greenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelectorClosable();
+            this.materialSearchButton1 = new MaterialWinforms.Controls.MaterialSearchButton();
+            this.datenbank2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabellenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.funktionenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.prozedurenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SideDrawer.SuspendLayout();
+            this.materialTabControl1.SuspendLayout();
+            this.materialTabPage1.SuspendLayout();
+            this.ActionBarMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialFlatButton3
@@ -74,7 +86,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton3.Depth = 0;
             this.materialFlatButton3.Enabled = false;
             this.materialFlatButton3.IconImage = null;
-            this.materialFlatButton3.Location = new System.Drawing.Point(744, 790);
+            this.materialFlatButton3.Location = new System.Drawing.Point(386, 489);
             this.materialFlatButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFlatButton3.Name = "materialFlatButton3";
@@ -93,7 +105,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialFlatButton1.Depth = 0;
             this.materialFlatButton1.IconImage = null;
-            this.materialFlatButton1.Location = new System.Drawing.Point(969, 790);
+            this.materialFlatButton1.Location = new System.Drawing.Point(527, 489);
             this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFlatButton1.Name = "materialFlatButton1";
@@ -108,7 +120,7 @@ namespace MaterialWinformsExample
             // 
             this.materialButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.materialButton1.Depth = 0;
-            this.materialButton1.Location = new System.Drawing.Point(720, 532);
+            this.materialButton1.Location = new System.Drawing.Point(437, 599);
             this.materialButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.Primary = true;
@@ -122,7 +134,7 @@ namespace MaterialWinformsExample
             // 
             this.materialRaisedButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.materialRaisedButton1.Depth = 0;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(873, 532);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(437, 533);
             this.materialRaisedButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
@@ -134,13 +146,13 @@ namespace MaterialWinformsExample
             // 
             // materialFloatingActionButton1
             // 
-            this.materialFloatingActionButton1.BackColor = System.Drawing.Color.White;
+            this.materialFloatingActionButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.materialFloatingActionButton1.Breite = 42;
             this.materialFloatingActionButton1.Depth = 0;
             this.materialFloatingActionButton1.Elevation = 5;
             this.materialFloatingActionButton1.Hoehe = 42;
             this.materialFloatingActionButton1.Icon = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
-            this.materialFloatingActionButton1.Location = new System.Drawing.Point(1010, 714);
+            this.materialFloatingActionButton1.Location = new System.Drawing.Point(672, 599);
             this.materialFloatingActionButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
             graphicsPath1.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
@@ -157,120 +169,94 @@ namespace MaterialWinformsExample
             this.materialFlatButton2.AutoSize = true;
             this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialFlatButton2.Depth = 0;
-            this.materialFlatButton2.IconImage = global::MaterialWinformsExample.Properties.Resources.ic_launcher;
-            this.materialFlatButton2.Image = global::MaterialWinformsExample.Properties.Resources.ic_launcher;
-            this.materialFlatButton2.Location = new System.Drawing.Point(834, 790);
+            this.materialFlatButton2.IconImage = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
+            this.materialFlatButton2.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
+            this.materialFlatButton2.Location = new System.Drawing.Point(213, 489);
             this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFlatButton2.Name = "materialFlatButton2";
             this.materialFlatButton2.Primary = false;
             this.materialFlatButton2.Selected = false;
-            this.materialFlatButton2.Size = new System.Drawing.Size(127, 36);
+            this.materialFlatButton2.Size = new System.Drawing.Size(108, 36);
             this.materialFlatButton2.TabIndex = 13;
             this.materialFlatButton2.Text = "Secondary";
             this.materialFlatButton2.UseVisualStyleBackColor = true;
             this.materialFlatButton2.Click += new System.EventHandler(this.materialFlatButton2_Click);
             // 
-            // materialContextMenuStrip1
+            // SideDrawer
             // 
-            this.materialContextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialContextMenuStrip1.Depth = 0;
-            this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SideDrawer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.SideDrawer.Depth = 0;
+            this.SideDrawer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tmi_Tabellen,
-            this.tmi_Sichten,
-            this.tmi_Prozeduren,
-            this.tmi_Funktionen});
-            this.materialContextMenuStrip1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
-            this.materialContextMenuStrip1.Size = new System.Drawing.Size(135, 124);
+            this.datenbank2ToolStripMenuItem,
+            this.otherToolStripMenuItem});
+            this.SideDrawer.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.SideDrawer.Name = "materialContextMenuStrip1";
+            this.SideDrawer.Size = new System.Drawing.Size(141, 78);
             // 
             // tmi_Tabellen
             // 
             this.tmi_Tabellen.AutoSize = false;
             this.tmi_Tabellen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tmi_UebersichtTabellen,
-            this.tmi_Artikel,
-            this.tmi_Struktur});
+            this.sichtenToolStripMenuItem,
+            this.prozedurenToolStripMenuItem,
+            this.funktionenToolStripMenuItem,
+            this.triggerToolStripMenuItem});
             this.tmi_Tabellen.Name = "tmi_Tabellen";
             this.tmi_Tabellen.Size = new System.Drawing.Size(120, 30);
-            this.tmi_Tabellen.Text = "Tabellen";
+            this.tmi_Tabellen.Text = "Datenbank 1";
             // 
             // tmi_UebersichtTabellen
             // 
             this.tmi_UebersichtTabellen.Name = "tmi_UebersichtTabellen";
-            this.tmi_UebersichtTabellen.Size = new System.Drawing.Size(124, 22);
-            this.tmi_UebersichtTabellen.Text = "Übersicht";
+            this.tmi_UebersichtTabellen.Size = new System.Drawing.Size(152, 22);
+            this.tmi_UebersichtTabellen.Text = "Tabellen";
             // 
-            // tmi_Artikel
+            // sichtenToolStripMenuItem
             // 
-            this.tmi_Artikel.Name = "tmi_Artikel";
-            this.tmi_Artikel.Size = new System.Drawing.Size(124, 22);
-            this.tmi_Artikel.Text = "Artikel";
+            this.sichtenToolStripMenuItem.Name = "sichtenToolStripMenuItem";
+            this.sichtenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sichtenToolStripMenuItem.Text = "Sichten";
             // 
-            // tmi_Struktur
+            // prozedurenToolStripMenuItem
             // 
-            this.tmi_Struktur.Name = "tmi_Struktur";
-            this.tmi_Struktur.Size = new System.Drawing.Size(124, 22);
-            this.tmi_Struktur.Text = "Struktur";
+            this.prozedurenToolStripMenuItem.Name = "prozedurenToolStripMenuItem";
+            this.prozedurenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.prozedurenToolStripMenuItem.Text = "Prozeduren";
             // 
-            // tmi_Sichten
+            // funktionenToolStripMenuItem
             // 
-            this.tmi_Sichten.AutoSize = false;
-            this.tmi_Sichten.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tmi_UebersichtSichten});
-            this.tmi_Sichten.Name = "tmi_Sichten";
-            this.tmi_Sichten.Size = new System.Drawing.Size(120, 30);
-            this.tmi_Sichten.Text = "Sichten";
+            this.funktionenToolStripMenuItem.Name = "funktionenToolStripMenuItem";
+            this.funktionenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.funktionenToolStripMenuItem.Text = "Funktionen";
             // 
-            // tmi_UebersichtSichten
+            // triggerToolStripMenuItem
             // 
-            this.tmi_UebersichtSichten.Name = "tmi_UebersichtSichten";
-            this.tmi_UebersichtSichten.Size = new System.Drawing.Size(124, 22);
-            this.tmi_UebersichtSichten.Text = "Übersicht";
+            this.triggerToolStripMenuItem.Name = "triggerToolStripMenuItem";
+            this.triggerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.triggerToolStripMenuItem.Text = "Trigger";
             // 
-            // tmi_Prozeduren
+            // materialSideDrawer3
             // 
-            this.tmi_Prozeduren.AutoSize = false;
-            this.tmi_Prozeduren.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tmi_Uebersicht});
-            this.tmi_Prozeduren.Name = "tmi_Prozeduren";
-            this.tmi_Prozeduren.Size = new System.Drawing.Size(120, 30);
-            this.tmi_Prozeduren.Text = "Prozeduren";
-            // 
-            // tmi_Uebersicht
-            // 
-            this.tmi_Uebersicht.Name = "tmi_Uebersicht";
-            this.tmi_Uebersicht.Size = new System.Drawing.Size(124, 22);
-            this.tmi_Uebersicht.Text = "Übersicht";
-            // 
-            // tmi_Funktionen
-            // 
-            this.tmi_Funktionen.AutoSize = false;
-            this.tmi_Funktionen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tmi_UebersichtFunktionen});
-            this.tmi_Funktionen.Name = "tmi_Funktionen";
-            this.tmi_Funktionen.Size = new System.Drawing.Size(120, 30);
-            this.tmi_Funktionen.Text = "Funktionen";
-            // 
-            // tmi_UebersichtFunktionen
-            // 
-            this.tmi_UebersichtFunktionen.Name = "tmi_UebersichtFunktionen";
-            this.tmi_UebersichtFunktionen.Size = new System.Drawing.Size(124, 22);
-            this.tmi_UebersichtFunktionen.Text = "Übersicht";
-            // 
-            // materialStyledTabControl1
-            // 
-            this.materialStyledTabControl1.Controls.Add(this.tabPage1);
-            this.materialStyledTabControl1.Controls.Add(this.tabPage2);
-            this.materialStyledTabControl1.Depth = 0;
-            this.materialStyledTabControl1.ItemSize = new System.Drawing.Size(150, 40);
-            this.materialStyledTabControl1.Location = new System.Drawing.Point(26, 71);
-            this.materialStyledTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialStyledTabControl1.Name = "materialStyledTabControl1";
-            this.materialStyledTabControl1.SelectedIndex = 0;
-            this.materialStyledTabControl1.Size = new System.Drawing.Size(670, 100);
-            this.materialStyledTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.materialStyledTabControl1.TabIndex = 22;
+            this.materialSideDrawer3.AutoScroll = true;
+            this.materialSideDrawer3.Depth = 0;
+            this.materialSideDrawer3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.materialSideDrawer3.Elevation = 10;
+            this.materialSideDrawer3.HideSideDrawer = false;
+            this.materialSideDrawer3.Location = new System.Drawing.Point(0, 64);
+            this.materialSideDrawer3.MaximumSize = new System.Drawing.Size(200, 653);
+            this.materialSideDrawer3.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialSideDrawer3.Name = "materialSideDrawer3";
+            graphicsPath2.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialSideDrawer3.ShadowBorder = graphicsPath2;
+            this.materialSideDrawer3.SideDrawer = this.SideDrawer;
+            this.materialSideDrawer3.SideDrawerFixiert = true;
+            this.materialSideDrawer3.SideDrawerUnterActionBar = false;
+            this.materialSideDrawer3.Size = new System.Drawing.Size(200, 629);
+            this.materialSideDrawer3.TabIndex = 29;
+            this.materialSideDrawer3.onSideDrawerItemClicked += new MaterialWinforms.Controls.MaterialSideDrawer.SideDrawerEventHandler(this.materialSideDrawer3_onSideDrawerItemClicked);
             // 
             // tabPage1
             // 
@@ -292,84 +278,205 @@ namespace MaterialWinformsExample
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // materialCard1
+            // materialTabControl1
             // 
-            this.materialCard1.BackColor = System.Drawing.Color.White;
-            this.materialCard1.Controls.Add(this.materialStyledTabControl1);
-            this.materialCard1.Depth = 0;
-            this.materialCard1.Elevation = 5;
-            this.materialCard1.Location = new System.Drawing.Point(123, 145);
-            this.materialCard1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialCard1.Name = "materialCard1";
-            this.materialCard1.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath2.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard1.ShadowBorder = graphicsPath2;
-            this.materialCard1.Size = new System.Drawing.Size(774, 292);
-            this.materialCard1.TabIndex = 23;
-            this.materialCard1.Title = null;
+            this.materialTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.materialTabControl1.Controls.Add(this.materialTabPage1);
+            this.materialTabControl1.Depth = 0;
+            this.materialTabControl1.Location = new System.Drawing.Point(206, 71);
+            this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTabControl1.Name = "materialTabControl1";
+            this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
+            this.materialTabControl1.SelectedIndex = 0;
+            this.materialTabControl1.Size = new System.Drawing.Size(705, 619);
+            this.materialTabControl1.TabIndex = 24;
+            this.materialTabControl1.TabsAreClosable = true;
             // 
-            // tabControl1
+            // materialTabPage1
             // 
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(186, 510);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(348, 100);
-            this.tabControl1.TabIndex = 24;
+            this.materialTabPage1.Controls.Add(this.materialFlatButton2);
+            this.materialTabPage1.Controls.Add(this.materialFlatButton3);
+            this.materialTabPage1.Controls.Add(this.materialFlatButton1);
+            this.materialTabPage1.Depth = 0;
+            this.materialTabPage1.Location = new System.Drawing.Point(4, 22);
+            this.materialTabPage1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTabPage1.Name = "materialTabPage1";
+            this.materialTabPage1.Size = new System.Drawing.Size(697, 593);
+            this.materialTabPage1.TabIndex = 0;
+            this.materialTabPage1.Text = "materialTabPage1";
             // 
-            // tabPage3
+            // materialActionBar1
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(340, 74);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.materialActionBar1.ActionBarMenu = this.ActionBarMenu;
+            this.materialActionBar1.Depth = 0;
+            this.materialActionBar1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialActionBar1.Elevation = 10;
+            this.materialActionBar1.Location = new System.Drawing.Point(0, 24);
+            this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialActionBar1.Name = "materialActionBar1";
+            graphicsPath3.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialActionBar1.ShadowBorder = graphicsPath3;
+            this.materialActionBar1.Size = new System.Drawing.Size(914, 40);
+            this.materialActionBar1.TabIndex = 26;
+            this.materialActionBar1.Text = "materialActionBar1";
             // 
-            // tabPage4
+            // ActionBarMenu
             // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(192, 74);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "tabPage4";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.ActionBarMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ActionBarMenu.Depth = 0;
+            this.ActionBarMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themeToolStripMenuItem,
+            this.themeToolStripMenuItem1});
+            this.ActionBarMenu.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.ActionBarMenu.Name = "materialContextMenuStrip2";
+            this.ActionBarMenu.Size = new System.Drawing.Size(112, 48);
+            // 
+            // themeToolStripMenuItem
+            // 
+            this.themeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.blueToolStripMenuItem,
+            this.greenToolStripMenuItem,
+            this.standardToolStripMenuItem});
+            this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.themeToolStripMenuItem.Text = "Style";
+            // 
+            // blueToolStripMenuItem
+            // 
+            this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.blueToolStripMenuItem.Tag = "1";
+            this.blueToolStripMenuItem.Text = "Blue";
+            this.blueToolStripMenuItem.Click += new System.EventHandler(this.blueToolStripMenuItem_Click);
+            // 
+            // greenToolStripMenuItem
+            // 
+            this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.greenToolStripMenuItem.Tag = "2";
+            this.greenToolStripMenuItem.Text = "Blue Gray";
+            this.greenToolStripMenuItem.Click += new System.EventHandler(this.greenToolStripMenuItem_Click);
+            // 
+            // standardToolStripMenuItem
+            // 
+            this.standardToolStripMenuItem.Name = "standardToolStripMenuItem";
+            this.standardToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.standardToolStripMenuItem.Tag = "3";
+            this.standardToolStripMenuItem.Text = "Green";
+            this.standardToolStripMenuItem.Click += new System.EventHandler(this.standardToolStripMenuItem_Click);
+            // 
+            // themeToolStripMenuItem1
+            // 
+            this.themeToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
+            this.themeToolStripMenuItem1.Name = "themeToolStripMenuItem1";
+            this.themeToolStripMenuItem1.Size = new System.Drawing.Size(111, 22);
+            this.themeToolStripMenuItem1.Text = "Theme";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(101, 22);
+            this.toolStripMenuItem1.Tag = "4";
+            this.toolStripMenuItem1.Text = "Light";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(101, 22);
+            this.toolStripMenuItem2.Tag = "5";
+            this.toolStripMenuItem2.Text = "Dark";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // materialTabSelectorClosable1
+            // 
+            this.materialTabSelectorClosable1.BaseTabControl = this.materialTabControl1;
+            this.materialTabSelectorClosable1.CenterTabs = true;
+            this.materialTabSelectorClosable1.Depth = 0;
+            this.materialTabSelectorClosable1.Elevation = 0;
+            this.materialTabSelectorClosable1.Location = new System.Drawing.Point(194, 24);
+            this.materialTabSelectorClosable1.Margin = new System.Windows.Forms.Padding(0);
+            this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
+            graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath4;
+            this.materialTabSelectorClosable1.Size = new System.Drawing.Size(614, 40);
+            this.materialTabSelectorClosable1.TabIndex = 32;
+            this.materialTabSelectorClosable1.Text = "materialTabSelectorClosable1";
+            // 
+            // materialSearchButton1
+            // 
+            this.materialSearchButton1.Depth = 0;
+            this.materialSearchButton1.Hint = "Suchbegriff eingeben...";
+            this.materialSearchButton1.Location = new System.Drawing.Point(839, 26);
+            this.materialSearchButton1.MaxLength = 32767;
+            this.materialSearchButton1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialSearchButton1.Name = "materialSearchButton1";
+            this.materialSearchButton1.Size = new System.Drawing.Size(25, 38);
+            this.materialSearchButton1.TabIndex = 33;
+            this.materialSearchButton1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // datenbank2ToolStripMenuItem
+            // 
+            this.datenbank2ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tabellenToolStripMenuItem,
+            this.funktionenToolStripMenuItem1,
+            this.prozedurenToolStripMenuItem1});
+            this.datenbank2ToolStripMenuItem.Name = "datenbank2ToolStripMenuItem";
+            this.datenbank2ToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.datenbank2ToolStripMenuItem.Text = "Datenbank2";
+            // 
+            // tabellenToolStripMenuItem
+            // 
+            this.tabellenToolStripMenuItem.Name = "tabellenToolStripMenuItem";
+            this.tabellenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tabellenToolStripMenuItem.Text = "Tabellen";
+            // 
+            // funktionenToolStripMenuItem1
+            // 
+            this.funktionenToolStripMenuItem1.Name = "funktionenToolStripMenuItem1";
+            this.funktionenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.funktionenToolStripMenuItem1.Text = "Funktionen";
+            // 
+            // prozedurenToolStripMenuItem1
+            // 
+            this.prozedurenToolStripMenuItem1.Name = "prozedurenToolStripMenuItem1";
+            this.prozedurenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.prozedurenToolStripMenuItem1.Text = "Prozeduren";
+            // 
+            // otherToolStripMenuItem
+            // 
+            this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
+            this.otherToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.otherToolStripMenuItem.Text = "Other";
             // 
             // MainForm
             // 
-            this.ActionBarMenu = this.materialContextMenuStrip1;
+            this.ActionBar = this.materialActionBar1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1086, 833);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.materialCard1);
+            this.ClientSize = new System.Drawing.Size(914, 693);
+            this.Controls.Add(this.materialSearchButton1);
+            this.Controls.Add(this.materialSideDrawer3);
+            this.Controls.Add(this.materialTabSelectorClosable1);
+            this.Controls.Add(this.materialActionBar1);
+            this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialFloatingActionButton1);
-            this.Controls.Add(this.materialFlatButton3);
-            this.Controls.Add(this.materialFlatButton2);
             this.Controls.Add(this.materialButton1);
             this.Controls.Add(this.materialRaisedButton1);
-            this.Controls.Add(this.materialFlatButton1);
             this.Name = "MainForm";
-            this.SideDrawer = this.materialContextMenuStrip1;
-            this.Text = "MaterialWinforms Demo";
-            this.Controls.SetChildIndex(this.materialFlatButton1, 0);
-            this.Controls.SetChildIndex(this.materialRaisedButton1, 0);
-            this.Controls.SetChildIndex(this.materialButton1, 0);
-            this.Controls.SetChildIndex(this.materialFlatButton2, 0);
-            this.Controls.SetChildIndex(this.materialFlatButton3, 0);
-            this.Controls.SetChildIndex(this.materialFloatingActionButton1, 0);
-            this.Controls.SetChildIndex(this.materialCard1, 0);
-            this.Controls.SetChildIndex(this.tabControl1, 0);
-            this.materialContextMenuStrip1.ResumeLayout(false);
-            this.materialStyledTabControl1.ResumeLayout(false);
-            this.materialCard1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.Text = "Datenbank Dokumentation";
+            this.SideDrawer.ResumeLayout(false);
+            this.materialTabControl1.ResumeLayout(false);
+            this.materialTabPage1.ResumeLayout(false);
+            this.materialTabPage1.PerformLayout();
+            this.ActionBarMenu.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -381,23 +488,33 @@ namespace MaterialWinformsExample
         private MaterialRaisedButton materialRaisedButton1;
         private MaterialFlatButton materialFlatButton3;
         private MaterialFloatingActionButton materialFloatingActionButton1;
-        private MaterialContextMenuStrip materialContextMenuStrip1;
+        private MaterialContextMenuStrip SideDrawer;
         private MaterialToolStripMenuItem tmi_Tabellen;
         private ToolStripMenuItem tmi_UebersichtTabellen;
-        private ToolStripMenuItem tmi_Artikel;
-        private ToolStripMenuItem tmi_Struktur;
-        private MaterialToolStripMenuItem tmi_Sichten;
-        private ToolStripMenuItem tmi_UebersichtSichten;
-        private MaterialToolStripMenuItem tmi_Prozeduren;
-        private ToolStripMenuItem tmi_Uebersicht;
-        private MaterialToolStripMenuItem tmi_Funktionen;
-        private ToolStripMenuItem tmi_UebersichtFunktionen;
-        private MaterialStyledTabControl materialStyledTabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private MaterialCard materialCard1;
-        private TabControl tabControl1;
-        private TabPage tabPage3;
-        private TabPage tabPage4;
+        private MaterialTabControl materialTabControl1;
+        private ToolStripMenuItem sichtenToolStripMenuItem;
+        private ToolStripMenuItem prozedurenToolStripMenuItem;
+        private ToolStripMenuItem funktionenToolStripMenuItem;
+        private ToolStripMenuItem triggerToolStripMenuItem;
+        private MaterialActionBar materialActionBar1;
+        private MaterialSideDrawer materialSideDrawer3;
+        private MaterialTabSelectorClosable materialTabSelectorClosable1;
+        private MaterialContextMenuStrip ActionBarMenu;
+        private ToolStripMenuItem themeToolStripMenuItem;
+        private ToolStripMenuItem blueToolStripMenuItem;
+        private ToolStripMenuItem greenToolStripMenuItem;
+        private ToolStripMenuItem standardToolStripMenuItem;
+        private ToolStripMenuItem themeToolStripMenuItem1;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private MaterialTabPage materialTabPage1;
+        private MaterialSearchButton materialSearchButton1;
+        private ToolStripMenuItem datenbank2ToolStripMenuItem;
+        private ToolStripMenuItem tabellenToolStripMenuItem;
+        private ToolStripMenuItem funktionenToolStripMenuItem1;
+        private ToolStripMenuItem prozedurenToolStripMenuItem1;
+        private ToolStripMenuItem otherToolStripMenuItem;
     }
 }

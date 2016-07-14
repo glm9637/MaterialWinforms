@@ -50,6 +50,18 @@
     <Compile Include="Controls\DrawerControls\MaterialDrawerItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\DrawerControls\MaterialSideDrawer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DrawerControls\MaterialSideDrawer.Designer.cs">
+      <DependentUpon>MaterialSideDrawer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MaterialActionBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialActionBar.Designer.cs">
+      <DependentUpon>MaterialActionBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MaterialBreadCrumbToolbar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,6 +87,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialSearchButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialToggle.cs">
@@ -107,13 +122,10 @@
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\TabControls\MaterialStyledTabControl.cs">
+    <Compile Include="Controls\TabControls\MaterialTabSelectorClosable.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TabControls\MaterialTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TabControls\MaterialTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TabControls\MaterialTabSelector.cs">

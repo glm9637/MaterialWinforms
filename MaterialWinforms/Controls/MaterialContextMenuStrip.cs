@@ -97,7 +97,6 @@ namespace MaterialWinforms.Controls
         public int Depth { get; set; }
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
-        
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
@@ -107,10 +106,10 @@ namespace MaterialWinforms.Controls
             var itemRect = GetItemRect(e.Item);
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
             g.DrawString(
-                e.Text, 
-                SkinManager.ROBOTO_MEDIUM_10, 
+                e.Text,
+                SkinManager.ROBOTO_MEDIUM_10,
                 e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
-                textRect, 
+                textRect,
                 new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
@@ -121,7 +120,7 @@ namespace MaterialWinforms.Controls
 
             //Draw background
             var itemRect = GetItemRect(e.Item);
-            //g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()), itemRect);
+            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()), itemRect);
 
             //Ripple animation
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
@@ -167,6 +166,8 @@ namespace MaterialWinforms.Controls
                 new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
         }
 
+
+
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -189,7 +190,8 @@ namespace MaterialWinforms.Controls
 
         private Rectangle GetItemRect(ToolStripItem item)
         {
-            return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height);
+            return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height+4);
         }
+
     }
 }

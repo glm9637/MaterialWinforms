@@ -1,15 +1,262 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialWinforms.Animations;
+using System.Runtime.InteropServices;
 
 namespace MaterialWinforms.Controls
 {
-    public class MaterialSingleLineTextField : Control, IMaterialControl
+
+    [DefaultEvent("TextChanged")]
+    public class MaterialSearchButton : Control, IMaterialControl
     {
+
+        #region  Variables
+
+        SearchTextField MaterialTB = new SearchTextField();
+
+        HorizontalAlignment ALNType;
+        int maxchars = 32767;
+        int StartX;
+        AnimationManager AnimManager;
+
+        [Browsable(false)]
+        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+
+        private SizeF IconSize;
+        private bool expanded;
+
+        #endregion
+        #region  Properties
+
         //Properties for managing the material design properties
+        [Browsable(false)]
+        public int Depth { get; set; }
+        [Browsable(false)]
+        public MouseState MouseState { get; set; }
+
+        public HorizontalAlignment TextAlignment
+        {
+            get
+            {
+                return ALNType;
+            }
+            set
+            {
+                ALNType = value;
+                Invalidate();
+            }
+        }
+
+        [Category("Behavior")]
+        public int MaxLength
+        {
+            get
+            {
+                return maxchars;
+            }
+            set
+            {
+                maxchars = value;
+                MaterialTB.MaxLength = MaxLength;
+                Invalidate();
+            }
+        }
+
+        [Category("Appearance")]
+        public string Hint
+        {
+            get { return MaterialTB.Hint; }
+            set
+            {
+                MaterialTB.Hint = value;
+                Invalidate();
+            }
+        }
+
+        #endregion
+        #region  Events
+
+        protected void OnKeyDown(object Obj, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                MaterialTB.SelectAll();
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                MaterialTB.Copy();
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.X)
+            {
+                MaterialTB.Cut();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        protected override void OnClick(System.EventArgs e)
+        {
+            if (!expanded)
+            {
+                BringToFront();
+                AnimManager.SetProgress(0);
+                AnimManager.StartNewAnimation(AnimationDirection.In);
+            }
+            else
+            {
+                if (new RectangleF(Width-IconSize.Width,0,IconSize.Width,Height).Contains(PointToClient(MousePosition)))
+                {
+                    AnimManager.SetProgress(1);
+                    AnimManager.StartNewAnimation(AnimationDirection.Out);
+
+                }
+            }
+            base.OnClick(e);
+        }
+
+        protected override void OnTextChanged(System.EventArgs e)
+        {
+            base.OnTextChanged(e);
+            Invalidate();
+        }
+
+        protected override void OnGotFocus(System.EventArgs e)
+        {
+            base.OnGotFocus(e);
+            MaterialTB.Focus();
+            MaterialTB.SelectionLength = 0;
+        }
+        protected override void OnResize(System.EventArgs e)
+        {
+            base.OnResize(e);
+
+            Height = MaterialTB.Height;
+            MaterialTB.Width = Width - Convert.ToInt16(IconSize.Width);
+        }
+
+        #endregion
+       
+        public void AddTextBox()
+        {
+            MaterialTB.Text = Text;
+            MaterialTB.Location = new Point(0, 1);
+            MaterialTB.Size = new Size(Width - Convert.ToInt16(IconSize.Width), 20);
+            MaterialTB.KeyDown += OnKeyDown;
+
+        }
+
+        public MaterialSearchButton()
+        {
+            expanded = false;
+            DoubleBuffered = true;
+            IconSize = new Size(25, 25);
+            AddTextBox();
+            Controls.Add(MaterialTB);
+            Width = Convert.ToInt16(IconSize.Width);
+            MaterialTB.TextChanged += (sender, args) => Text = MaterialTB.Text;
+            base.TextChanged += (sender, args) => MaterialTB.Text = Text;
+            AnimManager = new AnimationManager();
+            AnimManager.AnimationType =  AnimationType.EaseOut;
+            AnimManager.Increment = 0.03;
+            AnimManager.OnAnimationProgress += AnimManager_OnAnimationProgress;
+            MaterialTB.Text = String.Empty;
+            MaterialTB.Hint = "Suchbegriff eingeben";
+            StartX = -50;
+        }
+
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            base.OnLocationChanged(e);
+            if (StartX == -50)
+            {
+                StartX = Location.X;
+            }
+        }
+        
+
+        void AnimManager_OnAnimationProgress(object sender)
+        {
+            
+            if (!expanded)
+            {
+                if (AnimManager.GetProgress()*100 < 100)
+                {
+                    Location = new Point(StartX - Convert.ToInt32(300 * AnimManager.GetProgress()), Location.Y);
+                    MaterialTB.Width =Convert.ToInt32(300*AnimManager.GetProgress());
+                    Width = Convert.ToInt16(IconSize.Width) + MaterialTB.Width;
+                    Refresh();
+                }
+                else
+                {
+                    Location = new Point(StartX - Convert.ToInt32(300 * AnimManager.GetProgress()), Location.Y);
+                    MaterialTB.Width = 300;
+                    Width = Convert.ToInt16(IconSize.Width) + MaterialTB.Width;
+                    expanded = true;
+                    Invalidate();
+                }
+            }
+            else
+            {
+                if (AnimManager.GetProgress()  > 0)
+                {
+                    Location = new Point(StartX - Convert.ToInt32(300 * AnimManager.GetProgress()), Location.Y);
+                    MaterialTB.Width = Convert.ToInt32(300 *AnimManager.GetProgress());
+                    Width = Convert.ToInt16(IconSize.Width) + MaterialTB.Width;
+                    Invalidate();
+                }
+                else
+                {
+                    Location = new Point(StartX, Location.Y);
+                    MaterialTB.Width = 0;
+                    Width = Convert.ToInt16(IconSize.Width) + MaterialTB.Width;
+                    expanded = false;
+                    Invalidate();
+                }
+            }
+        }
+
+        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Bitmap B = new Bitmap(Width, Height);
+            Graphics G = Graphics.FromImage(B);
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.Clear(SkinManager.ColorScheme.PrimaryColor);
+            if (expanded) 
+            {
+                Pen IconPen = new Pen(SkinManager.ColorScheme.TextColor, 2);
+                G.DrawLine(IconPen, Width + 4 - IconSize.Width, Height - (Height - IconSize.Height) / 2, Width - 4,( Height - IconSize.Height) / 2);
+                G.DrawLine(IconPen, Width - 4, Height - (Height - IconSize.Height)/2, Width + 4 - IconSize.Width, (Height - IconSize.Height) / 2);
+            }
+            else 
+            { 
+            Pen IconPen = new Pen(SkinManager.ColorScheme.TextColor, 2);
+            RectangleF MagTopRect = new RectangleF(Width - IconSize.Width + 2, (Height - IconSize.Height) / 2, Convert.ToSingle(IconSize.Width * 0.66) - 4, Convert.ToSingle(IconSize.Height * 0.66) - 4);
+            G.DrawArc(IconPen,MagTopRect , 60, 180);
+            G.DrawArc(IconPen, MagTopRect, 240, 180);
+            IconPen.Width = 4;
+            G.DrawLine(IconPen, Width - 2, Height - (Height - IconSize.Height), Width - Convert.ToSingle(IconSize.Width * 0.5), (Height / 2)-2);
+            }
+            e.Graphics.DrawImage((Image)(B.Clone()), 0, 0);
+            G.Dispose();
+            B.Dispose();
+        
+        }
+
+    }
+
+   class SearchTextField : Control, IMaterialControl
+   {
+
+         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
         [Browsable(false)]
@@ -27,10 +274,6 @@ namespace MaterialWinforms.Controls
         public int SelectionStart { get { return baseTextBox.SelectionStart; } set { baseTextBox.SelectionStart = value; } }
         public int SelectionLength { get { return baseTextBox.SelectionLength; } set { baseTextBox.SelectionLength = value; } }
         public int TextLength { get { return baseTextBox.TextLength; } }
-
-        public bool UseSystemPasswordChar { get { return baseTextBox.UseSystemPasswordChar; } set { baseTextBox.UseSystemPasswordChar = value; } }
-        public char PasswordChar { get { return baseTextBox.PasswordChar; } set { baseTextBox.PasswordChar = value; } }
-
         public void SelectAll() { baseTextBox.SelectAll(); }
         public void Clear() { baseTextBox.Clear(); }
 
@@ -946,20 +1189,11 @@ namespace MaterialWinforms.Controls
         }
         # endregion
 
-        private readonly AnimationManager animationManager;
-
         protected readonly BaseTextBox baseTextBox;
-        public MaterialSingleLineTextField()
+        public SearchTextField()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
-            animationManager = new AnimationManager
-            {
-                Increment = 0.06,
-                AnimationType = AnimationType.EaseInOut,
-                InterruptAnimation = false
-            };
-            animationManager.OnAnimationProgress += sender => Invalidate();
 
             baseTextBox = new BaseTextBox
             {
@@ -976,12 +1210,10 @@ namespace MaterialWinforms.Controls
                 Controls.Add(baseTextBox);
             }
 
-            baseTextBox.GotFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.In);
-            baseTextBox.LostFocus += (sender, args) => animationManager.StartNewAnimation(AnimationDirection.Out);
             BackColorChanged += (sender, args) =>
             {
                 baseTextBox.BackColor = BackColor;
-                baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
+                baseTextBox.ForeColor = SkinManager.ACTION_BAR_TEXT;
             };
 
             baseTextBox.TextChanged += new EventHandler(Redraw);
@@ -989,7 +1221,11 @@ namespace MaterialWinforms.Controls
 			//Fix for tabstop
 			baseTextBox.TabStop = true;
 			this.TabStop = false;
+            BackColor = SkinManager.ColorScheme.PrimaryColor;
+            Text = "";
+            baseTextBox.Text = "";
         }
+
 
         private void Redraw(object sencer, EventArgs e)
         {
@@ -999,30 +1235,11 @@ namespace MaterialWinforms.Controls
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
-            g.Clear(Parent.BackColor);
+            g.Clear(SkinManager.ColorScheme.PrimaryColor);
 
             int lineY = baseTextBox.Bottom + 3;
-
-            if (!animationManager.IsAnimating())
-            {
-                //No animation
-				g.FillRectangle(baseTextBox.Focused ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, baseTextBox.Focused ? 2 : 1);
-            }
-            else
-            {
-                //Animate
-                int animationWidth = (int)(baseTextBox.Width * animationManager.GetProgress());
-                int halfAnimationWidth = animationWidth / 2;
-                int animationStart = baseTextBox.Location.X + baseTextBox.Width / 2;
-
-                //Unfocused background
-                g.FillRectangle(SkinManager.GetDividersBrush(), baseTextBox.Location.X, lineY, baseTextBox.Width, 1);
-
-                //Animated focus transition
-				g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, animationStart - halfAnimationWidth, lineY, animationWidth, 2);
-
-              
-            }
+            baseTextBox.BackColor = BackColor;
+            g.FillRectangle(SkinManager.ColorScheme.AccentBrush , baseTextBox.Location.X, lineY, baseTextBox.Width, 2 );
             if (!String.IsNullOrWhiteSpace(Hint) && (!String.IsNullOrWhiteSpace(Text) || Focused()))
             {
                g.DrawString(
@@ -1128,7 +1345,7 @@ namespace MaterialWinforms.Controls
                 MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
                 cms.Opening += ContextMenuStripOnOpening;
                 cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
-
+                BackColor = Color.White;
                 ContextMenuStrip = cms;
             }
 
@@ -1198,5 +1415,7 @@ namespace MaterialWinforms.Controls
                 });
             }
         }
-    }
+   }
 }
+
+
