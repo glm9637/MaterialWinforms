@@ -595,7 +595,12 @@ namespace MaterialWinforms.Controls
             statusBarBounds = new Rectangle(0, 0, Width, STATUS_BAR_HEIGHT);
             minButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             maxButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-            xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);           
+            xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+
+            if (SideDrawer != null)
+            {
+                SideDrawer.Height = this.Height;
+            }
         }
 
 
@@ -712,7 +717,7 @@ namespace MaterialWinforms.Controls
             //Schatten Zeichnen
             GraphicsPath ActionBarShadow = new GraphicsPath();
             ActionBarShadow.AddLine(new Point(0, STATUS_BAR_HEIGHT ), new Point(Width, STATUS_BAR_HEIGHT ));
-            DrawHelper.drawShadow(g, ActionBarShadow, 10, BackColor);
+            DrawHelper.drawShadow(g, ActionBarShadow, 10, SkinManager.GetApplicationBackgroundColor());
 
             foreach (Control objChild in Controls)
             {

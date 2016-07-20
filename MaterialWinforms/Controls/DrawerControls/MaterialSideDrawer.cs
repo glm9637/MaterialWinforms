@@ -113,7 +113,7 @@ namespace MaterialWinforms.Controls
             }
         }
 
-        
+
 
         public event SideDrawerEventHandler onSideDrawerItemClicked;
 
@@ -123,7 +123,7 @@ namespace MaterialWinforms.Controls
             Dock = DockStyle.Left;
             AutoScroll = true;
             Elevation = 10;
-            
+
             Location = new Point(0, MaterialActionBar.ACTION_BAR_HEIGHT + MaterialForm.STATUS_BAR_HEIGHT + (_SideDrawerUnterActionBar ? 48 : 0));
             MinimumSize = new Size(0, MaximumSize.Height);
 
@@ -138,7 +138,11 @@ namespace MaterialWinforms.Controls
 
         protected override void OnResize(EventArgs eventargs)
         {
-            base.OnResize(eventargs);
+            if (Parent != null)
+            {
+                MaximumSize = new Size(Math.Min(Parent.Width * 80, MaterialActionBar.ACTION_BAR_HEIGHT * 5), Parent.Height - MaterialActionBar.ACTION_BAR_HEIGHT);
+                Width = _SideDrawerFixiert ? MaximumSize.Width : 0;
+            }
             ShadowBorder = new GraphicsPath();
             if (Width == 0)
             {
@@ -148,8 +152,9 @@ namespace MaterialWinforms.Controls
             {
                 Elevation = 10;
             }
-            ShadowBorder.AddLine(new Point(Location.X+Width, Location.Y), new Point(Location.X + Width, Location.Y + Height));
-           
+          
+            ShadowBorder.AddLine(new Point(Location.X + Width, Location.Y), new Point(Location.X + Width, Location.Y + Height));
+
         }
 
         private void initSideDrawer()

@@ -22,6 +22,14 @@ namespace MaterialWinformsExample
 
             // Add dummy data to the listview
             seedListView();
+
+            materialActionBar1.onSearched += materialActionBar1_onSearched;
+        }
+
+        void materialActionBar1_onSearched(string pText)
+        {
+            materialTabControl1.TabPages.Add(new MaterialTabPage("Suchergebnisse"));
+            materialTabControl1.SelectedIndex = materialTabControl1.TabCount-1;
         }
 
         private void seedListView()

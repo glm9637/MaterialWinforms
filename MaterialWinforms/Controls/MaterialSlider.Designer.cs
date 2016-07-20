@@ -1,6 +1,6 @@
 ﻿namespace MaterialWinforms.Controls
 {
-    partial class MaterialBreadCrumbToolbar
+    partial class MaterialSlider
     {
         /// <summary> 
         /// Erforderliche Designervariable.

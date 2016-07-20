@@ -104,7 +104,7 @@ namespace MaterialWinforms
             float dGreen = 1f * (bc.G - fc.G) / depth;
             float dBlue = 1f * (bc.B - fc.B) / depth;
             for (int d = 1; d <= depth; d++)
-                cv.Add(Color.FromArgb(80, (int)(fc.R + dRed * d),
+                cv.Add(Color.FromArgb(60, (int)(fc.R + dRed * d),
                   (int)(fc.G + dGreen * d), (int)(fc.B + dBlue * d)));
             return cv;
         }

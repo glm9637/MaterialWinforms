@@ -109,7 +109,7 @@ namespace MaterialWinforms.Controls
                 if (typeof(IShadowedMaterialControl).IsAssignableFrom(objChild.GetType()))
                 {
                     IShadowedMaterialControl objCurrent = (IShadowedMaterialControl)objChild;
-                    DrawHelper.drawShadow(e.Graphics, objCurrent.ShadowBorder, objCurrent.Elevation, BackColor);
+                    DrawHelper.drawShadow(e.Graphics, objCurrent.ShadowBorder, objCurrent.Elevation, SkinManager.GetApplicationBackgroundColor());
 
                 }
             }

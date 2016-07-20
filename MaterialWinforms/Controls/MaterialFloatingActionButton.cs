@@ -5,6 +5,7 @@ using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialWinforms.Animations;
 using System;
+
 namespace MaterialWinforms.Controls
 {
 
@@ -192,6 +193,7 @@ namespace MaterialWinforms.Controls
                 Invalidate();
             };
         }
+
     }
 }
 

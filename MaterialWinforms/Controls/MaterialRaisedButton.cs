@@ -7,7 +7,7 @@ using MaterialWinforms.Animations;
 
 namespace MaterialWinforms.Controls
 {
-    public class MaterialRaisedButton : Button, IMaterialControl
+    public class MaterialRaisedButton : Button, IShadowedMaterialControl
     {
         [Browsable(false)]
         public int Depth { get; set; }
@@ -16,6 +16,9 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
+        public int Elevation { get; set; }
+        [Browsable(false)]
+        public GraphicsPath ShadowBorder { get; set; }
 
         private readonly AnimationManager animationManager;
 
@@ -28,6 +31,7 @@ namespace MaterialWinforms.Controls
                 Increment = 0.03,
                 AnimationType = AnimationType.EaseOut
             };
+            Elevation = 5;
             animationManager.OnAnimationProgress += sender => Invalidate();
         }
 
@@ -36,6 +40,32 @@ namespace MaterialWinforms.Controls
             base.OnMouseUp(mevent);
 
             animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+        }
+
+        protected override void OnLocationChanged(System.EventArgs e)
+        {
+            base.OnLocationChanged(e);
+            ShadowBorder = new GraphicsPath();
+            ShadowBorder.AddRectangle(new Rectangle(this.Location.X,this.Location.Y,Width,Height));
+        }
+
+        void MaterialCard_MouseLeave(object sender, System.EventArgs e)
+        {
+            Elevation /= 2;
+            Refresh();
+        }
+
+        void MaterialCard_MouseEnter(object sender, System.EventArgs e)
+        {
+            Elevation *= 2;
+            Refresh();
+        }
+
+        protected override void OnResize(System.EventArgs e)
+        {
+            base.OnResize(e);
+            ShadowBorder = new GraphicsPath();
+            ShadowBorder.AddRectangle(new Rectangle(this.Location.X, this.Location.Y, Width, Height));
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -48,8 +78,8 @@ namespace MaterialWinforms.Controls
             
             using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
                 ClientRectangle.Y,
-                ClientRectangle.Width - 1,
-                ClientRectangle.Height - 1,
+                ClientRectangle.Width ,
+                ClientRectangle.Height ,
                 1f))
             {
                 g.FillPath(Primary ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetRaisedButtonBackgroundBrush(), backgroundPath);

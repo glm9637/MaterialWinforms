@@ -76,6 +76,7 @@ namespace MaterialWinforms.Controls
         private int offset = 0;
         private int TabOffset = 0;
         private int oldXLocation = -1;
+        private int TabLength = 0;
 
         struct TabRectangle
         {
@@ -104,7 +105,7 @@ namespace MaterialWinforms.Controls
         {
             RightClickMenu = new MaterialContextMenuStrip();
             ToolStripMenuItem CloseAllTabs = new ToolStripMenuItem();
-           ToolStripMenuItem TabPositionZurruecksetzten = new ToolStripMenuItem();
+            ToolStripMenuItem TabPositionZurruecksetzten = new ToolStripMenuItem();
             ToolStripMenuItem CloseAllExeptCurrent = new ToolStripMenuItem();
 
             CloseAllTabs.Text = "Alle Tabs schließen";
@@ -124,17 +125,17 @@ namespace MaterialWinforms.Controls
         protected override void OnLayout(LayoutEventArgs levent)
         {
             base.OnLayout(levent);
-          //  SetupRightClickMenu();
+            //  SetupRightClickMenu();
         }
 
         void CloseAllExeptCurrent_Click(object sender, EventArgs e)
         {
-            for (int i = baseTabControl.TabPages.Count-1; i >= 0; i--)
+            for (int i = baseTabControl.TabPages.Count - 1; i >= 0; i--)
             {
                 if (i != baseTabControl.SelectedIndex)
                 {
                     if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
-                    baseTabControl.TabPages.RemoveAt(i);
+                        baseTabControl.TabPages.RemoveAt(i);
                 }
             }
             previousSelectedTabIndex = -1;
@@ -158,8 +159,8 @@ namespace MaterialWinforms.Controls
             offset = 0;
             for (int i = baseTabControl.TabPages.Count - 1; i >= 0; i--)
             {
-                    if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
-                        baseTabControl.TabPages.RemoveAt(i);
+                if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
+                    baseTabControl.TabPages.RemoveAt(i);
             }
             UpdateTabRects();
             Invalidate();
@@ -236,24 +237,24 @@ namespace MaterialWinforms.Controls
                     new Rectangle(tabRects[currentTabIndex].TabRect.X + offset, tabRects[currentTabIndex].TabRect.Y, tabRects[currentTabIndex].TabRect.Width, tabRects[currentTabIndex].TabRect.Height),
                     new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 if (((MaterialTabPage)BaseTabControl.TabPages[currentTabIndex]).Closable)
-                { 
-                g.DrawLine(
-                   closePen,
-                   tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.33) + offset,
-                   tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.33),
-                   tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.66) + offset,
-                   tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.66)
-                );
+                {
+                    g.DrawLine(
+                       closePen,
+                       tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.33) + offset,
+                       tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.33),
+                       tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.66) + offset,
+                       tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.66)
+                    );
 
-                g.DrawLine(
-                    closePen,
-                    tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.66) + offset,
-                    tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.33),
-                    tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.33) + offset,
-                    tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.66));
-                textBrush.Dispose();
+                    g.DrawLine(
+                        closePen,
+                        tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.66) + offset,
+                        tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.33),
+                        tabRects[currentTabIndex].XButtonRect.X + (int)(tabRects[currentTabIndex].XButtonRect.Width * 0.33) + offset,
+                        tabRects[currentTabIndex].XButtonRect.Y + (int)(tabRects[currentTabIndex].XButtonRect.Height * 0.66));
+                    textBrush.Dispose();
 
-            }
+                }
             }
 
             //Animate tab indicator
@@ -293,16 +294,41 @@ namespace MaterialWinforms.Controls
             base.OnMouseMove(e);
             if (mouseDown)
             {
+                bool move = false;
+
+
                 if (oldXLocation > 0)
                 {
-                    offset -= oldXLocation - e.X;
+
+                    int off = offset;
+                    off -= oldXLocation - e.X;
+                    if (tabRects[0].TabRect.X + off < 0)
+                    {
+                        if (tabRects[tabRects.Count - 1].TabRect.Right + off > Width)
+                        {
+                            move = true;
+                        }
+                    }else{
+                        if (tabRects[tabRects.Count - 1].TabRect.Right + off < Width)
+                        {
+                            move = true;
+                        }
+                    }
+                    
+                    if (move)
+                    {
+                        offset -= oldXLocation - e.X;
+                        oldXLocation = e.X;
+                        Refresh();
+                    }
                 }
                 else
                 {
-                    offset = 0;
+                    oldXLocation = e.X;
+                    Refresh();
                 }
-                oldXLocation = e.X;
-                Refresh();
+
+
                 return;
             }
             for (int i = 0; i < baseTabControl.TabCount; i++)
@@ -380,7 +406,7 @@ namespace MaterialWinforms.Controls
         private void UpdateTabRects()
         {
             tabRects = new List<TabRectangle>();
-
+            TabLength = 0;
             //If there isn't a base tab control, the rects shouldn't be calculated
             //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
             if (baseTabControl == null || baseTabControl.TabCount == 0) return;
@@ -390,10 +416,11 @@ namespace MaterialWinforms.Controls
             {
                 using (var g = Graphics.FromImage(b))
                 {
-                    int xButtonSize = ((MaterialTabPage) BaseTabControl.TabPages[0]).Closable? 18:0;
+                    int xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[0]).Closable ? 18 : 0;
                     TabRectangle CurrentTab = new TabRectangle();
                     CurrentTab.TabRect = new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
                     CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
+                    TabLength += CurrentTab.TabRect.Width;
                     tabRects.Add(CurrentTab);
                     for (int i = 1; i < baseTabControl.TabPages.Count; i++)
                     {
@@ -401,6 +428,7 @@ namespace MaterialWinforms.Controls
                         CurrentTab = new TabRectangle();
                         CurrentTab.TabRect = new Rectangle(tabRects[i - 1].TabRect.Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
                         CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
+                        TabLength += CurrentTab.TabRect.Width;
                         tabRects.Add(CurrentTab);
                     }
 

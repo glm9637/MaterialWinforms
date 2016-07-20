@@ -8,7 +8,7 @@ using System;
 
 namespace MaterialWinforms.Controls
 {
-    public partial class MaterialBreadCrumbToolbar : UserControl,IMaterialControl
+    public partial class MaterialBreadCrumbToolbar : Control, IMaterialControl
     {
 
         private List<BreadCrumbItem> _Teile;

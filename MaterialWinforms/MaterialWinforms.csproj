@@ -63,7 +63,7 @@
       <DependentUpon>MaterialActionBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MaterialBreadCrumbToolbar.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialBreadCrumbToolbar.Designer.cs">
       <DependentUpon>MaterialBreadCrumbToolbar.cs</DependentUpon>
@@ -91,6 +91,12 @@
     </Compile>
     <Compile Include="Controls\MaterialSearchButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialSlider.Designer.cs">
+      <DependentUpon>MaterialSlider.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MaterialToggle.cs">
       <SubType>Component</SubType>
