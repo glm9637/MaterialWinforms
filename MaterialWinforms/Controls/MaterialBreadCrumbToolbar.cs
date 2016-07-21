@@ -3,15 +3,17 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System;
+
+using MaterialWinforms.Animations;
 
 namespace MaterialWinforms.Controls
 {
     public partial class MaterialBreadCrumbToolbar : Control, IMaterialControl
     {
 
-        private List<BreadCrumbItem> _Teile;
+        private ObservableCollection<BreadCrumbItem> _Teile;
         public int Depth { get; set; }
         [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
@@ -19,7 +21,7 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
 
         [Category("Appearance")]
-        public List<BreadCrumbItem> Items
+        public ObservableCollection<BreadCrumbItem> Items
         {
             get { return _Teile; }
             set
@@ -27,7 +29,21 @@ namespace MaterialWinforms.Controls
                 _Teile = value;
             }
         }
-        
+
+        public delegate void BreadCrumbItemClicked(String pTitel);
+        public event BreadCrumbItemClicked onBreadCrumbItemClicked;
+
+        private int ItemLengt;
+        private String _Trennzeichen = "  >";
+        private int HoveredItem = -1;
+        private int SelectedItemIndex = -1;
+        private Point animationSource;
+        private bool mouseDown = false;
+        private int offset = 0;
+        private int TabOffset = 0;
+        private int oldXLocation = -1;
+        private int TabLength = 0;
+        private readonly AnimationManager animationManager;
 
         public MaterialBreadCrumbToolbar()
         {
@@ -35,9 +51,16 @@ namespace MaterialWinforms.Controls
             Height = 1;
             BackColor = SkinManager.GetCardsColor();
             Padding = new Padding(5, 5, 5, 5);
-            _Teile = new List<BreadCrumbItem>();
-            
+            _Teile = new ObservableCollection<BreadCrumbItem>();
+            _Teile.CollectionChanged += RecalculateTabRects;
             ParentChanged += new System.EventHandler(Redraw);
+            DoubleBuffered = true;
+            animationManager = new AnimationManager
+            {
+                AnimationType = AnimationType.EaseOut,
+                Increment = 0.03
+            };
+            animationManager.OnAnimationProgress += sender => Invalidate();
         }
 
         private void Redraw(object sender, System.EventArgs e)
@@ -48,53 +71,220 @@ namespace MaterialWinforms.Controls
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
                 BackColor = SkinManager.GetCardsColor();
             }
-           
+
+        }
+
+        private void RecalculateTabRects(object sender, EventArgs e)
+        {
+            UpdateTabRects();
+            Invalidate();
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (mouseDown)
+            {
+                bool move = false;
+
+
+                if (oldXLocation > 0)
+                {
+
+                    int off = offset;
+                    off -= oldXLocation - e.X;
+                    if (_Teile[0].ItemRect.X + off < 0)
+                    {
+                        if (_Teile[_Teile.Count - 1].ItemRect.Right + off > Width)
+                        {
+                            move = true;
+                        }
+                    }
+                    else
+                    {
+                        if (_Teile[_Teile.Count - 1].ItemRect.Right + off < Width)
+                        {
+                            move = true;
+                        }
+                    }
+
+                    if (move)
+                    {
+                        offset -= oldXLocation - e.X;
+                        oldXLocation = e.X;
+                        Invalidate();
+                    }
+                }
+                else
+                {
+                    oldXLocation = e.X;
+                    Invalidate();
+                }
+
+
+                return;
+            }
+
+            foreach (BreadCrumbItem objItem in _Teile)
+            {
+                if (objItem.ItemRect.Contains(e.Location))
+                {
+                    int newItem = _Teile.IndexOf(objItem);
+                    if (HoveredItem != newItem)
+                    {
+                        HoveredItem = newItem;
+                        Invalidate();
+                    }
+                    return;
+                }
+            }
+            if (HoveredItem != -1)
+            {
+                HoveredItem = -1;
+                Invalidate();
+            }
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                mouseDown = true;
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (HoveredItem != -1)
+            {
+                HoveredItem = -1;
+                Invalidate();
+            }
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                mouseDown = false;
+                oldXLocation = -1;
+                bool ignoreClick = false;
+                if (Math.Abs(offset) > 5)
+                {
+                    TabOffset += offset;
+                    ignoreClick = true;
+                }
+
+                offset = 0;
+                if (!ignoreClick)
+                {
+                    SelectedItemIndex = HoveredItem;
+                    animationSource = e.Location;
+                    UpdateTabRects();
+                    animationManager.SetProgress(0);
+                    animationManager.StartNewAnimation(AnimationDirection.In);
+                    Invalidate();
+                    if (onBreadCrumbItemClicked != null)
+                    {
+                        onBreadCrumbItemClicked(_Teile[SelectedItemIndex].Text);
+                    }
+                }
+                UpdateTabRects();
+                Invalidate();
+            }
+
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            int ShadowDepth = 4;
             int iCropping = ClientRectangle.Width / 3;
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-            
-        
 
             g.Clear(Parent.BackColor);
-            for (int i = 0; i < ShadowDepth; i++)
-            {
-                using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X + i,
-                                    ClientRectangle.Y + i,
-                                    ClientRectangle.Width  - i, ClientRectangle.Height  - i, 10))
-                {
-                    g.FillPath(new SolidBrush(Color.FromArgb((50 / ShadowDepth - 1) * i, Color.Black)), backgroundPath);
-                }
-            }
 
             this.Region = new Region(DrawHelper.CreateRoundRect(ClientRectangle.X + 3,
                                     ClientRectangle.Y + 3,
                                     ClientRectangle.Width - 3, ClientRectangle.Height - 3, 10));
 
-            using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X + (ShadowDepth/2),
-                    ClientRectangle.Y + (ShadowDepth / 2),
-                    ClientRectangle.Width  - ShadowDepth, ClientRectangle.Height   - ShadowDepth, 3))
+            using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X,
+                    ClientRectangle.Y,
+                    ClientRectangle.Width, ClientRectangle.Height, 3))
             {
                 g.FillPath(SkinManager.getCardsBrush(), backgroundPath);
-               
+
             }
             if (_Teile.Count > 0)
             {
-                Point pPosition = new Point(10, Convert.ToInt32((Height- g.MeasureString("T", SkinManager.ROBOTO_MEDIUM_10).Height)/2));
+                if (HoveredItem >= 0)
+                {
+                    g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(),
+                        new Rectangle(_Teile[HoveredItem].ItemRect.X + offset, _Teile[HoveredItem].ItemRect.Y, _Teile[HoveredItem].ItemRect.Width, _Teile[HoveredItem].ItemRect.Height));
+                }
+                //Click feedback
+                if (animationManager.IsAnimating())
+                {
+                    double animationProgress = animationManager.GetProgress();
+
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int)(51 - (animationProgress * 50)), Color.White));
+                    var rippleSize = (int)(animationProgress * _Teile[SelectedItemIndex].ItemRect.Width * 1.75);
+
+                    g.SetClip(_Teile[SelectedItemIndex].ItemRect);
+                    g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                    g.ResetClip();
+                    rippleBrush.Dispose();
+                }
                 for (int i = 0; i < _Teile.Count; i++)
                 {
-                    if(!string.IsNullOrWhiteSpace(_Teile[i].Text)) { 
                     g.DrawString(
-                        _Teile[i].Text + "  >  ",
+                        _Teile[i].Text + (i == _Teile.Count - 1 ? "" : _Trennzeichen),
                         SkinManager.ROBOTO_MEDIUM_10,
-                        SkinManager.GetPrimaryTextBrush(), pPosition);
-                    pPosition.X += Convert.ToInt32(g.MeasureString(_Teile[i].Text+"  >  ", SkinManager.ROBOTO_MEDIUM_10).Width);
+                        SkinManager.GetPrimaryTextBrush(),
+                        new Rectangle(_Teile[i].ItemRect.X + offset, _Teile[i].ItemRect.Y, _Teile[i].ItemRect.Width, _Teile[i].ItemRect.Height),
+                        new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 }
+            }
+
+
+
+        }
+
+        private void UpdateTabRects()
+        {
+            ItemLengt = 0;
+            if (_Teile.Count == 0) return;
+
+            using (var b = new Bitmap(1, 1))
+            {
+                using (var g = Graphics.FromImage(b))
+                {
+
+                    _Teile[0].ItemRect = new Rectangle(10, Convert.ToInt32((Height - g.MeasureString("T", SkinManager.ROBOTO_MEDIUM_10).Height) / 2), (int)g.MeasureString(_Teile[0].Text + (0 == _Teile.Count - 1 ? "" : _Trennzeichen) + 5, SkinManager.ROBOTO_MEDIUM_10).Width + 2, Height);
+                    ItemLengt += _Teile[0].ItemRect.Width;
+                    for (int i = 1; i < _Teile.Count; i++)
+                    {
+
+                        _Teile[i].ItemRect = new Rectangle(_Teile[i - 1].ItemRect.Right, _Teile[i - 1].ItemRect.Y, (int)g.MeasureString(_Teile[i].Text + (i == _Teile.Count - 1 ? "" : _Trennzeichen) + 5, SkinManager.ROBOTO_MEDIUM_10).Width + 2, Height);
+                        ItemLengt += _Teile[i].ItemRect.Width;
+                    }
+
+                    if (TabOffset != 0)
+                    {
+                        Rectangle CurrentTab = _Teile[0].ItemRect;
+                        CurrentTab = new Rectangle(CurrentTab.X + TabOffset, CurrentTab.Y, CurrentTab.Width, CurrentTab.Height);
+
+                        _Teile[0].ItemRect = CurrentTab;
+                        for (int i = 1; i < _Teile.Count; i++)
+                        {
+                            CurrentTab = _Teile[i].ItemRect;
+                            CurrentTab = new Rectangle(CurrentTab.X + TabOffset, CurrentTab.Y, CurrentTab.Width, CurrentTab.Height);
+                            _Teile[i].ItemRect = CurrentTab;
+                        }
+                    }
                 }
             }
         }
@@ -104,15 +294,17 @@ namespace MaterialWinforms.Controls
     public class BreadCrumbItem
     {
         public string Text;
+        public Rectangle ItemRect;
         public BreadCrumbItem()
         {
-
+            ItemRect = new Rectangle();
         }
         public BreadCrumbItem(string pText)
         {
             Text = pText;
+            ItemRect = new Rectangle();
         }
 
-        
+
     }
 }

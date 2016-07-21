@@ -37,11 +37,11 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath3 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath4 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -66,6 +66,19 @@ namespace MaterialWinformsExample
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.materialTabControl1 = new MaterialWinforms.Controls.MaterialTabControl();
             this.materialTabPage1 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialScrollBar1 = new MaterialWinforms.Controls.MaterialScrollBar();
+            this.materialSingleLineTextField1 = new MaterialWinforms.Controls.MaterialSingleLineTextField();
+            this.materialComboBox1 = new MaterialWinforms.Controls.MaterialComboBox();
+            this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wert3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.materialProgressBar1 = new MaterialWinforms.Controls.MaterialProgressBar();
+            this.materialLoadingFloatingActionButton1 = new MaterialWinforms.Controls.MaterialLoadingFloatingActionButton();
+            this.materialLabel1 = new MaterialWinforms.Controls.MaterialLabel();
+            this.materialFolderInput1 = new MaterialWinforms.Controls.MaterialFolderInput();
+            this.materialFileInput1 = new MaterialWinforms.Controls.MaterialFileInput();
             this.materialCard2 = new MaterialWinforms.Controls.MaterialCard();
             this.materialToggle3 = new MaterialWinforms.Controls.MaterialToggle();
             this.materialToggle4 = new MaterialWinforms.Controls.MaterialToggle();
@@ -90,15 +103,11 @@ namespace MaterialWinformsExample
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
-            this.materialFileInput1 = new MaterialWinforms.Controls.MaterialFileInput();
-            this.materialFolderInput1 = new MaterialWinforms.Controls.MaterialFolderInput();
-            this.materialLabel1 = new MaterialWinforms.Controls.MaterialLabel();
-            this.materialListView1 = new MaterialWinforms.Controls.MaterialListView();
-            this.materialLoadingFloatingActionButton1 = new MaterialWinforms.Controls.MaterialLoadingFloatingActionButton();
-            this.materialProgressBar1 = new MaterialWinforms.Controls.MaterialProgressBar();
+            this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
+            this.mcm_ComboBox1.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.materialCard1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
@@ -326,8 +335,8 @@ namespace MaterialWinformsExample
             this.materialSideDrawer3.Dock = System.Windows.Forms.DockStyle.Left;
             this.materialSideDrawer3.Elevation = 10;
             this.materialSideDrawer3.HideSideDrawer = false;
-            this.materialSideDrawer3.Location = new System.Drawing.Point(0, 104);
-            this.materialSideDrawer3.MaximumSize = new System.Drawing.Size(200, 653);
+            this.materialSideDrawer3.Location = new System.Drawing.Point(0, 99);
+            this.materialSideDrawer3.MaximumSize = new System.Drawing.Size(210, 651);
             this.materialSideDrawer3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSideDrawer3.Name = "materialSideDrawer3";
             graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
@@ -335,7 +344,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer3.SideDrawer = this.SideDrawerList;
             this.materialSideDrawer3.SideDrawerFixiert = true;
             this.materialSideDrawer3.SideDrawerUnterActionBar = false;
-            this.materialSideDrawer3.Size = new System.Drawing.Size(200, 589);
+            this.materialSideDrawer3.Size = new System.Drawing.Size(210, 594);
             this.materialSideDrawer3.TabIndex = 29;
             this.materialSideDrawer3.onSideDrawerItemClicked += new MaterialWinforms.Controls.MaterialSideDrawer.SideDrawerEventHandler(this.materialSideDrawer3_onSideDrawerItemClicked);
             // 
@@ -364,17 +373,20 @@ namespace MaterialWinformsExample
             this.materialTabControl1.Controls.Add(this.materialTabPage1);
             this.materialTabControl1.Controls.Add(this.materialTabPage2);
             this.materialTabControl1.Depth = 0;
-            this.materialTabControl1.Location = new System.Drawing.Point(210, 117);
+            this.materialTabControl1.Location = new System.Drawing.Point(222, 117);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
-            this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(821, 508);
+            this.materialTabControl1.SelectedIndex = 1;
+            this.materialTabControl1.Size = new System.Drawing.Size(809, 508);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
             // 
             // materialTabPage1
             // 
+            this.materialTabPage1.Controls.Add(this.materialScrollBar1);
+            this.materialTabPage1.Controls.Add(this.materialSingleLineTextField1);
+            this.materialTabPage1.Controls.Add(this.materialComboBox1);
             this.materialTabPage1.Controls.Add(this.materialProgressBar1);
             this.materialTabPage1.Controls.Add(this.materialLoadingFloatingActionButton1);
             this.materialTabPage1.Controls.Add(this.materialLabel1);
@@ -390,6 +402,167 @@ namespace MaterialWinformsExample
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
             // 
+            // materialScrollBar1
+            // 
+            this.materialScrollBar1.Depth = 0;
+            this.materialScrollBar1.Location = new System.Drawing.Point(244, 218);
+            this.materialScrollBar1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialScrollBar1.Name = "materialScrollBar1";
+            this.materialScrollBar1.Orientation = MaterialWinforms.Controls.MaterialScrollOrientation.Vertical;
+            this.materialScrollBar1.Size = new System.Drawing.Size(10, 200);
+            this.materialScrollBar1.TabIndex = 45;
+            this.materialScrollBar1.Text = "materialScrollBar1";
+            // 
+            // materialSingleLineTextField1
+            // 
+            this.materialSingleLineTextField1.Depth = 0;
+            this.materialSingleLineTextField1.Hint = "materialSingleLineTextField1";
+            this.materialSingleLineTextField1.Location = new System.Drawing.Point(320, 286);
+            this.materialSingleLineTextField1.MaxLength = 32767;
+            this.materialSingleLineTextField1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
+            this.materialSingleLineTextField1.PasswordChar = '\0';
+            this.materialSingleLineTextField1.ReadOnly = false;
+            this.materialSingleLineTextField1.SelectedText = "";
+            this.materialSingleLineTextField1.SelectionLength = 0;
+            this.materialSingleLineTextField1.SelectionStart = 0;
+            this.materialSingleLineTextField1.Size = new System.Drawing.Size(213, 38);
+            this.materialSingleLineTextField1.TabIndex = 44;
+            this.materialSingleLineTextField1.TabStop = false;
+            this.materialSingleLineTextField1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.materialSingleLineTextField1.UseSystemPasswordChar = false;
+            // 
+            // materialComboBox1
+            // 
+            this.materialComboBox1.Depth = 0;
+            this.materialComboBox1.DropDownItems = this.mcm_ComboBox1;
+            this.materialComboBox1.FocusedColor = "#508ef5";
+            this.materialComboBox1.FontColor = "#999999";
+            this.materialComboBox1.Hint = "materialComboBox1";
+            this.materialComboBox1.IsEnabled = true;
+            this.materialComboBox1.Location = new System.Drawing.Point(320, 218);
+            this.materialComboBox1.MaxLength = 32767;
+            this.materialComboBox1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialComboBox1.Name = "materialComboBox1";
+            this.materialComboBox1.ReadOnly = false;
+            this.materialComboBox1.Size = new System.Drawing.Size(213, 38);
+            this.materialComboBox1.TabIndex = 43;
+            this.materialComboBox1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.materialComboBox1.UseSystemPasswordChar = false;
+            // 
+            // mcm_ComboBox1
+            // 
+            this.mcm_ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.mcm_ComboBox1.Depth = 0;
+            this.mcm_ComboBox1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testToolStripMenuItem,
+            this.test2ToolStripMenuItem,
+            this.wert3ToolStripMenuItem,
+            this.toolStripMenuItem4});
+            this.mcm_ComboBox1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.mcm_ComboBox1.Name = "mcm_ComboBox1";
+            this.mcm_ComboBox1.Size = new System.Drawing.Size(106, 92);
+            // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.testToolStripMenuItem.Text = "Test";
+            // 
+            // test2ToolStripMenuItem
+            // 
+            this.test2ToolStripMenuItem.Name = "test2ToolStripMenuItem";
+            this.test2ToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.test2ToolStripMenuItem.Text = "Test2";
+            // 
+            // wert3ToolStripMenuItem
+            // 
+            this.wert3ToolStripMenuItem.Name = "wert3ToolStripMenuItem";
+            this.wert3ToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.wert3ToolStripMenuItem.Text = "Wert3";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(105, 22);
+            this.toolStripMenuItem4.Text = "42";
+            // 
+            // materialProgressBar1
+            // 
+            this.materialProgressBar1.Depth = 0;
+            this.materialProgressBar1.Location = new System.Drawing.Point(26, 443);
+            this.materialProgressBar1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialProgressBar1.Name = "materialProgressBar1";
+            this.materialProgressBar1.Size = new System.Drawing.Size(769, 5);
+            this.materialProgressBar1.TabIndex = 42;
+            this.materialProgressBar1.Value = 50;
+            // 
+            // materialLoadingFloatingActionButton1
+            // 
+            this.materialLoadingFloatingActionButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.materialLoadingFloatingActionButton1.Depth = 0;
+            this.materialLoadingFloatingActionButton1.Elevation = 5;
+            this.materialLoadingFloatingActionButton1.Icon = null;
+            this.materialLoadingFloatingActionButton1.Location = new System.Drawing.Point(30, 389);
+            this.materialLoadingFloatingActionButton1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialLoadingFloatingActionButton1.Name = "materialLoadingFloatingActionButton1";
+            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialLoadingFloatingActionButton1.ShadowBorder = graphicsPath5;
+            this.materialLoadingFloatingActionButton1.Size = new System.Drawing.Size(48, 48);
+            this.materialLoadingFloatingActionButton1.TabIndex = 41;
+            this.materialLoadingFloatingActionButton1.Text = "materialLoadingFloatingActionButton1";
+            this.materialLoadingFloatingActionButton1.UseVisualStyleBackColor = false;
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialLabel1.Location = new System.Drawing.Point(26, 347);
+            this.materialLabel1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(108, 19);
+            this.materialLabel1.TabIndex = 40;
+            this.materialLabel1.Text = "materialLabel1";
+            // 
+            // materialFolderInput1
+            // 
+            this.materialFolderInput1.Depth = 0;
+            this.materialFolderInput1.Filter = "All Files (*.*)|*.*";
+            this.materialFolderInput1.FocusedColor = "#508ef5";
+            this.materialFolderInput1.FontColor = "#999999";
+            this.materialFolderInput1.Hint = "materialFolderInput1";
+            this.materialFolderInput1.IsEnabled = true;
+            this.materialFolderInput1.Location = new System.Drawing.Point(26, 286);
+            this.materialFolderInput1.MaxLength = 32767;
+            this.materialFolderInput1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialFolderInput1.Name = "materialFolderInput1";
+            this.materialFolderInput1.ReadOnly = false;
+            this.materialFolderInput1.Size = new System.Drawing.Size(172, 38);
+            this.materialFolderInput1.TabIndex = 39;
+            this.materialFolderInput1.Text = "materialFolderInput1";
+            this.materialFolderInput1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.materialFolderInput1.UseSystemPasswordChar = false;
+            // 
+            // materialFileInput1
+            // 
+            this.materialFileInput1.Depth = 0;
+            this.materialFileInput1.Filter = "All Files (*.*)|*.*";
+            this.materialFileInput1.FocusedColor = "#508ef5";
+            this.materialFileInput1.FontColor = "#999999";
+            this.materialFileInput1.Hint = "materialFileInput1";
+            this.materialFileInput1.IsEnabled = true;
+            this.materialFileInput1.Location = new System.Drawing.Point(26, 218);
+            this.materialFileInput1.MaxLength = 32767;
+            this.materialFileInput1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialFileInput1.Name = "materialFileInput1";
+            this.materialFileInput1.ReadOnly = false;
+            this.materialFileInput1.Size = new System.Drawing.Size(172, 38);
+            this.materialFileInput1.TabIndex = 38;
+            this.materialFileInput1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
+            this.materialFileInput1.UseSystemPasswordChar = false;
+            // 
             // materialCard2
             // 
             this.materialCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
@@ -402,7 +575,7 @@ namespace MaterialWinformsExample
             this.materialCard2.Controls.Add(this.materialCheckBox2);
             this.materialCard2.Controls.Add(this.materialCheckBox1);
             this.materialCard2.Depth = 0;
-            this.materialCard2.Elevation = 5;
+            this.materialCard2.Elevation = 10;
             this.materialCard2.Location = new System.Drawing.Point(361, 23);
             this.materialCard2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
@@ -551,7 +724,7 @@ namespace MaterialWinformsExample
             this.materialCard1.Controls.Add(this.materialSlider2);
             this.materialCard1.Controls.Add(this.materialSlider1);
             this.materialCard1.Depth = 0;
-            this.materialCard1.Elevation = 5;
+            this.materialCard1.Elevation = 10;
             this.materialCard1.Location = new System.Drawing.Point(12, 23);
             this.materialCard1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
@@ -591,12 +764,12 @@ namespace MaterialWinformsExample
             // 
             // materialTabPage2
             // 
-            this.materialTabPage2.Controls.Add(this.materialListView1);
+            this.materialTabPage2.Controls.Add(this.materialDatePicker1);
             this.materialTabPage2.Depth = 0;
             this.materialTabPage2.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage2.Name = "materialTabPage2";
-            this.materialTabPage2.Size = new System.Drawing.Size(813, 482);
+            this.materialTabPage2.Size = new System.Drawing.Size(801, 482);
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
             // 
@@ -699,7 +872,7 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
             graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
             this.materialTabSelectorClosable1.ShadowBorder = graphicsPath9;
-            this.materialTabSelectorClosable1.Size = new System.Drawing.Size(1043, 40);
+            this.materialTabSelectorClosable1.Size = new System.Drawing.Size(1043, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
             this.materialTabSelectorClosable1.Text = "materialTabSelectorClosable1";
             // 
@@ -710,103 +883,19 @@ namespace MaterialWinformsExample
             this.materialDivider1.Location = new System.Drawing.Point(210, 635);
             this.materialDivider1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialDivider1.Name = "materialDivider1";
-            this.materialDivider1.Size = new System.Drawing.Size(697, 2);
+            this.materialDivider1.Size = new System.Drawing.Size(813, 2);
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // materialFileInput1
+            // materialDatePicker1
             // 
-            this.materialFileInput1.Depth = 0;
-            this.materialFileInput1.Filter = "All Files (*.*)|*.*";
-            this.materialFileInput1.FocusedColor = "#508ef5";
-            this.materialFileInput1.FontColor = "#999999";
-            this.materialFileInput1.Hint = "";
-            this.materialFileInput1.IsEnabled = true;
-            this.materialFileInput1.Location = new System.Drawing.Point(26, 218);
-            this.materialFileInput1.MaxLength = 32767;
-            this.materialFileInput1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialFileInput1.Name = "materialFileInput1";
-            this.materialFileInput1.ReadOnly = false;
-            this.materialFileInput1.Size = new System.Drawing.Size(172, 38);
-            this.materialFileInput1.TabIndex = 38;
-            this.materialFileInput1.Text = "materialFileInput1";
-            this.materialFileInput1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialFileInput1.UseSystemPasswordChar = false;
-            // 
-            // materialFolderInput1
-            // 
-            this.materialFolderInput1.Depth = 0;
-            this.materialFolderInput1.Filter = "All Files (*.*)|*.*";
-            this.materialFolderInput1.FocusedColor = "#508ef5";
-            this.materialFolderInput1.FontColor = "#999999";
-            this.materialFolderInput1.Hint = "";
-            this.materialFolderInput1.IsEnabled = true;
-            this.materialFolderInput1.Location = new System.Drawing.Point(26, 286);
-            this.materialFolderInput1.MaxLength = 32767;
-            this.materialFolderInput1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialFolderInput1.Name = "materialFolderInput1";
-            this.materialFolderInput1.ReadOnly = false;
-            this.materialFolderInput1.Size = new System.Drawing.Size(172, 38);
-            this.materialFolderInput1.TabIndex = 39;
-            this.materialFolderInput1.Text = "materialFolderInput1";
-            this.materialFolderInput1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialFolderInput1.UseSystemPasswordChar = false;
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialLabel1.Location = new System.Drawing.Point(26, 347);
-            this.materialLabel1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(108, 19);
-            this.materialLabel1.TabIndex = 40;
-            this.materialLabel1.Text = "materialLabel1";
-            // 
-            // materialListView1
-            // 
-            this.materialListView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.materialListView1.Depth = 0;
-            this.materialListView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialListView1.Font = new System.Drawing.Font("Roboto", 24F);
-            this.materialListView1.FullRowSelect = true;
-            this.materialListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.materialListView1.Location = new System.Drawing.Point(0, 0);
-            this.materialListView1.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialListView1.MouseState = MaterialWinforms.MouseState.OUT;
-            this.materialListView1.Name = "materialListView1";
-            this.materialListView1.OwnerDraw = true;
-            this.materialListView1.Size = new System.Drawing.Size(813, 482);
-            this.materialListView1.TabIndex = 0;
-            this.materialListView1.UseCompatibleStateImageBehavior = false;
-            this.materialListView1.View = System.Windows.Forms.View.Details;
-            // 
-            // materialLoadingFloatingActionButton1
-            // 
-            this.materialLoadingFloatingActionButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.materialLoadingFloatingActionButton1.Depth = 0;
-            this.materialLoadingFloatingActionButton1.Elevation = 5;
-            this.materialLoadingFloatingActionButton1.Icon = null;
-            this.materialLoadingFloatingActionButton1.Location = new System.Drawing.Point(552, 207);
-            this.materialLoadingFloatingActionButton1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialLoadingFloatingActionButton1.Name = "materialLoadingFloatingActionButton1";
-            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialLoadingFloatingActionButton1.ShadowBorder = graphicsPath5;
-            this.materialLoadingFloatingActionButton1.Size = new System.Drawing.Size(48, 48);
-            this.materialLoadingFloatingActionButton1.TabIndex = 41;
-            this.materialLoadingFloatingActionButton1.Text = "materialLoadingFloatingActionButton1";
-            this.materialLoadingFloatingActionButton1.UseVisualStyleBackColor = false;
-            // 
-            // materialProgressBar1
-            // 
-            this.materialProgressBar1.Depth = 0;
-            this.materialProgressBar1.Location = new System.Drawing.Point(226, 317);
-            this.materialProgressBar1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialProgressBar1.Name = "materialProgressBar1";
-            this.materialProgressBar1.Size = new System.Drawing.Size(395, 5);
-            this.materialProgressBar1.TabIndex = 42;
+            this.materialDatePicker1.Depth = 0;
+            this.materialDatePicker1.Location = new System.Drawing.Point(316, 33);
+            this.materialDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialDatePicker1.Name = "materialDatePicker1";
+            this.materialDatePicker1.Size = new System.Drawing.Size(200, 400);
+            this.materialDatePicker1.TabIndex = 1;
+            this.materialDatePicker1.Text = "materialDatePicker1";
             // 
             // MainForm
             // 
@@ -833,6 +922,7 @@ namespace MaterialWinformsExample
             this.materialTabControl1.ResumeLayout(false);
             this.materialTabPage1.ResumeLayout(false);
             this.materialTabPage1.PerformLayout();
+            this.mcm_ComboBox1.ResumeLayout(false);
             this.materialCard2.ResumeLayout(false);
             this.materialCard2.PerformLayout();
             this.materialCard1.ResumeLayout(false);
@@ -898,6 +988,14 @@ namespace MaterialWinformsExample
         private MaterialLabel materialLabel1;
         private MaterialFolderInput materialFolderInput1;
         private MaterialFileInput materialFileInput1;
-        private MaterialListView materialListView1;
+        private MaterialComboBox materialComboBox1;
+        private MaterialContextMenuStrip mcm_ComboBox1;
+        private ToolStripMenuItem testToolStripMenuItem;
+        private ToolStripMenuItem test2ToolStripMenuItem;
+        private ToolStripMenuItem wert3ToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem4;
+        private MaterialSingleLineTextField materialSingleLineTextField1;
+        private MaterialScrollBar materialScrollBar1;
+        private MaterialDatePicker materialDatePicker1;
     }
 }

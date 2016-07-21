@@ -72,7 +72,7 @@ namespace MaterialWinforms.Controls
         }
 
 
-        public const int ACTION_BAR_HEIGHT = 40;
+        public const int ACTION_BAR_HEIGHT = 42;
         public MaterialActionBar()
         {
             Elevation = 10;

@@ -50,12 +50,12 @@ namespace MaterialWinforms.Controls
         private void Redraw(object sender, System.EventArgs e)
         {
             ShadowBorder = new GraphicsPath();
-            ShadowBorder = DrawHelper.CreateRoundRect(Location.X - Elevation / 2,
-                                    Location.Y - Elevation / 2,
-                                    ClientRectangle.Width + Elevation / 2, ClientRectangle.Height + Elevation / 2, 10);
-            this.Region = new Region(DrawHelper.CreateRoundRect(ClientRectangle.X + 3,
-                                    ClientRectangle.Y + 3,
-                                    ClientRectangle.Width - 3, ClientRectangle.Height - 3, 10));
+            ShadowBorder = DrawHelper.CreateRoundRect(Location.X,
+                                    Location.Y,
+                                    ClientRectangle.Width, ClientRectangle.Height, 10);
+            this.Region = new Region(DrawHelper.CreateRoundRect(ClientRectangle.X,
+                                    ClientRectangle.Y ,
+                                    ClientRectangle.Width, ClientRectangle.Height, 10));
             Invalidate();
             if (Parent != null)
             {

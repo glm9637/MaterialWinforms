@@ -23,6 +23,8 @@ namespace MaterialWinformsExample
             // Add dummy data to the listview
             seedListView();
 
+            materialLoadingFloatingActionButton1.startProgressAnimation();
+
             materialActionBar1.onSearched += materialActionBar1_onSearched;
         }
 
@@ -48,7 +50,6 @@ namespace MaterialWinformsExample
             foreach (string[] version in data)
             {
                 var item = new ListViewItem(version);
-                materialListView1.Items.Add(item);
             }
         }
 

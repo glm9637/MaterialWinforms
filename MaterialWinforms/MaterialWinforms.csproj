@@ -74,6 +74,12 @@
     <Compile Include="Controls\MaterialComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialDatePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialDatePicker.Designer.cs">
+      <DependentUpon>MaterialDatePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MaterialLoadingFloatingActionButton.cs">
       <SubType>Component</SubType>
     </Compile>
