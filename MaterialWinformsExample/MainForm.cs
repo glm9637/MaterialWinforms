@@ -45,7 +45,11 @@ namespace MaterialWinformsExample
 	        };
 
             //Add
-           
+            foreach (string[] version in data)
+            {
+                var item = new ListViewItem(version);
+                materialListView1.Items.Add(item);
+            }
         }
 
         private void materialButton1_Click(object sender, EventArgs e)

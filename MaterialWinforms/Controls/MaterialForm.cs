@@ -702,7 +702,7 @@ namespace MaterialWinforms.Controls
             }
 
             //Form title
-
+            if(_ActionBar== null)
             g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING + (true ? drawerButtonBounds.Width + drawerButtonBounds.X : 0), 0, Width, STATUS_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
 
             if (_SideDrawer != null)

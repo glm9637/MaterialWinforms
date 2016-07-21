@@ -86,9 +86,9 @@ namespace MaterialWinforms.Controls
             objAnimationManager.OnAnimationProgress += sender => Invalidate();
             objAnimationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
             InitializeComponent();
-             SearchTextBox = new SearchTextField();
-             SearchTextBox.onEnterDown += SearchTextBox_onEnterDown;
-             DoubleBuffered = true;
+            SearchTextBox = new SearchTextField();
+            SearchTextBox.onEnterDown += SearchTextBox_onEnterDown;
+            DoubleBuffered = true;
         }
 
         void SearchTextBox_onEnterDown()
@@ -116,6 +116,7 @@ namespace MaterialWinforms.Controls
         {
             base.OnParentChanged(e);
             Dock = DockStyle.Top;
+            Refresh();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -179,16 +180,18 @@ namespace MaterialWinforms.Controls
                 if (searchOpen)
                 {
                     objAnimationManager.StartNewAnimation(AnimationDirection.Out);
+                    SearchTextBox.Text = "";
                     searchOpen = false;
                     Controls.Remove(SearchTextBox);
                 }
-                else { 
-                 ActionBarMenu.Show(PointToScreen(e.Location));
+                else
+                {
+                    ActionBarMenu.Show(PointToScreen(e.Location));
                 }
-               
+
                 Invalidate();
             }
-            else if(SearchButtonBounds.Contains(e.Location) && IntegratedSearchBar)
+            else if (SearchButtonBounds.Contains(e.Location) && IntegratedSearchBar)
             {
                 buttonState = ButtonState.MenuDown;
                 if (searchOpen)
@@ -232,6 +235,7 @@ namespace MaterialWinforms.Controls
             Bitmap B = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(B);
             e.Graphics.Clear(SkinManager.ColorScheme.PrimaryColor);
+            bool DrawerIcon = false;
             if (objAnimationManager.GetProgress() == 1)
             {
                 g.Clear(Color.White);
@@ -257,7 +261,7 @@ namespace MaterialWinforms.Controls
                     float borderDistance = 0.2f;
                     g.DrawEllipse(CloseButtonPen, new RectangleF(SearchButtonBounds.X + SearchButtonBounds.Width * borderDistance, SearchButtonBounds.Y + SearchButtonBounds.Height * borderDistance, SearchButtonBounds.Width * 0.4f, SearchButtonBounds.Height * 0.4f));
                     g.DrawLine(CloseButtonPen, new PointF(SearchButtonBounds.Right - SearchButtonBounds.Width * borderDistance, SearchButtonBounds.Bottom - SearchButtonBounds.Height * borderDistance), new PointF(SearchButtonBounds.X + SearchButtonBounds.Width * 0.53f, SearchButtonBounds.Y + SearchButtonBounds.Height * 0.53f));
-                        
+
                 }
 
                 var hoverBrush = SkinManager.GetFlatButtonHoverBackgroundBrush();
@@ -268,7 +272,6 @@ namespace MaterialWinforms.Controls
 
                 if (buttonState == ButtonState.SearchOver)
                     g.FillEllipse(hoverBrush, SearchButtonBounds);
-            
             }
             else
             {
@@ -334,6 +337,7 @@ namespace MaterialWinforms.Controls
                     }
                     if (!objParent.SideDrawer.SideDrawerFixiert)
                     {
+                        DrawerIcon = true;
                         using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT, 2))
                         {
                             g.DrawLine(
@@ -357,6 +361,10 @@ namespace MaterialWinforms.Controls
                         }
                     }
                 }
+
+                    //Form title
+                    g.DrawString(Parent.Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING + (DrawerIcon ? drawerButtonBounds.Right : 0), 0, Width, Height), new StringFormat { LineAlignment = StringAlignment.Center });
+
 
                 if (objAnimationManager.IsAnimating())
                 {
@@ -1368,8 +1376,8 @@ namespace MaterialWinforms.Controls
 
             }
 
-             public delegate void EnterDown();
-             public event EnterDown onEnterDown;
+            public delegate void EnterDown();
+            public event EnterDown onEnterDown;
 
 
             public bool Focused()

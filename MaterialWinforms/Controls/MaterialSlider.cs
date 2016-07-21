@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MaterialWinforms.Controls
@@ -13,65 +9,164 @@ namespace MaterialWinforms.Controls
     {
         [Browsable(false)]
         public int Depth { get; set; }
-
         [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
         [Browsable(false)]
 
-        public int Value;
+        private int _Value;
+        public int Value
+        {
+            get { return _Value; }
+            set
+            {
+                _Value = value;
+                MouseX = (int)((double)_Value / (double)(MaxValue - MinValue) * (double)(Width-IndicatorSize));
+            }
+        }
+        private int _MaxValue;
+        public int MaxValue
+        {
+            get { return _MaxValue; }
+            set
+            {
+                _MaxValue = value;
+                MouseX = (int)((double)_Value / (double)(MaxValue - MinValue) * (double)(Width - IndicatorSize));
+            }
+        }
+        private int _MinValue;
+        public int MinValue
+        {
+            get { return _MinValue; }
+            set
+            {
+                _MinValue = value;
+                MouseX = (int)((double)_Value / (double)(MaxValue - MinValue) * (double)(Width - IndicatorSize));
+            }
+        }
 
-        public int MaxValue;
-        public int MinValue;
-
-        private int MouseX;
         private bool MousePressed;
+        private int MouseX;
 
         private int IndicatorSize;
+        private bool hovered = false;
 
         private Rectangle IndicatorRectangle;
         private Rectangle IndicatorRectangleNormal;
         private Rectangle IndicatorRectanglePressed;
+        private Rectangle IndicatorRectangleDisabled;
+
         public MaterialSlider()
         {
             InitializeComponent();
+            SetStyle(ControlStyles.Selectable, true);
             IndicatorSize = 30;
-            Width = 40;
-            MinValue = 0;
-            Height = IndicatorSize;
             MaxValue = 100;
+            Width = 80;
+            MinValue = 0;
+            Height = IndicatorSize+10;
+
             Value = 50;
-       
-            IndicatorRectangle = new Rectangle(0, 0, IndicatorSize, IndicatorSize);
+
+            IndicatorRectangle = new Rectangle(0, 10, IndicatorSize, IndicatorSize);
             IndicatorRectangleNormal = new Rectangle();
             IndicatorRectanglePressed = new Rectangle();
+
+            EnabledChanged += MaterialSlider_EnabledChanged;
+
             DoubleBuffered = true;
+
+        }
+
+        void MaterialSlider_EnabledChanged(object sender, EventArgs e)
+        {
+            Invalidate();
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            int iWidht = Width - 10;
-            Height = IndicatorSize;
-            IndicatorRectangle = new Rectangle(iWidht / 2 - IndicatorRectangle.Width / 2, 0, Height, Height);
-            IndicatorRectangleNormal = new Rectangle(IndicatorRectangle.X + (IndicatorRectangle.Width / 4), IndicatorRectangle.Y + (IndicatorRectangle.Height / 4), (IndicatorRectangle.Width / 2), (IndicatorRectangle.Height / 2));
-            IndicatorRectanglePressed = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.375), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.375), (int)(IndicatorRectangle.Width * 0.75), (int)(IndicatorRectangle.Height * 0.75));
-            Invalidate();
+            Height = IndicatorSize + 10;
+            MouseX = (int)((double)_Value / (double)(MaxValue - MinValue) * (double)(Width - IndicatorSize));
+            RecalcutlateIndicator();
         }
 
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
+            hovered = true;
             Invalidate();
         }
 
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
+            hovered = false;
             Invalidate();
         }
 
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Y > IndicatorRectanglePressed.Top && e.Y < IndicatorRectanglePressed.Bottom)
+            {
+                MousePressed = true;
+                if (e.X >= IndicatorSize / 2 && e.X <= Width - IndicatorSize / 2)
+                {
+                    MouseX = e.X - IndicatorSize / 2;
+                    double ValuePerPx = ((double)(MaxValue - MinValue)) / (Width - IndicatorSize);
+                    _Value = (int)(ValuePerPx * MouseX);
+                    RecalcutlateIndicator();
+                }
+            }
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            hovered = true;
+            Invalidate();
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            hovered = false;
+            Invalidate();
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+            MousePressed = false;
+            Invalidate();
+        }
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (MousePressed)
+            {
+                if (e.X >= IndicatorSize / 2 && e.X <= Width - IndicatorSize / 2)
+                {
+                    MouseX = e.X - IndicatorSize / 2;
+                    double ValuePerPx = ((double)(MaxValue - MinValue)) / (Width - IndicatorSize);
+                    _Value = (int)(ValuePerPx * MouseX);
+                    RecalcutlateIndicator();
+                }
+            }
+        }
+
+        private void RecalcutlateIndicator()
+        {
+            int iWidht = Width - IndicatorSize;
+
+            IndicatorRectangle = new Rectangle(MouseX, Height-IndicatorSize, IndicatorSize, IndicatorSize);
+            IndicatorRectangleNormal = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.25), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.25), (int)(IndicatorRectangle.Width * 0.5), (int)(IndicatorRectangle.Height * 0.5));
+            IndicatorRectanglePressed = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.165), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.165), (int)(IndicatorRectangle.Width * 0.66), (int)(IndicatorRectangle.Height * 0.66));
+            IndicatorRectangleDisabled = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.34), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.34), (int)(IndicatorRectangle.Width * 0.33), (int)(IndicatorRectangle.Height * 0.33));
+            Invalidate();
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             Bitmap bmp = new Bitmap(Width, Height);
@@ -79,6 +174,7 @@ namespace MaterialWinforms.Controls
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             Color LineColor;
+            Brush DisabledBrush;
             Color BalloonColor;
 
             if (SkinManager.Theme == MaterialSkinManager.Themes.DARK)
@@ -87,30 +183,69 @@ namespace MaterialWinforms.Controls
             }
             else
             {
-                LineColor = Color.FromArgb((int)(2.55 * (Focused ? 38 : 26)), 0, 0, 0);
+                LineColor = Color.FromArgb((int)(2.55 * (hovered ? 38 : 26)), 0, 0, 0);
             }
 
-            BalloonColor = Color.FromArgb((int)(2.55 * 30), (Value == 0 ? Color.Gray : SkinManager.ColorScheme.PrimaryColor));
+            DisabledBrush = new SolidBrush(LineColor);
+            BalloonColor = Color.FromArgb((int)(2.55 * 30), (Value == 0 ? Color.Gray : SkinManager.ColorScheme.AccentColor));
 
             Pen LinePen = new Pen(LineColor, 2);
 
-            g.DrawLine(LinePen, 5, Height / 2, Width - 5, Height / 2);
+            g.DrawLine(LinePen, IndicatorSize / 2, Height / 2 + (Height - IndicatorSize) / 2, Width - IndicatorSize / 2, Height / 2 + (Height - IndicatorSize) / 2);
 
-            g.DrawLine(SkinManager.ColorScheme.AccentPen, 5, Height / 2, IndicatorRectangleNormal.X, Height / 2);
-
-            if (MousePressed)
+            if (Enabled)
             {
-                g.FillEllipse(SkinManager.ColorScheme.AccentBrush, IndicatorRectanglePressed);
+                g.DrawLine(SkinManager.ColorScheme.AccentPen, IndicatorSize / 2, Height / 2 + (Height - IndicatorSize) / 2, IndicatorRectangleNormal.X, Height / 2 + (Height - IndicatorSize) / 2);
+
+                if (MousePressed)
+                {
+                    if (Value > MinValue)
+                    {
+                        g.FillEllipse(SkinManager.ColorScheme.AccentBrush, IndicatorRectanglePressed);
+                    }
+                    else
+                    {
+                        g.FillEllipse(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), IndicatorRectanglePressed);
+                        g.DrawEllipse(LinePen, IndicatorRectanglePressed);
+                    }
+                }
+                else
+                {
+                    if (Value > MinValue)
+                    {
+                        g.FillEllipse(SkinManager.ColorScheme.AccentBrush, IndicatorRectangleNormal);
+                    }
+                    else
+                    {
+                        g.FillEllipse(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), IndicatorRectangleNormal);
+                        g.DrawEllipse(LinePen, IndicatorRectangleNormal);
+                    }
+
+
+                    if (hovered)
+                    {
+                        g.FillEllipse(new SolidBrush(BalloonColor), IndicatorRectangle);
+                    }
+                }
             }
             else
             {
-                g.FillEllipse(SkinManager.ColorScheme.AccentBrush, IndicatorRectangleNormal);
-                if (Focused)
+                if (Value > MinValue)
                 {
-                    g.FillEllipse(new SolidBrush(BalloonColor), IndicatorRectangle);
+                    g.FillEllipse(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), IndicatorRectangleNormal);
+                    g.FillEllipse(DisabledBrush, IndicatorRectangleDisabled);
+                }
+                else
+                {
+                    g.FillEllipse(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), IndicatorRectangleNormal);
+                    g.DrawEllipse(LinePen, IndicatorRectangleDisabled);
                 }
             }
 
+
+            g.DrawString(MinValue.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.ColorScheme.TextBrush, new PointF(0, 0));
+            g.DrawString(MaxValue.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.ColorScheme.TextBrush, new PointF(Width - g.MeasureString(MaxValue.ToString(), SkinManager.ROBOTO_MEDIUM_10).Width, 0f));
+            g.DrawString(Value.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.ColorScheme.TextBrush, new PointF(Width / 2 - g.MeasureString(Value.ToString(), SkinManager.ROBOTO_MEDIUM_10).Width / 2, 0f));
             e.Graphics.DrawImage((Image)bmp.Clone(), 0, 0);
         }
     }

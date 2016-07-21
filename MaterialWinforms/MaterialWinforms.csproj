@@ -89,9 +89,6 @@
     <Compile Include="Controls\MaterialScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MaterialSearchButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\MaterialSlider.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,13 +125,10 @@
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\TabControls\MaterialTabSelectorClosable.cs">
+    <Compile Include="Controls\TabControls\MaterialTabSelector.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TabControls\MaterialTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TabControls\MaterialTabSelector.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialProgressBar.cs">
@@ -142,12 +136,6 @@
     </Compile>
     <Compile Include="Controls\MaterialDialog.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\Toolbar\MaterialToolbar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\Toolbar\MaterialToolStripComboBox.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DrawHelper.cs" />
     <Compile Include="IShadowedMaterialControl.cs" />
