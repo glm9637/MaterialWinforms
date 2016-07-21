@@ -71,6 +71,9 @@
     <Compile Include="Controls\MaterialCard.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialColorPickercs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

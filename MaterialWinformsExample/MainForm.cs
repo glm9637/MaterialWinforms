@@ -123,6 +123,11 @@ namespace MaterialWinformsExample
             MaterialWinformsManager.Theme = MaterialSkinManager.Themes.DARK;
         }
 
+        private void materialFloatingActionButton1_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+        }
+
 
     }
 }

@@ -92,6 +92,7 @@ namespace MaterialWinformsExample
             this.materialSlider2 = new MaterialWinforms.Controls.MaterialSlider();
             this.materialSlider1 = new MaterialWinforms.Controls.MaterialSlider();
             this.materialTabPage2 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
             this.materialActionBar1 = new MaterialWinforms.Controls.MaterialActionBar();
             this.ActionBarMenu = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,7 +104,7 @@ namespace MaterialWinformsExample
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
-            this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -204,6 +205,7 @@ namespace MaterialWinformsExample
             this.materialFloatingActionButton1.TabIndex = 20;
             this.materialFloatingActionButton1.Text = "materialFloatingActionButton1";
             this.materialFloatingActionButton1.UseVisualStyleBackColor = false;
+            this.materialFloatingActionButton1.Click += new System.EventHandler(this.materialFloatingActionButton1_Click);
             // 
             // materialFlatButton2
             // 
@@ -398,7 +400,7 @@ namespace MaterialWinformsExample
             this.materialTabPage1.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage1.Name = "materialTabPage1";
-            this.materialTabPage1.Size = new System.Drawing.Size(813, 482);
+            this.materialTabPage1.Size = new System.Drawing.Size(801, 482);
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
             // 
@@ -773,6 +775,16 @@ namespace MaterialWinformsExample
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
             // 
+            // materialDatePicker1
+            // 
+            this.materialDatePicker1.Depth = 0;
+            this.materialDatePicker1.Location = new System.Drawing.Point(359, 26);
+            this.materialDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialDatePicker1.Name = "materialDatePicker1";
+            this.materialDatePicker1.Size = new System.Drawing.Size(250, 425);
+            this.materialDatePicker1.TabIndex = 1;
+            this.materialDatePicker1.Text = "materialDatePicker1";
+            // 
             // materialActionBar1
             // 
             this.materialActionBar1.ActionBarMenu = this.ActionBarMenu;
@@ -887,16 +899,6 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // materialDatePicker1
-            // 
-            this.materialDatePicker1.Depth = 0;
-            this.materialDatePicker1.Location = new System.Drawing.Point(316, 33);
-            this.materialDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialDatePicker1.Name = "materialDatePicker1";
-            this.materialDatePicker1.Size = new System.Drawing.Size(200, 400);
-            this.materialDatePicker1.TabIndex = 1;
-            this.materialDatePicker1.Text = "materialDatePicker1";
-            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -997,5 +999,6 @@ namespace MaterialWinformsExample
         private MaterialSingleLineTextField materialSingleLineTextField1;
         private MaterialScrollBar materialScrollBar1;
         private MaterialDatePicker materialDatePicker1;
+        private ColorDialog colorDialog1;
     }
 }
