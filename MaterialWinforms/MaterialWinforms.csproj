@@ -72,7 +72,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialColorPickercs.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialComboBox.cs">
       <SubType>Component</SubType>

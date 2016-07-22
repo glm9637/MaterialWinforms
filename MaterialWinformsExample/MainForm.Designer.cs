@@ -92,6 +92,7 @@ namespace MaterialWinformsExample
             this.materialSlider2 = new MaterialWinforms.Controls.MaterialSlider();
             this.materialSlider1 = new MaterialWinforms.Controls.MaterialSlider();
             this.materialTabPage2 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
             this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
             this.materialActionBar1 = new MaterialWinforms.Controls.MaterialActionBar();
             this.ActionBarMenu = new MaterialWinforms.Controls.MaterialContextMenuStrip();
@@ -766,6 +767,7 @@ namespace MaterialWinformsExample
             // 
             // materialTabPage2
             // 
+            this.materialTabPage2.Controls.Add(this.materialColorPicker1);
             this.materialTabPage2.Controls.Add(this.materialDatePicker1);
             this.materialTabPage2.Depth = 0;
             this.materialTabPage2.Location = new System.Drawing.Point(4, 22);
@@ -775,10 +777,21 @@ namespace MaterialWinformsExample
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
             // 
+            // materialColorPicker1
+            // 
+            this.materialColorPicker1.Depth = 0;
+            this.materialColorPicker1.Location = new System.Drawing.Point(52, 26);
+            this.materialColorPicker1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialColorPicker1.Name = "materialColorPicker1";
+            this.materialColorPicker1.Size = new System.Drawing.Size(250, 425);
+            this.materialColorPicker1.TabIndex = 2;
+            this.materialColorPicker1.Text = "materialColorPicker1";
+            this.materialColorPicker1.Value = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(64)))), ((int)(((byte)(129)))));
+            // 
             // materialDatePicker1
             // 
             this.materialDatePicker1.Depth = 0;
-            this.materialDatePicker1.Location = new System.Drawing.Point(359, 26);
+            this.materialDatePicker1.Location = new System.Drawing.Point(308, 26);
             this.materialDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialDatePicker1.Name = "materialDatePicker1";
             this.materialDatePicker1.Size = new System.Drawing.Size(250, 425);
@@ -1000,5 +1013,6 @@ namespace MaterialWinformsExample
         private MaterialScrollBar materialScrollBar1;
         private MaterialDatePicker materialDatePicker1;
         private ColorDialog colorDialog1;
+        private MaterialColorPicker materialColorPicker1;
     }
 }

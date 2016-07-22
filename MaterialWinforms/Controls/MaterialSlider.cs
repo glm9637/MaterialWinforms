@@ -15,6 +15,9 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         [Browsable(false)]
 
+        public delegate void ValueChanged(int newValue);
+        public event ValueChanged onValueChanged;
+
         private int _Value;
         public int Value
         {
@@ -116,7 +119,11 @@ namespace MaterialWinforms.Controls
                 {
                     MouseX = e.X - IndicatorSize / 2;
                     double ValuePerPx = ((double)(MaxValue - MinValue)) / (Width - IndicatorSize);
-                    _Value = (int)(ValuePerPx * MouseX);
+                    int v = (int)(ValuePerPx * MouseX);
+                    if (v != _Value) { 
+                    _Value = v;
+                        if(onValueChanged!= null) onValueChanged(_Value);
+                    }
                     RecalcutlateIndicator();
                 }
             }
@@ -151,7 +158,12 @@ namespace MaterialWinforms.Controls
                 {
                     MouseX = e.X - IndicatorSize / 2;
                     double ValuePerPx = ((double)(MaxValue - MinValue)) / (Width - IndicatorSize);
-                    _Value = (int)(ValuePerPx * MouseX);
+                    int v = (int)(ValuePerPx * MouseX);
+                    if (v != _Value)
+                    {
+                        _Value = v;
+                        if (onValueChanged != null) onValueChanged(_Value);
+                    }
                     RecalcutlateIndicator();
                 }
             }
@@ -243,9 +255,9 @@ namespace MaterialWinforms.Controls
             }
 
 
-            g.DrawString(MinValue.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.ColorScheme.TextBrush, new PointF(0, 0));
-            g.DrawString(MaxValue.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.ColorScheme.TextBrush, new PointF(Width - g.MeasureString(MaxValue.ToString(), SkinManager.ROBOTO_MEDIUM_10).Width, 0f));
-            g.DrawString(Value.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.ColorScheme.TextBrush, new PointF(Width / 2 - g.MeasureString(Value.ToString(), SkinManager.ROBOTO_MEDIUM_10).Width / 2, 0f));
+            g.DrawString(MinValue.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetPrimaryTextBrush(), new PointF(0, 0));
+            g.DrawString(MaxValue.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetPrimaryTextBrush(), new PointF(Width - g.MeasureString(MaxValue.ToString(), SkinManager.ROBOTO_MEDIUM_10).Width, 0f));
+            g.DrawString(Value.ToString(), SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetPrimaryTextBrush(), new PointF(Width / 2 - g.MeasureString(Value.ToString(), SkinManager.ROBOTO_MEDIUM_10).Width / 2, 0f));
             e.Graphics.DrawImage((Image)bmp.Clone(), 0, 0);
         }
     }

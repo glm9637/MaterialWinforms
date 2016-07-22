@@ -35,6 +35,7 @@ namespace MaterialWinforms.Controls
         private GraphicsPath ShadowPath;
         private DateTime CurrentDate;
         private List<List<DateRect>> DateRectangles;
+
         private int DateRectDefaultSize;
         private int HoverX;
         private int HoverY;
