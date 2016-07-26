@@ -551,5 +551,9 @@ namespace MaterialWinforms.Controls
             this.FormSize = formSize;
             this.Style = style;
         }
+        public AnimateMsgBox(Size formSize)
+        {
+            this.FormSize = formSize;
+        }
     }
 }

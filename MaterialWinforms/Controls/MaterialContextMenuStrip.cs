@@ -113,6 +113,8 @@ namespace MaterialWinforms.Controls
                 new StringFormat { LineAlignment = StringAlignment.Center });
         }
 
+
+
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             var g = e.Graphics;
@@ -120,7 +122,7 @@ namespace MaterialWinforms.Controls
 
             //Draw background
             var itemRect = GetItemRect(e.Item);
-            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetApplicationBackgroundColor()), itemRect);
+            g.FillRectangle(e.Item.Selected && e.Item.Enabled ? SkinManager.GetCmsSelectedItemBrush() : new SolidBrush(SkinManager.GetCardsColor()), itemRect);
 
             //Ripple animation
             var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
@@ -141,9 +143,10 @@ namespace MaterialWinforms.Controls
             }
         }
 
+
         protected override void OnRenderImageMargin(ToolStripRenderEventArgs e)
         {
-            //base.OnRenderImageMargin(e);
+
         }
 
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -159,11 +162,8 @@ namespace MaterialWinforms.Controls
 
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
-            var g = e.Graphics;
+            e.ToolStrip.BackColor = SkinManager.GetCardsColor();   
 
-            g.DrawRectangle(
-                new Pen(SkinManager.getCardsBrush()),
-                new Rectangle(e.AffectedBounds.X, e.AffectedBounds.Y, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1));
         }
 
 
@@ -190,7 +190,8 @@ namespace MaterialWinforms.Controls
 
         private Rectangle GetItemRect(ToolStripItem item)
         {
-            return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width + 4, item.ContentRectangle.Height+4);
+            return item.ContentRectangle;
+            //return new Rectangle(0, item.ContentRectangle.Y, item.ContentRectangle.Width, item.ContentRectangle.Height);
         }
 
     }

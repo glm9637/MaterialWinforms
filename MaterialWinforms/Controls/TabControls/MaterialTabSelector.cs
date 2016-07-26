@@ -23,6 +23,13 @@ namespace MaterialWinforms.Controls
         private int HoveredXButtonIndex = -1;
         public MaterialContextMenuStrip RightClickMenu { get; set; }
 
+        private int _MaxTabWidth;
+        public int MaxTabWidht
+        {
+            get { return _MaxTabWidth; }
+            set { _MaxTabWidth = value; Invalidate(); }
+        }
+
         private int _Elevation;
         public int Elevation
         {
@@ -88,7 +95,7 @@ namespace MaterialWinforms.Controls
         {
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             Height = 35;
-
+            _MaxTabWidth = -1;
             animationManager = new AnimationManager
             {
                 AnimationType = AnimationType.EaseOut,
@@ -235,7 +242,7 @@ namespace MaterialWinforms.Controls
                     tabPage.Text.ToUpper(),
                     SkinManager.ROBOTO_MEDIUM_10,
                     textBrush,
-                    new Rectangle(tabRects[currentTabIndex].TabRect.X + offset, tabRects[currentTabIndex].TabRect.Y, tabRects[currentTabIndex].TabRect.Width, tabRects[currentTabIndex].TabRect.Height),
+                    new Rectangle(tabRects[currentTabIndex].TabRect.X + offset, tabRects[currentTabIndex].TabRect.Y, tabRects[currentTabIndex].TabRect.Width - tabRects[currentTabIndex].XButtonRect.Width, tabRects[currentTabIndex].TabRect.Height),
                     new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
                 if (((MaterialTabPage)BaseTabControl.TabPages[currentTabIndex]).Closable)
                 {
@@ -434,6 +441,10 @@ namespace MaterialWinforms.Controls
                     int xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[0]).Closable ? 18 : 0;
                     TabRectangle CurrentTab = new TabRectangle();
                     CurrentTab.TabRect = new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                    if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                    {
+                        CurrentTab.TabRect.Width = MaxTabWidht;
+                    }
                     CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
                     TabLength += CurrentTab.TabRect.Width;
                     tabRects.Add(CurrentTab);
@@ -442,6 +453,10 @@ namespace MaterialWinforms.Controls
                         xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[i]).Closable ? 18 : 0;
                         CurrentTab = new TabRectangle();
                         CurrentTab.TabRect = new Rectangle(tabRects[i - 1].TabRect.Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                        if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                        {
+                            CurrentTab.TabRect.Width = MaxTabWidht;
+                        }
                         CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
                         TabLength += CurrentTab.TabRect.Width;
                         tabRects.Add(CurrentTab);
@@ -463,12 +478,20 @@ namespace MaterialWinforms.Controls
                     {
                         CurrentTab = tabRects[0];
                         CurrentTab.TabRect = new Rectangle(CurrentTab.TabRect.X + TabOffset, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                        if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                        {
+                            CurrentTab.TabRect.Width = MaxTabWidht;
+                        }
                         CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), CurrentTab.XButtonRect.Width, CurrentTab.XButtonRect.Height);
                         tabRects[0] = CurrentTab;
                         for (int i = 1; i < baseTabControl.TabPages.Count; i++)
                         {
                             CurrentTab = tabRects[i];
                             CurrentTab.TabRect = new Rectangle(tabRects[i - 1].TabRect.Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                            if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                            {
+                                CurrentTab.TabRect.Width = MaxTabWidht;
+                            }
                             CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), CurrentTab.XButtonRect.Width, CurrentTab.XButtonRect.Height);
                             tabRects[i] = CurrentTab;
                         }

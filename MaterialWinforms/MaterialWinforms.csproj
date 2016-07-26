@@ -56,6 +56,12 @@
     <Compile Include="Controls\DrawerControls\MaterialSideDrawer.Designer.cs">
       <DependentUpon>MaterialSideDrawer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DropDownControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DropDownControl.designer.cs">
+      <DependentUpon>DropDownControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MaterialActionBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -82,6 +88,15 @@
     </Compile>
     <Compile Include="Controls\MaterialDatePicker.Designer.cs">
       <DependentUpon>MaterialDatePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MaterialDropDownColorPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialDropDownColorPicker.Designer.cs">
+      <DependentUpon>MaterialDropDownColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MaterialDropDownDatePicker.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\MaterialLoadingFloatingActionButton.cs">
       <SubType>Component</SubType>

@@ -92,6 +92,8 @@ namespace MaterialWinformsExample
             this.materialSlider2 = new MaterialWinforms.Controls.MaterialSlider();
             this.materialSlider1 = new MaterialWinforms.Controls.MaterialSlider();
             this.materialTabPage2 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialDropDownColorPicker1 = new MaterialWinforms.Controls.MaterialDropDownColorPicker();
+            this.materialDropDownDatePicker1 = new MaterialWinforms.Controls.MaterialDropDownDatePicker();
             this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
             this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
             this.materialActionBar1 = new MaterialWinforms.Controls.MaterialActionBar();
@@ -767,6 +769,8 @@ namespace MaterialWinformsExample
             // 
             // materialTabPage2
             // 
+            this.materialTabPage2.Controls.Add(this.materialDropDownColorPicker1);
+            this.materialTabPage2.Controls.Add(this.materialDropDownDatePicker1);
             this.materialTabPage2.Controls.Add(this.materialColorPicker1);
             this.materialTabPage2.Controls.Add(this.materialDatePicker1);
             this.materialTabPage2.Depth = 0;
@@ -776,6 +780,32 @@ namespace MaterialWinformsExample
             this.materialTabPage2.Size = new System.Drawing.Size(801, 482);
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
+            // 
+            // materialDropDownColorPicker1
+            // 
+            this.materialDropDownColorPicker1.AnchorSize = new System.Drawing.Size(88, 21);
+            this.materialDropDownColorPicker1.BackColor = System.Drawing.Color.White;
+            this.materialDropDownColorPicker1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(64)))), ((int)(((byte)(129)))));
+            this.materialDropDownColorPicker1.Depth = 0;
+            this.materialDropDownColorPicker1.DockSide = MaterialWinforms.Controls.DropDownControl.eDockSide.Left;
+            this.materialDropDownColorPicker1.Location = new System.Drawing.Point(574, 75);
+            this.materialDropDownColorPicker1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialDropDownColorPicker1.Name = "materialDropDownColorPicker1";
+            this.materialDropDownColorPicker1.Size = new System.Drawing.Size(88, 21);
+            this.materialDropDownColorPicker1.TabIndex = 4;
+            // 
+            // materialDropDownDatePicker1
+            // 
+            this.materialDropDownDatePicker1.AnchorSize = new System.Drawing.Size(181, 21);
+            this.materialDropDownDatePicker1.BackColor = System.Drawing.Color.White;
+            this.materialDropDownDatePicker1.Date = new System.DateTime(2016, 7, 25, 14, 22, 14, 444);
+            this.materialDropDownDatePicker1.Depth = 0;
+            this.materialDropDownDatePicker1.DockSide = MaterialWinforms.Controls.DropDownControl.eDockSide.Left;
+            this.materialDropDownDatePicker1.Location = new System.Drawing.Point(574, 47);
+            this.materialDropDownDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialDropDownDatePicker1.Name = "materialDropDownDatePicker1";
+            this.materialDropDownDatePicker1.Size = new System.Drawing.Size(181, 21);
+            this.materialDropDownDatePicker1.TabIndex = 3;
             // 
             // materialColorPicker1
             // 
@@ -790,6 +820,7 @@ namespace MaterialWinformsExample
             // 
             // materialDatePicker1
             // 
+            this.materialDatePicker1.Date = new System.DateTime(2016, 7, 25, 14, 22, 14, 457);
             this.materialDatePicker1.Depth = 0;
             this.materialDatePicker1.Location = new System.Drawing.Point(308, 26);
             this.materialDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
@@ -816,7 +847,7 @@ namespace MaterialWinformsExample
             // 
             // ActionBarMenu
             // 
-            this.ActionBarMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ActionBarMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.ActionBarMenu.Depth = 0;
             this.ActionBarMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.themeToolStripMenuItem,
@@ -831,6 +862,7 @@ namespace MaterialWinformsExample
             this.blueToolStripMenuItem,
             this.greenToolStripMenuItem,
             this.standardToolStripMenuItem});
+            this.themeToolStripMenuItem.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
             this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
             this.themeToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.themeToolStripMenuItem.Text = "Style";
@@ -893,6 +925,7 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.Elevation = 10;
             this.materialTabSelectorClosable1.Location = new System.Drawing.Point(0, 64);
             this.materialTabSelectorClosable1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.materialTabSelectorClosable1.MaxTabWidht = 0;
             this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
             graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
@@ -1014,5 +1047,7 @@ namespace MaterialWinformsExample
         private MaterialDatePicker materialDatePicker1;
         private ColorDialog colorDialog1;
         private MaterialColorPicker materialColorPicker1;
+        private MaterialDropDownDatePicker materialDropDownDatePicker1;
+        private MaterialDropDownColorPicker materialDropDownColorPicker1;
     }
 }

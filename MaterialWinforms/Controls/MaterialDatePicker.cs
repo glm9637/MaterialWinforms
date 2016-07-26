@@ -34,6 +34,7 @@ namespace MaterialWinforms.Controls
         private RectangleF NextCal;
         private GraphicsPath ShadowPath;
         private DateTime CurrentDate;
+        public DateTime Date { get { return CurrentDate; } set { CurrentDate = value; Invalidate(); } }
         private List<List<DateRect>> DateRectangles;
 
         private int DateRectDefaultSize;
@@ -123,6 +124,7 @@ namespace MaterialWinforms.Controls
             }
             if (HoverX >= 0 || recentHovered || nextHovered)
             {
+                HoverX = -1;
                 recentHovered = false;
                 nextHovered = false;
                 Invalidate();

@@ -22,6 +22,8 @@ namespace MaterialWinforms.Controls
 
         private AnimationManager objAnimationManager;
 
+        public delegate void ColorChanged(Color newColor);
+        public event ColorChanged onColorChanged;
 
         private MaterialColorSlider RedSlider, GreenSlider, BlueSlider;
         private Color pBaseColor;
@@ -79,6 +81,13 @@ namespace MaterialWinforms.Controls
                     objAnimationManager.StartNewAnimation(AnimationDirection.In);
                 }
             }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            HoveredIndex = -1;
+            Invalidate();
+            base.OnMouseLeave(e);
         }
 
         protected override void OnResize(EventArgs e)
@@ -211,12 +220,14 @@ namespace MaterialWinforms.Controls
         void objAnimationManager_OnAnimationFinished(object sender)
         {
             Value = TempColor;
+            if (onColorChanged != null) onColorChanged(pBaseColor);
         }
 
         void RedSlider_onValueChanged(int newValue)
         {
             if (!objAnimationManager.IsAnimating()) { 
             pBaseColor = Color.FromArgb(newValue, pBaseColor.G, pBaseColor.B);
+                if(onColorChanged!= null) onColorChanged(pBaseColor);
             Invalidate();
             }
         }
@@ -226,6 +237,7 @@ namespace MaterialWinforms.Controls
             if (!objAnimationManager.IsAnimating())
             {
                 pBaseColor = Color.FromArgb(pBaseColor.R, newValue, pBaseColor.B);
+                if(onColorChanged!= null) onColorChanged(pBaseColor);
                 Invalidate();
             }
         }
@@ -234,6 +246,7 @@ namespace MaterialWinforms.Controls
         {
             if (!objAnimationManager.IsAnimating()) { 
             pBaseColor = Color.FromArgb(pBaseColor.R, pBaseColor.G, newValue);
+                if(onColorChanged!= null) onColorChanged(pBaseColor);
             Invalidate();
             }
         }
@@ -444,6 +457,7 @@ namespace MaterialWinforms.Controls
         {
             base.OnMouseLeave(e);
             hovered = false;
+            
             Invalidate();
         }
 
