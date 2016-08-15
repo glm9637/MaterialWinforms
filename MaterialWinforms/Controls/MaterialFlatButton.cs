@@ -23,6 +23,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public bool Selected { get; set; }
 
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+
         private readonly AnimationManager animationManager;
         private readonly AnimationManager hoverAnimationManager;
 
@@ -89,7 +91,7 @@ namespace MaterialWinforms.Controls
             var g = pevent.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(Parent.BackColor);
+            g.Clear(BackColor);
 
             if (Image != null)
             {

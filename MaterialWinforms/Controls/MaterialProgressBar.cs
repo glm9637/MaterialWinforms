@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MaterialWinforms.Controls
 {
@@ -59,6 +60,8 @@ namespace MaterialWinforms.Controls
         {
             base.SetBoundsCore(x, y, width, 5, specified);
         }
+
+        public Color BackColor { get { return SkinManager.GetDisabledOrHintColor(); } }
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.

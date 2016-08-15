@@ -19,6 +19,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        public Color BackColor { get { return SkinManager.GetCardsColor(); } set { } }
+
         private RectangleF TopDayRect;
         private RectangleF TopDateRect;
         private RectangleF MonthRect;
@@ -74,7 +76,7 @@ namespace MaterialWinforms.Controls
             DoubleBuffered = true;
             DateRectDefaultSize = (Width - 10) / 7;
             CurrentDate = DateTime.Now;
-            HoverBrush = new SolidBrush(Color.FromArgb(100, SkinManager.ColorScheme.PrimaryColor));
+
             HoverX = -1;
             HoverY = -1;
             CalculateRectangles();
@@ -169,6 +171,16 @@ namespace MaterialWinforms.Controls
             base.OnMouseUp(e);
         }
 
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            HoverX = -1;
+            HoverY = -1;
+            nextHovered = false;
+            recentHovered = false;
+            Invalidate();
+            base.OnMouseLeave(e);
+        }
+
 
         private void CalculateRectangles()
         {
@@ -210,6 +222,7 @@ namespace MaterialWinforms.Controls
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+            HoverBrush = new SolidBrush(Color.FromArgb(100, SkinManager.ColorScheme.PrimaryColor));
 
             g.Clear(SkinManager.GetCardsColor());
 
@@ -227,7 +240,7 @@ namespace MaterialWinforms.Controls
             g.DrawString(CurrentDate.ToString("dd"), DayFont, SkinManager.ACTION_BAR_TEXT_BRUSH, DayRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
             g.DrawString(CurrentDate.ToString("yyyy"), YeahrFont, new SolidBrush(Color.FromArgb(80, SkinManager.ACTION_BAR_TEXT)), YearRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 
-            g.DrawString(CurrentDate.ToString("MMMM"), SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, CurrentCal_Header, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(CurrentDate.ToString("MMMM"), SkinManager.ROBOTO_REGULAR_11, SkinManager.GetPrimaryTextBrush(), CurrentCal_Header, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 
             if (HoverX >= 0)
             {
@@ -239,7 +252,7 @@ namespace MaterialWinforms.Controls
             
             if (nextHovered) g.FillEllipse(HoverBrush, NextCal);
 
-            using (var ButtonPen = new Pen(SkinManager.ColorScheme.TextBrush, 2))
+            using (var ButtonPen = new Pen(SkinManager.GetPrimaryTextBrush(), 2))
             {
 
                 g.DrawLine(ButtonPen,

@@ -19,6 +19,7 @@ namespace MaterialWinforms.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+        public Color BackColor { get { return SkinManager.GetCardsColor() ; } }
 
         [Category("Appearance")]
         public ObservableCollection<BreadCrumbItem> Items
@@ -49,7 +50,6 @@ namespace MaterialWinforms.Controls
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             Height = 1;
-            BackColor = SkinManager.GetCardsColor();
             Padding = new Padding(5, 5, 5, 5);
             _Teile = new ObservableCollection<BreadCrumbItem>();
             _Teile.CollectionChanged += RecalculateTabRects;
@@ -69,7 +69,6 @@ namespace MaterialWinforms.Controls
             if (Parent != null)
             {
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
-                BackColor = SkinManager.GetCardsColor();
             }
 
         }

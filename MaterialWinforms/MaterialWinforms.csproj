@@ -149,6 +149,12 @@
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialUserControl.Designer.cs">
+      <DependentUpon>MaterialUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TabControls\MaterialTabSelector.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -159,6 +165,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MaterialDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControls\TabWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DrawHelper.cs" />

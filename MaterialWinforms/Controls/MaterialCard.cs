@@ -17,6 +17,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        public Color BackColor { get { return SkinManager.GetCardsColor(); } }
+
         public int Elevation { get; set; }
           [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
@@ -38,11 +40,11 @@ namespace MaterialWinforms.Controls
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             Height = 1;
-            BackColor = SkinManager.GetCardsColor();
             Padding = new Padding(5, 25, 5, 5);
             Elevation = 5;
             SizeChanged += Redraw;
             LocationChanged += Redraw;
+            DoubleBuffered = true;
             ParentChanged += new System.EventHandler(Redraw);
         }
 
@@ -60,7 +62,6 @@ namespace MaterialWinforms.Controls
             if (Parent != null)
             {
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
-                BackColor = SkinManager.GetCardsColor();
                 Parent.Invalidate();
             }
            

@@ -13,6 +13,7 @@ namespace MaterialWinforms.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
         [Browsable(false)]
 
         public delegate void ValueChanged(int newValue);
@@ -25,7 +26,7 @@ namespace MaterialWinforms.Controls
             set
             {
                 _Value = value;
-                MouseX = (int)((double)_Value / (double)(MaxValue - MinValue) * (double)(Width-IndicatorSize));
+                MouseX = (int)((double)_Value / (double)(MaxValue - MinValue) * (double)(Width - IndicatorSize));
             }
         }
         private int _MaxValue;
@@ -68,7 +69,7 @@ namespace MaterialWinforms.Controls
             MaxValue = 100;
             Width = 80;
             MinValue = 0;
-            Height = IndicatorSize+10;
+            Height = IndicatorSize + 10;
 
             Value = 50;
 
@@ -120,9 +121,10 @@ namespace MaterialWinforms.Controls
                     MouseX = e.X - IndicatorSize / 2;
                     double ValuePerPx = ((double)(MaxValue - MinValue)) / (Width - IndicatorSize);
                     int v = (int)(ValuePerPx * MouseX);
-                    if (v != _Value) { 
-                    _Value = v;
-                        if(onValueChanged!= null) onValueChanged(_Value);
+                    if (v != _Value)
+                    {
+                        _Value = v;
+                        if (onValueChanged != null) onValueChanged(_Value);
                     }
                     RecalcutlateIndicator();
                 }
@@ -173,7 +175,7 @@ namespace MaterialWinforms.Controls
         {
             int iWidht = Width - IndicatorSize;
 
-            IndicatorRectangle = new Rectangle(MouseX, Height-IndicatorSize, IndicatorSize, IndicatorSize);
+            IndicatorRectangle = new Rectangle(MouseX, Height - IndicatorSize, IndicatorSize, IndicatorSize);
             IndicatorRectangleNormal = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.25), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.25), (int)(IndicatorRectangle.Width * 0.5), (int)(IndicatorRectangle.Height * 0.5));
             IndicatorRectanglePressed = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.165), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.165), (int)(IndicatorRectangle.Width * 0.66), (int)(IndicatorRectangle.Height * 0.66));
             IndicatorRectangleDisabled = new Rectangle(IndicatorRectangle.X + (int)(IndicatorRectangle.Width * 0.34), IndicatorRectangle.Y + (int)(IndicatorRectangle.Height * 0.34), (int)(IndicatorRectangle.Width * 0.33), (int)(IndicatorRectangle.Height * 0.33));
@@ -184,7 +186,7 @@ namespace MaterialWinforms.Controls
             Bitmap bmp = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(bmp);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(BackColor);
             Color LineColor;
             Brush DisabledBrush;
             Color BalloonColor;

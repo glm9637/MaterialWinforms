@@ -6,5 +6,7 @@
         MaterialSkinManager SkinManager { get; }
         MouseState MouseState { get; set; }
 
+        System.Drawing.Color BackColor { get; } 
+
     }
 }

@@ -20,6 +20,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
+        public Color BackColor { get { return Primary ? SkinManager.ColorScheme.PrimaryColor : SkinManager.getRaisedButtonBackroundColor(); } }
+
         private readonly AnimationManager animationManager;
 
         public MaterialRaisedButton()

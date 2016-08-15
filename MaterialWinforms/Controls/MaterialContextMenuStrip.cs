@@ -98,6 +98,8 @@ namespace MaterialWinforms.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         public MouseState MouseState { get; set; }
 
+        public Color BackColor { get { return SkinManager.GetCardsColor(); } }
+
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
         {
             var g = e.Graphics;

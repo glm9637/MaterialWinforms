@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using MaterialWinforms.Animations;
 
 namespace MaterialWinforms.Controls
 {
@@ -52,7 +53,8 @@ namespace MaterialWinforms.Controls
 
         void _ActionBar_onSideDrawerButtonClicked()
         {
-            DrawerAnimationTimer.Start();
+            
+            DrawerAnimationTimer.StartNewAnimation(DrawerAnimationTimer.GetProgress()==0?AnimationDirection.In:AnimationDirection.Out);
         }
 
 
@@ -105,7 +107,7 @@ namespace MaterialWinforms.Controls
         private const int HTTOPRIGHT = 14;
         private const int BORDER_WIDTH = 7;
         private ResizeDirection resizeDir;
-        private ButtonState buttonState = ButtonState.None;
+        protected ButtonState buttonState = ButtonState.None;
 
         private const int WMSZ_TOP = 3;
         private const int WMSZ_TOPLEFT = 4;
@@ -128,7 +130,7 @@ namespace MaterialWinforms.Controls
             {HTBOTTOMRIGHT, WMSZ_BOTTOMRIGHT}
         };
 
-        private const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
+        protected const int STATUS_BAR_BUTTON_WIDTH = STATUS_BAR_HEIGHT;
         public const int STATUS_BAR_HEIGHT = 24;
 
         private const uint TPM_LEFTALIGN = 0x0000;
@@ -180,7 +182,7 @@ namespace MaterialWinforms.Controls
             None
         }
 
-        private enum ButtonState
+        protected enum ButtonState
         {
             XOver,
             MaxOver,
@@ -196,19 +198,16 @@ namespace MaterialWinforms.Controls
 
         private readonly Cursor[] resizeCursors = { Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE, Cursors.SizeNS };
 
-        private Rectangle minButtonBounds;
-        private Rectangle maxButtonBounds;
-        private Rectangle xButtonBounds;
-        private Rectangle statusBarBounds;
-        private Rectangle drawerButtonBounds;
+        protected Rectangle minButtonBounds;
+        protected Rectangle maxButtonBounds;
+        protected Rectangle xButtonBounds;
+        protected Rectangle statusBarBounds;
 
         private bool Maximized;
         private Size previousSize;
         private Point previousLocation;
         private bool headerMouseDown;
-        private bool AnimationDirection;
-        private int DrawerAnimationProgress;
-        private Timer DrawerAnimationTimer;
+        private Animations.AnimationManager DrawerAnimationTimer;
 
      
 
@@ -223,11 +222,13 @@ namespace MaterialWinforms.Controls
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
             MouseMessageFilter.MouseMove += OnGlobalMouseMove;
-            DrawerAnimationTimer = new Timer();
-            DrawerAnimationTimer.Interval = 10;
-            DrawerAnimationProgress = 0;
-            AnimationDirection = true;
-            DrawerAnimationTimer.Tick += DrawerAnimationTimer_Tick;
+            DrawerAnimationTimer =new Animations.AnimationManager()            
+            {
+                Increment = 0.03,
+                AnimationType = AnimationType.EaseOut
+            };
+
+            DrawerAnimationTimer.OnAnimationProgress += sender => Invalidate();
             this.ControlAdded += MaterialForm_ControlAdded;
 
             Layout += MaterialForm_Layout;
@@ -250,37 +251,6 @@ namespace MaterialWinforms.Controls
             }
         }
 
-
-        private void DrawerAnimationTimer_Tick(object sender, EventArgs e)
-        {
-            int AnimationStep = 5;
-            if (AnimationDirection)
-            {
-                if (DrawerAnimationProgress == 100 - AnimationStep)
-                {
-                    AnimationDirection = false;
-                    DrawerAnimationTimer.Stop();
-                }
-                DrawerAnimationProgress += AnimationStep;
-            }
-            else
-            {
-                if (DrawerAnimationProgress == AnimationStep)
-                {
-                    DrawerAnimationTimer.Stop();
-                    AnimationDirection = true;
-                }
-                DrawerAnimationProgress -= AnimationStep;
-            }
-
-            if (_ActionBar != null)
-            {
-                _ActionBar.setDrawerAnimationProgress(DrawerAnimationProgress);
-            }
-            Invalidate();
-
-
-        }
 
         protected override void WndProc(ref Message m)
         {
@@ -466,7 +436,7 @@ namespace MaterialWinforms.Controls
             }
         }
 
-        private void UpdateButtons(MouseEventArgs e, bool up = false)
+        protected virtual void UpdateButtons(MouseEventArgs e, bool up = false)
         {
             if (DesignMode) return;
             ButtonState oldState = buttonState;
@@ -483,8 +453,6 @@ namespace MaterialWinforms.Controls
                     buttonState = ButtonState.MaxDown;
                 else if (ControlBox && xButtonBounds.Contains(e.Location))
                     buttonState = ButtonState.XDown;
-                else if (drawerButtonBounds.Contains(e.Location))
-                    buttonState = ButtonState.DrawerDown;
                 else
                     buttonState = ButtonState.None;
             }
@@ -648,9 +616,6 @@ namespace MaterialWinforms.Controls
             if (buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, xButtonBounds);
 
-            if (buttonState == ButtonState.DrawerOver)
-                g.FillEllipse(hoverBrush, drawerButtonBounds);
-
             using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
             {
                 // Minimize button.
@@ -703,13 +668,19 @@ namespace MaterialWinforms.Controls
 
             //Form title
             if(_ActionBar== null)
-            g.DrawString(Text, SkinManager.ROBOTO_MEDIUM_12, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING + (true ? drawerButtonBounds.Width + drawerButtonBounds.X : 0), 0, Width, STATUS_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING , 0, Width, STATUS_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
 
             if (_SideDrawer != null)
             {
                 if (!_SideDrawer.SideDrawerFixiert)
                 {
-                    _SideDrawer.Width = _SideDrawer.MaximumSize.Width * DrawerAnimationProgress / 100;
+    
+                    _SideDrawer.Width = (int)(_SideDrawer.MaximumSize.Width * DrawerAnimationTimer.GetProgress());
+                    if (_ActionBar != null)
+                    {
+                        _ActionBar.setDrawerAnimationProgress((int)(DrawerAnimationTimer.GetProgress() * 100));
+                    }
+                    
                 }
 
             }

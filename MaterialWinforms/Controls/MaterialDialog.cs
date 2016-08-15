@@ -54,7 +54,20 @@ namespace MaterialWinforms.Controls
             _msgBox = new MaterialDialog(pForm.SkinManager);
             _msgBox.lbl_Message.Text = message;
             _msgBox.ShowDialog();
-            MessageBeep(0);
+            MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
+        }
+
+        public static void Show(MaterialForm pForm, string title,UserControl pContent)
+        {
+            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox.Controls.Remove(_msgBox.pnl_Top);
+            pContent.Location = new Point(0,0);
+            _msgBox.Controls.Add(pContent);
+            _msgBox.Width = pContent.Width;
+            _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
+            _msgBox.lbl_Title.Text = title;
+            MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
+            _msgBox.ShowDialog();
         }
 
         public static void Show(MaterialForm pForm, string message, string title)
@@ -64,7 +77,6 @@ namespace MaterialWinforms.Controls
             _msgBox.lbl_Message.Text = message;
             _msgBox.lbl_Title.Text = title;
             _msgBox.ShowDialog();
-            MessageBeep(0);
         }
 
         public static DialogResult Show(MaterialForm pForm, string message, string title, Buttons buttons)
@@ -78,6 +90,19 @@ namespace MaterialWinforms.Controls
             _msgBox.ShowDialog();
             MessageBeep(0);
             return _buttonResult;
+        }
+
+        public static void Show(MaterialForm pForm, string title, UserControl pContent, Buttons buttons)
+        {
+            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox.Controls.Remove(_msgBox.pnl_Top);
+            pContent.Location = new Point(0, 0);
+            _msgBox.Controls.Add(pContent);
+            _msgBox.Width = pContent.Width;
+            _msgBox.Height = _msgBox.pnl_Footer.Height + 5 + pContent.Height;
+            _msgBox.lbl_Title.Text = title;
+            MaterialDialog.InitButtons(buttons);
+            _msgBox.ShowDialog();
         }
 
         public static DialogResult Show(MaterialForm pForm, string message, string title, Buttons buttons, Icon icon)
@@ -444,11 +469,10 @@ namespace MaterialWinforms.Controls
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaterialDialog));
             this.pnl_Top = new System.Windows.Forms.Panel();
             this.pnl_Message = new System.Windows.Forms.Panel();
             this.lbl_Message = new MaterialWinforms.Controls.MaterialLabel();
-            this.lbl_Title = new Label();
+            this.lbl_Title = new System.Windows.Forms.Label();
             this.pnl_Footer = new System.Windows.Forms.Panel();
             this.pnl_Top.SuspendLayout();
             this.pnl_Message.SuspendLayout();
@@ -482,25 +506,25 @@ namespace MaterialWinforms.Controls
             // 
             this.lbl_Message.AutoSize = true;
             this.lbl_Message.Depth = 0;
+            this.lbl_Message.Dock = System.Windows.Forms.DockStyle.Top;
             this.lbl_Message.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lbl_Message.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lbl_Message.Location = new System.Drawing.Point(0, 0);
+            this.lbl_Message.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.lbl_Message.Location = new System.Drawing.Point(5, 5);
             this.lbl_Message.MaximumSize = new System.Drawing.Size(330, 5000);
             this.lbl_Message.MouseState = MaterialWinforms.MouseState.HOVER;
             this.lbl_Message.Name = "lbl_Message";
-            this.lbl_Message.Size = new System.Drawing.Size(330, 5000);
+            this.lbl_Message.Size = new System.Drawing.Size(0, 19);
             this.lbl_Message.TabIndex = 1;
-            this.lbl_Message.Text = resources.GetString("lbl_Message.Text");
             // 
             // lbl_Title
             // 
             this.lbl_Title.AutoSize = true;
             this.lbl_Title.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lbl_Title.Font = SkinManager.ROBOTO_MEDIUM_12;
+            this.lbl_Title.Font = new System.Drawing.Font("Roboto", 12F);
             this.lbl_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lbl_Title.Location = new System.Drawing.Point(10, 10);
             this.lbl_Title.Name = "lbl_Title";
-            this.lbl_Title.Size = new System.Drawing.Size(108, 19);
+            this.lbl_Title.Size = new System.Drawing.Size(115, 20);
             this.lbl_Title.TabIndex = 0;
             this.lbl_Title.Text = "materialLabel1";
             // 
@@ -519,8 +543,6 @@ namespace MaterialWinforms.Controls
             this.Controls.Add(this.pnl_Top);
             this.Name = "MaterialDialog";
             this.Padding = new System.Windows.Forms.Padding(0);
-            this.Controls.SetChildIndex(this.pnl_Top, 0);
-            this.Controls.SetChildIndex(this.pnl_Footer, 0);
             this.pnl_Top.ResumeLayout(false);
             this.pnl_Top.PerformLayout();
             this.pnl_Message.ResumeLayout(false);

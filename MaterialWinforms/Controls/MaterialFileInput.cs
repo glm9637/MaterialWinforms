@@ -67,6 +67,7 @@ public class MaterialFileInput : Control, IMaterialControl
     public int Depth { get; set; }
     [Browsable(false)]
     public MouseState MouseState { get; set; }
+    public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
     public HorizontalAlignment TextAlignment
     {
@@ -336,7 +337,7 @@ public class MaterialFileInput : Control, IMaterialControl
         base.OnPaint(e);
         Bitmap B = new Bitmap(Width, Height);
         Graphics G = Graphics.FromImage(B);
-        G.Clear(Color.Transparent);
+        G.Clear(BackColor);
 
         EnabledStringColor = ColorTranslator.FromHtml(fontColor);
         EnabledFocusedColor = ColorTranslator.FromHtml(focusColor);

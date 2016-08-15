@@ -18,6 +18,8 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         public bool Primary { get; set; }
 
+        public Color BackColor { get { return Parent==null?SkinManager.GetApplicationBackgroundColor():Parent.BackColor; } }
+
         public bool Accent { get; set; }
 
         [Browsable(false)]

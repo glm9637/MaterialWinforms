@@ -44,6 +44,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+
         [Category("Appearance")]
         public string EllipseColor
         {
@@ -101,7 +103,7 @@ namespace MaterialWinforms.Controls
         {
             var G = pevent.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.Clear(Parent.BackColor);
+            G.Clear(BackColor);
 
             EllipseBackColor = ColorTranslator.FromHtml(EllipseBG);
             EllipseBorderBackColor = ColorTranslator.FromHtml(EllipseBorder);

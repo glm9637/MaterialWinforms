@@ -26,6 +26,8 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
+
+        public Color BackColor { get { return SkinManager.ColorScheme.PrimaryColor; } }
         public delegate void SideDrawerButtonClicked();
         public event SideDrawerButtonClicked onSideDrawerButtonClicked;
 
@@ -123,6 +125,7 @@ namespace MaterialWinforms.Controls
         {
             base.OnMouseMove(e);
 
+
             if (menuButtonBounds.Contains(e.Location))
             {
                 if (buttonState != ButtonState.MenuOver)
@@ -173,19 +176,19 @@ namespace MaterialWinforms.Controls
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (menuButtonBounds.Contains(e.Location) && ActionBarMenu != null)
+            if (menuButtonBounds.Contains(e.Location))
             {
-
-                buttonState = ButtonState.MenuDown;
                 if (searchOpen)
                 {
+                    buttonState = ButtonState.MenuDown;
                     objAnimationManager.StartNewAnimation(AnimationDirection.Out);
                     SearchTextBox.Text = "";
                     searchOpen = false;
                     Controls.Remove(SearchTextBox);
                 }
-                else
+                else if (ActionBarMenu != null)
                 {
+                    buttonState = ButtonState.MenuDown;
                     ActionBarMenu.Show(PointToScreen(e.Location));
                 }
 
@@ -226,6 +229,7 @@ namespace MaterialWinforms.Controls
             SearchButtonBounds = new Rectangle(menuButtonBounds.X - ACTION_BAR_HEIGHT, 0, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
             ShadowBorder = new GraphicsPath();
             ShadowBorder.AddLine(new Point(Location.X, Location.Y + Height), new Point(Location.X + Width, Location.Y + Height));
+            Height = ACTION_BAR_HEIGHT;
             Refresh();
         }
 
@@ -310,23 +314,23 @@ namespace MaterialWinforms.Controls
                           menuButtonBounds.X + (int)(menuButtonBounds.Width * 0.5) - CircleRadius / 2,
                           menuButtonBounds.Y + (int)(menuButtonBounds.Height * 0.7) - CircleRadius / 2,
                          CircleRadius, CircleRadius);
-
-
-                        if (IntegratedSearchBar)
-                        {
-
-                            if (buttonState == ButtonState.SearchOver)
-                            {
-                                g.FillEllipse(hoverBrush, SearchButtonBounds);
-                            }
-                            g.SmoothingMode = SmoothingMode.AntiAlias;
-                            Pen IconPen = new Pen(SkinManager.ColorScheme.TextColor, 2);
-                            float borderDistance = 0.2f;
-                            g.DrawEllipse(IconPen, new RectangleF(SearchButtonBounds.X + SearchButtonBounds.Width * borderDistance, SearchButtonBounds.Y + SearchButtonBounds.Height * borderDistance, SearchButtonBounds.Width * 0.4f, SearchButtonBounds.Height * 0.4f));
-                            g.DrawLine(IconPen, new PointF(SearchButtonBounds.Right - SearchButtonBounds.Width * borderDistance, SearchButtonBounds.Bottom - SearchButtonBounds.Height * borderDistance), new PointF(SearchButtonBounds.X + SearchButtonBounds.Width * 0.53f, SearchButtonBounds.Y + SearchButtonBounds.Height * 0.53f));
-                        }
                     }
                 }
+                    if (IntegratedSearchBar)
+                    {
+
+                        if (buttonState == ButtonState.SearchOver)
+                        {
+                            g.FillEllipse(hoverBrush, SearchButtonBounds);
+                        }
+                        g.SmoothingMode = SmoothingMode.AntiAlias;
+                        Pen IconPen = new Pen(SkinManager.ColorScheme.TextColor, 2);
+                        float borderDistance = 0.2f;
+                        g.DrawEllipse(IconPen, new RectangleF(SearchButtonBounds.X + SearchButtonBounds.Width * borderDistance, SearchButtonBounds.Y + SearchButtonBounds.Height * borderDistance, SearchButtonBounds.Width * 0.4f, SearchButtonBounds.Height * 0.4f));
+                        g.DrawLine(IconPen, new PointF(SearchButtonBounds.Right - SearchButtonBounds.Width * borderDistance, SearchButtonBounds.Bottom - SearchButtonBounds.Height * borderDistance), new PointF(SearchButtonBounds.X + SearchButtonBounds.Width * 0.53f, SearchButtonBounds.Y + SearchButtonBounds.Height * 0.53f));
+                    }
+                
+
                 MaterialForm objParent = (MaterialForm)Parent;
                 if (objParent.SideDrawer != null)
                 {

@@ -35,6 +35,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
+        public Color BackColor { get { return SkinManager.ColorScheme.AccentColor; } }
+
         [Browsable(false)]
         [DefaultValue (typeof(int),"48")]
         public int Breite { get { return this.Width; } set { this.Width = value; } }
@@ -51,7 +53,6 @@ namespace MaterialWinforms.Controls
             Height = 48;
             Width = 48;
             Elevation = 5;
-            BackColor = Color.Transparent;
             
             animationManager = new AnimationManager(false)
             {
@@ -100,7 +101,6 @@ namespace MaterialWinforms.Controls
             if (Parent != null)
             {
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
-                BackColor = SkinManager.GetCardsColor();
                 Parent.Invalidate();
             }
 

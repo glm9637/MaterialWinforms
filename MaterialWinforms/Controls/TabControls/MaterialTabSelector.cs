@@ -20,8 +20,12 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
+        public Color BackColor { get { return SkinManager.ColorScheme.PrimaryColor; } }
+
         private int HoveredXButtonIndex = -1;
         public MaterialContextMenuStrip RightClickMenu { get; set; }
+
+        private Point RightClickLocation;
 
         private int _MaxTabWidth;
         public int MaxTabWidht
@@ -114,6 +118,7 @@ namespace MaterialWinforms.Controls
             ToolStripMenuItem CloseAllTabs = new ToolStripMenuItem();
             ToolStripMenuItem TabPositionZurruecksetzten = new ToolStripMenuItem();
             ToolStripMenuItem CloseAllExeptCurrent = new ToolStripMenuItem();
+            ToolStripMenuItem OpenInNewWindow = new ToolStripMenuItem();
 
             CloseAllTabs.Text = "Alle Tabs schließen";
             CloseAllTabs.Click += CloseAllTabs_Click;
@@ -126,6 +131,24 @@ namespace MaterialWinforms.Controls
             TabPositionZurruecksetzten.Text = "Tab Positionen Zurrücksetzen";
             TabPositionZurruecksetzten.Click += TabPositionZurruecksetzten_Click;
             RightClickMenu.Items.Add(TabPositionZurruecksetzten);
+
+            OpenInNewWindow.Text = "Tab in neuem Fenster öffnen";
+            OpenInNewWindow.Click += OpenInNewWindow_Click;
+            RightClickMenu.Items.Add(OpenInNewWindow);
+        }
+
+        void OpenInNewWindow_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < tabRects.Count; i++)
+            {
+                if (tabRects[i].TabRect.Contains(RightClickLocation))
+                {
+                    var me = this;
+                    TabWindow t = new TabWindow((MaterialTabPage)baseTabControl.TabPages[i], ref me);
+                    t.Show();
+                    return;
+                }
+            }  
         }
 
 
@@ -312,61 +335,64 @@ namespace MaterialWinforms.Controls
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (mouseDown)
+            if (baseTabControl != null && tabRects != null)
             {
-                bool move = false;
-
-
-                if (oldXLocation > 0)
+                if (mouseDown && baseTabControl.TabPages.Count > 0)
                 {
+                    bool move = false;
 
-                    int off = offset;
-                    off -= oldXLocation - e.X;
-                    if (tabRects[0].TabRect.X + off < 0)
+
+                    if (oldXLocation > 0)
                     {
-                        if (tabRects[tabRects.Count - 1].TabRect.Right + off > Width)
+
+                        int off = offset;
+                        off -= oldXLocation - e.X;
+                        if (tabRects[0].TabRect.X + off < 0)
                         {
-                            move = true;
+                            if (tabRects[tabRects.Count - 1].TabRect.Right + off > Width)
+                            {
+                                move = true;
+                            }
+                        }
+                        else
+                        {
+                            if (tabRects[tabRects.Count - 1].TabRect.Right + off < Width)
+                            {
+                                move = true;
+                            }
+                        }
+
+                        if (move)
+                        {
+                            offset -= oldXLocation - e.X;
+                            oldXLocation = e.X;
+                            Refresh();
                         }
                     }
                     else
                     {
-                        if (tabRects[tabRects.Count - 1].TabRect.Right + off < Width)
-                        {
-                            move = true;
-                        }
-                    }
-
-                    if (move)
-                    {
-                        offset -= oldXLocation - e.X;
                         oldXLocation = e.X;
                         Refresh();
                     }
-                }
-                else
-                {
-                    oldXLocation = e.X;
-                    Refresh();
-                }
 
 
-                return;
-            }
-            for (int i = 0; i < baseTabControl.TabCount; i++)
-            {
-                if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
+                    return;
+                }
+                for (int i = 0; i < baseTabControl.TabCount; i++)
                 {
-                    if (tabRects[i].XButtonRect.Contains(e.Location))
+                    if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
                     {
-                        HoveredXButtonIndex = i;
-                        Refresh();
-                        return;
+                        if (tabRects[i].XButtonRect.Contains(e.Location))
+                        {
+                            HoveredXButtonIndex = i;
+                            Refresh();
+                            return;
+                        }
                     }
                 }
+                HoveredXButtonIndex = -1;
+                return;
             }
-            HoveredXButtonIndex = -1;
-            return;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -421,6 +447,7 @@ namespace MaterialWinforms.Controls
             }
             else
             {
+                RightClickLocation = e.Location;
                 RightClickMenu.Show(PointToScreen(e.Location));
             }
         }

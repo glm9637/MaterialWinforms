@@ -31,6 +31,8 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        public Color BackColor { get { return SkinManager.ColorScheme.AccentColor; } }
+
         public int Elevation { get; set; }
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
@@ -69,7 +71,6 @@ namespace MaterialWinforms.Controls
             Height = 48;
             Width = 48;
             Elevation = 5;
-            BackColor = Color.Transparent;
             ProgressBackgroundPen = new Pen(MaterialSkinManager.Instance.ColorScheme.LightPrimaryBrush);
             ProgressBackgroundPen.Width = 0;
             ProgressPen = new Pen(MaterialSkinManager.Instance.ColorScheme.PrimaryBrush);
@@ -129,7 +130,6 @@ namespace MaterialWinforms.Controls
             if (Parent != null)
             {
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
-                BackColor = SkinManager.GetCardsColor();
                 Parent.Invalidate();
             }
 

@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MaterialSkin")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Material Designed Windows Forms Controls")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Melvin Fengels")]
 [assembly: AssemblyProduct("MaterialSkin")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]

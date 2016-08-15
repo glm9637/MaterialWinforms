@@ -192,6 +192,11 @@ namespace MaterialWinforms
             return (Theme == Themes.LIGHT ? CHECKBOX_OFF_DISABLED_LIGHT_BRUSH : CHECKBOX_OFF_DISABLED_DARK_BRUSH);
         }
 
+        public Color getRaisedButtonBackroundColor()
+        {
+            return RAISED_BUTTON_BACKGROUND;
+        }
+
         public Brush GetRaisedButtonBackgroundBrush()
         {
             return RAISED_BUTTON_BACKGROUND_BRUSH;

@@ -29,6 +29,8 @@ namespace MaterialWinforms.Controls
         private Color pBaseColor;
         private GraphicsPath objShadowPath;
 
+        public Color BackColor { get { return SkinManager.GetCardsColor(); } set{} }
+
         private GraphicsPath CurrentHoveredPath;
         private int HoveredIndex;
         private Color TempColor;

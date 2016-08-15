@@ -20,6 +20,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
+        public override Color BackColor { get { return SkinManager.GetApplicationBackgroundColor(); } }
+
         private MaterialContextMenuStrip _SideDrawer;
 
         public bool _SideDrawerFixiert;
@@ -141,7 +143,8 @@ namespace MaterialWinforms.Controls
             if (Parent != null)
             {
                 MaximumSize = new Size(Math.Min(Parent.Width * 80, MaterialActionBar.ACTION_BAR_HEIGHT * 5), Parent.Height - MaterialActionBar.ACTION_BAR_HEIGHT);
-                Width = _SideDrawerFixiert ? MaximumSize.Width : 0;
+
+                Width = _SideDrawerFixiert ? MaximumSize.Width : Width;
             }
             ShadowBorder = new GraphicsPath();
             if (Width == 0)
@@ -155,6 +158,11 @@ namespace MaterialWinforms.Controls
           
             ShadowBorder.AddLine(new Point(Location.X + Width, Location.Y), new Point(Location.X + Width, Location.Y + Height));
 
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.Clear(SkinManager.GetApplicationBackgroundColor());
         }
 
         private void initSideDrawer()

@@ -21,6 +21,7 @@ namespace MaterialWinforms.Controls
         private MaterialColorPicker objColorControl;
         private Color _Color;
         private Rectangle ColorRect;
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : Parent.BackColor; } set { } }
         public Color Color
         {
             get { return _Color; }

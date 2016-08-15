@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace MaterialWinforms.Controls
 {
@@ -15,6 +16,8 @@ namespace MaterialWinforms.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : Parent.BackColor; } set { } }
+
 
         private MaterialDatePicker objDateControl;
         private DateTime _Date;

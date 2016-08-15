@@ -19,6 +19,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public Point MouseLocation { get; set; }
 
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+
         private bool ripple;
         [Category("Behavior")]
         public bool Ripple
@@ -96,7 +98,7 @@ namespace MaterialWinforms.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             // clear the control
-            g.Clear(Parent.BackColor);
+            g.Clear(BackColor);
 
             var CHECKBOX_CENTER = boxOffset + CHECKBOX_SIZE_HALF -1;
 

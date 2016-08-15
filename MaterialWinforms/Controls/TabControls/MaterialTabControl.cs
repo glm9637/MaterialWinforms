@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing.Design;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MaterialWinforms.Controls
 {
@@ -17,6 +18,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
+        public Color BackColor { get { return Parent==null?SkinManager.GetApplicationBackgroundColor():Parent.BackColor; } }
+
         private bool _TabsAreClosable;
         public bool TabsAreClosable
         {
@@ -28,6 +31,11 @@ namespace MaterialWinforms.Controls
             {
                 _TabsAreClosable = true;
             }
+        }
+
+        public MaterialTabControl()
+        {
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
         }
 
         protected override void WndProc(ref Message m)
@@ -82,21 +90,31 @@ namespace MaterialWinforms.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+       
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : Parent.BackColor; } }
 
-        public bool Closable;
+         [Category("Behavior")]
+        public Boolean Closable {get;set;}
 
-        public MaterialTabPage() { }
+        public MaterialTabPage() {
+
+                SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+        }
 
         public MaterialTabPage(string pText)
         {
             this.Name = pText;
             this.Text = pText;
+
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
 
         public MaterialTabPage(string pText, bool isClosable)
         {
             this.Name = pText;
             this.Text = pText;
+
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             Closable = isClosable;
         }
 

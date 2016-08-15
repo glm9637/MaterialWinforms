@@ -18,6 +18,7 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         [Browsable(false)]
         public Point MouseLocation { get; set; }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
         private bool ripple;
         [Category("Behavior")]
@@ -96,7 +97,7 @@ namespace MaterialWinforms.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             // clear the control
-            g.Clear(Parent.BackColor);
+            g.Clear(BackColor);
 
             var RADIOBUTTON_CENTER = boxOffset + RADIOBUTTON_SIZE_HALF;
 

@@ -287,6 +287,7 @@ namespace MaterialWinforms.Controls
             e.Graphics.DrawLine(new Pen(LineBrush), new Point(0, ClientRectangle.Bottom-1), new Point(ClientRectangle.Right, ClientRectangle.Bottom-1));
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            if (Enabled) { 
             PointF p1 = new Point(ClientRectangle.Right - 5, (int)(ClientRectangle.Height * 0.33));
             PointF p2 = new Point(ClientRectangle.Right - 15, (int)(ClientRectangle.Height * 0.33));
             PointF p3 = new Point(ClientRectangle.Right - 10, (int)(ClientRectangle.Height * 0.66));
@@ -294,7 +295,7 @@ namespace MaterialWinforms.Controls
                                   p1,p2,p3
                               };
             e.Graphics.FillPolygon(LineBrush, curvePoints, FillMode.Winding);
-
+        }
             TextRenderer.DrawText(e.Graphics, _Text, SkinManager.ROBOTO_MEDIUM_11, this.AnchorClientBounds, SkinManager.ColorScheme.TextColor, TextFormatFlags.WordEllipsis);
         }
 

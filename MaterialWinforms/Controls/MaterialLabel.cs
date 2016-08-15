@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MaterialWinforms.Controls
 {
@@ -9,8 +10,10 @@ namespace MaterialWinforms.Controls
         public int Depth { get; set; }
         [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType())?((IMaterialControl)Parent).BackColor:Parent.BackColor; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
+
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
@@ -20,5 +23,12 @@ namespace MaterialWinforms.Controls
 
             BackColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
         }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.Clear(BackColor);
+            base.OnPaint(e);
+        }
+
     }
 }

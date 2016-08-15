@@ -19,6 +19,7 @@ namespace MaterialWinforms.Controls
 		public MouseState MouseState { get; set; }
 		[Browsable(false)]
 		public Point MouseLocation { get; set; }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
 		public MaterialListView()
 		{
