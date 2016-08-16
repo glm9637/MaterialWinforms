@@ -110,6 +110,9 @@
     <Compile Include="Controls\MaterialFloatingActionButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -24,6 +24,8 @@ namespace MaterialWinforms.Controls
 
         private MaterialContextMenuStrip _SideDrawer;
 
+        public bool SelectOnClick { get; set; }
+
         public bool _SideDrawerFixiert;
         public bool _SideDrawerUnterActionBar;
         public bool SideDrawerFixiert
@@ -188,7 +190,7 @@ namespace MaterialWinforms.Controls
 
                         if (objMenuItem.GetType() == typeof(MaterialToolStripMenuItem))
                         {
-                            ToolStripMenuItem t = (ToolStripMenuItem)objMenuItem;
+                            MaterialToolStripMenuItem t = (MaterialToolStripMenuItem)objMenuItem;
                             if (t.DropDownItems.Count > 0)
                             {
                                 Verarbeitet = true;
@@ -211,7 +213,7 @@ namespace MaterialWinforms.Controls
                                 {
                                     MaterialDrawerItem objSubItem = new MaterialDrawerItem();
                                     objSubItem.Text = objSubMenuItem.Text;
-                                    objSubItem.Tag = objSubMenuItem;
+                                    objSubItem.Tag = objSubMenuItem.Tag;
                                     objSubItem.Enabled = objSubMenuItem.Enabled;
                                     objSubItem.AutoSize = false;
                                     objSubItem.Margin = new Padding(10, 0, 0, 0);
@@ -239,7 +241,7 @@ namespace MaterialWinforms.Controls
                         {
                             MaterialFlatButton objItem = new MaterialFlatButton();
                             objItem.Text = objMenuItem.Text;
-                            objItem.Tag = objMenuItem;
+                            objItem.Tag = objMenuItem.Tag;
                             objItem.Enabled = objMenuItem.Enabled;
                             objItem.AutoSize = false;
                             objItem.Margin = new Padding(0, 0, 0, 0);
@@ -276,14 +278,14 @@ namespace MaterialWinforms.Controls
             if (sender.GetType() == typeof(MaterialDrawerItem))
             {
                 MaterialDrawerItem t = (MaterialDrawerItem)sender;
-                t.Selected = true;
+                t.Selected = true && SelectOnClick;
                 strText = t.Text;
                 objTag = t.Tag;
             }
             else
             {
                 MaterialFlatButton t = (MaterialFlatButton)sender;
-                t.Selected = true;
+                t.Selected = true&&SelectOnClick;
                 strText = t.Text;
                 objTag = t.Tag;
             }

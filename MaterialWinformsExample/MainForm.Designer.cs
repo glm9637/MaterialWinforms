@@ -37,12 +37,12 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath3 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath4 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -67,6 +67,8 @@ namespace MaterialWinformsExample
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.materialTabControl1 = new MaterialWinforms.Controls.MaterialTabControl();
             this.materialTabPage1 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialCard3 = new MaterialWinforms.Controls.MaterialCard();
+            this.materialLabel2 = new MaterialWinforms.Controls.MaterialLabel();
             this.materialScrollBar1 = new MaterialWinforms.Controls.MaterialScrollBar();
             this.materialSingleLineTextField1 = new MaterialWinforms.Controls.MaterialSingleLineTextField();
             this.materialComboBox1 = new MaterialWinforms.Controls.MaterialComboBox();
@@ -109,17 +111,15 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.materialCard3 = new MaterialWinforms.Controls.MaterialCard();
-            this.materialLabel2 = new MaterialWinforms.Controls.MaterialLabel();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
+            this.materialCard3.SuspendLayout();
             this.mcm_ComboBox1.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.materialCard1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
-            this.materialCard3.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialFlatButton3
@@ -347,6 +347,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer3.MaximumSize = new System.Drawing.Size(210, 651);
             this.materialSideDrawer3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSideDrawer3.Name = "materialSideDrawer3";
+            this.materialSideDrawer3.SelectOnClick = false;
             graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
             this.materialSideDrawer3.ShadowBorder = graphicsPath4;
             this.materialSideDrawer3.SideDrawer = this.SideDrawerList;
@@ -411,6 +412,34 @@ namespace MaterialWinformsExample
             this.materialTabPage1.Size = new System.Drawing.Size(801, 482);
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
+            // 
+            // materialCard3
+            // 
+            this.materialCard3.Controls.Add(this.materialLabel2);
+            this.materialCard3.Depth = 0;
+            this.materialCard3.Elevation = 5;
+            this.materialCard3.Location = new System.Drawing.Point(320, 347);
+            this.materialCard3.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialCard3.Name = "materialCard3";
+            this.materialCard3.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
+            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard3.ShadowBorder = graphicsPath5;
+            this.materialCard3.Size = new System.Drawing.Size(259, 54);
+            this.materialCard3.TabIndex = 46;
+            this.materialCard3.Title = null;
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialLabel2.Location = new System.Drawing.Point(41, 17);
+            this.materialLabel2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(108, 19);
+            this.materialLabel2.TabIndex = 0;
+            this.materialLabel2.Text = "materialLabel2";
             // 
             // materialScrollBar1
             // 
@@ -787,6 +816,7 @@ namespace MaterialWinformsExample
             // materialDropDownColorPicker1
             // 
             this.materialDropDownColorPicker1.AnchorSize = new System.Drawing.Size(88, 21);
+            this.materialDropDownColorPicker1.BackColor = System.Drawing.SystemColors.Control;
             this.materialDropDownColorPicker1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(64)))), ((int)(((byte)(129)))));
             this.materialDropDownColorPicker1.Depth = 0;
             this.materialDropDownColorPicker1.DockSide = MaterialWinforms.Controls.DropDownControl.eDockSide.Left;
@@ -799,6 +829,7 @@ namespace MaterialWinformsExample
             // materialDropDownDatePicker1
             // 
             this.materialDropDownDatePicker1.AnchorSize = new System.Drawing.Size(181, 21);
+            this.materialDropDownDatePicker1.BackColor = System.Drawing.SystemColors.Control;
             this.materialDropDownDatePicker1.Date = new System.DateTime(2016, 7, 25, 14, 22, 14, 444);
             this.materialDropDownDatePicker1.Depth = 0;
             this.materialDropDownDatePicker1.DockSide = MaterialWinforms.Controls.DropDownControl.eDockSide.Left;
@@ -945,34 +976,6 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // materialCard3
-            // 
-            this.materialCard3.Controls.Add(this.materialLabel2);
-            this.materialCard3.Depth = 0;
-            this.materialCard3.Elevation = 5;
-            this.materialCard3.Location = new System.Drawing.Point(320, 347);
-            this.materialCard3.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialCard3.Name = "materialCard3";
-            this.materialCard3.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard3.ShadowBorder = graphicsPath5;
-            this.materialCard3.Size = new System.Drawing.Size(259, 54);
-            this.materialCard3.TabIndex = 46;
-            this.materialCard3.Title = null;
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialLabel2.Location = new System.Drawing.Point(41, 17);
-            this.materialLabel2.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(108, 19);
-            this.materialLabel2.TabIndex = 0;
-            this.materialLabel2.Text = "materialLabel2";
-            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -998,14 +1001,14 @@ namespace MaterialWinformsExample
             this.materialTabControl1.ResumeLayout(false);
             this.materialTabPage1.ResumeLayout(false);
             this.materialTabPage1.PerformLayout();
+            this.materialCard3.ResumeLayout(false);
+            this.materialCard3.PerformLayout();
             this.mcm_ComboBox1.ResumeLayout(false);
             this.materialCard2.ResumeLayout(false);
             this.materialCard2.PerformLayout();
             this.materialCard1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
-            this.materialCard3.ResumeLayout(false);
-            this.materialCard3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

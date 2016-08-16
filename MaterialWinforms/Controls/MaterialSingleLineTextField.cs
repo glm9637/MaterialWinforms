@@ -16,7 +16,7 @@ namespace MaterialWinforms.Controls
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
-        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
         public override string Text { get { return baseTextBox.Text; } set { baseTextBox.Text = value; } }
         public new object Tag { get { return baseTextBox.Tag; } set { baseTextBox.Tag = value; } }
@@ -1001,6 +1001,7 @@ namespace MaterialWinforms.Controls
         {
             var g = pevent.Graphics;
             g.Clear(BackColor);
+            baseTextBox.BackColor = BackColor;
 
             int lineY = baseTextBox.Bottom + 3;
 
