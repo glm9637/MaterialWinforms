@@ -67,6 +67,8 @@ namespace MaterialWinformsExample
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.materialTabControl1 = new MaterialWinforms.Controls.MaterialTabControl();
             this.materialTabPage1 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.materialTextBox1 = new MaterialWinforms.Controls.MaterialTextBox();
             this.materialCard3 = new MaterialWinforms.Controls.MaterialCard();
             this.materialLabel2 = new MaterialWinforms.Controls.MaterialLabel();
             this.materialScrollBar1 = new MaterialWinforms.Controls.MaterialScrollBar();
@@ -394,6 +396,8 @@ namespace MaterialWinformsExample
             // materialTabPage1
             // 
             this.materialTabPage1.Closable = false;
+            this.materialTabPage1.Controls.Add(this.textBox1);
+            this.materialTabPage1.Controls.Add(this.materialTextBox1);
             this.materialTabPage1.Controls.Add(this.materialCard3);
             this.materialTabPage1.Controls.Add(this.materialScrollBar1);
             this.materialTabPage1.Controls.Add(this.materialSingleLineTextField1);
@@ -413,12 +417,38 @@ namespace MaterialWinformsExample
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(610, 381);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 48;
+            // 
+            // materialTextBox1
+            // 
+            this.materialTextBox1.Depth = 0;
+            this.materialTextBox1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialTextBox1.Hint = "Testhint";
+            this.materialTextBox1.Location = new System.Drawing.Point(552, 218);
+            this.materialTextBox1.MaxLength = 32767;
+            this.materialTextBox1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTextBox1.Name = "materialTextBox1";
+            this.materialTextBox1.ReadOnly = false;
+            this.materialTextBox1.SelectedText = "";
+            this.materialTextBox1.SelectionLength = 0;
+            this.materialTextBox1.SelectionStart = 0;
+            this.materialTextBox1.Size = new System.Drawing.Size(242, 134);
+            this.materialTextBox1.TabIndex = 47;
+            this.materialTextBox1.TabStop = false;
+            // 
             // materialCard3
             // 
             this.materialCard3.Controls.Add(this.materialLabel2);
             this.materialCard3.Depth = 0;
             this.materialCard3.Elevation = 5;
-            this.materialCard3.Location = new System.Drawing.Point(320, 347);
+            this.materialCard3.Location = new System.Drawing.Point(274, 347);
             this.materialCard3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard3.Name = "materialCard3";
             this.materialCard3.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
@@ -460,7 +490,6 @@ namespace MaterialWinformsExample
             this.materialSingleLineTextField1.MaxLength = 32767;
             this.materialSingleLineTextField1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
-            this.materialSingleLineTextField1.PasswordChar = '\0';
             this.materialSingleLineTextField1.ReadOnly = false;
             this.materialSingleLineTextField1.SelectedText = "";
             this.materialSingleLineTextField1.SelectionLength = 0;
@@ -468,8 +497,6 @@ namespace MaterialWinformsExample
             this.materialSingleLineTextField1.Size = new System.Drawing.Size(213, 38);
             this.materialSingleLineTextField1.TabIndex = 44;
             this.materialSingleLineTextField1.TabStop = false;
-            this.materialSingleLineTextField1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialSingleLineTextField1.UseSystemPasswordChar = false;
             // 
             // materialComboBox1
             // 
@@ -1084,5 +1111,7 @@ namespace MaterialWinformsExample
         private MaterialDropDownColorPicker materialDropDownColorPicker1;
         private MaterialCard materialCard3;
         private MaterialLabel materialLabel2;
+        private MaterialTextBox materialTextBox1;
+        private TextBox textBox1;
     }
 }

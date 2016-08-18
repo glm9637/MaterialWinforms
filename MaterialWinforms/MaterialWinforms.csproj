@@ -116,6 +116,9 @@
     <Compile Include="Controls\MaterialScrollBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialSlider.cs">
       <SubType>Component</SubType>
     </Compile>

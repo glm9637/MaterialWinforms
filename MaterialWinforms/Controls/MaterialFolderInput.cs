@@ -19,7 +19,7 @@ public class MaterialFolderInput : Control, IMaterialControl
     #region  Variables
 
     Button InPutBTN = new Button();
-    MaterialWinforms.Controls.MaterialSingleLineTextField MaterialTB = new MaterialWinforms.Controls.MaterialSingleLineTextField();
+    MaterialSingleLineTextField MaterialTB = new MaterialSingleLineTextField();
 
     HorizontalAlignment ALNType;
     int maxchars = 32767;
