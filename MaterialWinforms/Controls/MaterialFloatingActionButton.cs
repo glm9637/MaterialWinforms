@@ -119,22 +119,15 @@ namespace MaterialWinforms.Controls
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-
-
-            g.Clear(Parent.BackColor);
            
 
             Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X ,
                                     ClientRectangle.Y ,
                                     ClientRectangle.Width / 2));
 
-            using (var backgroundPath = DrawHelper.CreateCircle(ClientRectangle.X ,
-                    ClientRectangle.Y ,
-                    ClientRectangle.Width / 2))
-                {
-                    g.FillPath(SkinManager.ColorScheme.AccentBrush, backgroundPath);
-                }
+
+            g.Clear(SkinManager.ColorScheme.AccentColor);
+
 
             if (_Icon != null)
             {

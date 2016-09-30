@@ -45,6 +45,12 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        public int TabPadding
+        {
+            get { return TAB_HEADER_PADDING; }
+            set { TAB_HEADER_PADDING = value; }
+        }
+
         public bool CenterTabs { get; set; }
 
         private MaterialTabControl baseTabControl;
@@ -81,7 +87,7 @@ namespace MaterialWinforms.Controls
         private readonly AnimationManager animationManager;
 
         private List<TabRectangle> tabRects;
-        private const int TAB_HEADER_PADDING = 24;
+        private int TAB_HEADER_PADDING = 24;
         private const int TAB_INDICATOR_HEIGHT = 2;
         private bool mouseDown = false;
         private int offset = 0;

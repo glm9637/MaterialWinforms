@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Drawing.Design;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Data;
@@ -10,6 +12,8 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 using MaterialWinforms.Animations;
+using System.Reflection;
+using System.Collections;
 
 namespace MaterialWinforms.Controls
 {
@@ -56,6 +60,72 @@ namespace MaterialWinforms.Controls
 
         private AnimationManager objAnimationManager;
 
+        private ActionBarButtonCollection _ActionBarButtons;
+
+        [Editor(typeof(MaterialActionBarButtonCollectionEditor), typeof(UITypeEditor))]
+        public ActionBarButtonCollection ActionBarButtons
+        {
+            get
+            {
+                return _ActionBarButtons;
+            }
+        }
+
+        internal class MaterialActionBarButtonCollectionEditor : CollectionEditor
+        {
+            protected override CollectionEditor.CollectionForm
+            CreateCollectionForm()
+            {
+                CollectionForm baseForm = base.CreateCollectionForm();
+                baseForm.Text = "ActionBarButtons Collection Editor";
+                MethodInfo methodInfo = baseForm.GetType().GetMethod("AddItems", BindingFlags.NonPublic | BindingFlags.Instance);
+                methodInfo.Invoke(baseForm, new object[] { "test","test" });
+                return baseForm;
+            }
+
+            public MaterialActionBarButtonCollectionEditor(System.Type type)
+                : base(type)
+            {
+            }
+            protected override Type CreateCollectionItemType()
+            {
+                return typeof(MaterialActionBarButton);
+            }
+            protected override Type[] CreateNewItemTypes()
+            {
+                return new Type[] { typeof(MaterialActionBarButton) };
+            }
+
+        }
+
+        public class ActionBarButtonCollection : BaseCollection
+        {
+            private ArrayList Buttons = new ArrayList();
+
+            public override int Count
+            {
+                get
+                {
+                    return Buttons.Count;
+                }
+            }
+
+            protected override System.Collections.ArrayList List
+            {
+                get
+                {
+                    return Buttons;
+                }
+            }
+
+            public MaterialActionBarButton get(int index)
+            {
+                return Buttons(index);
+            }
+
+        }
+
+
         private enum ButtonState
         {
             DrawerOver,
@@ -77,6 +147,7 @@ namespace MaterialWinforms.Controls
         public const int ACTION_BAR_HEIGHT = 42;
         public MaterialActionBar()
         {
+            _ActionBarButtons = new ActionBarButtonCollection();
             Elevation = 10;
             Height = ACTION_BAR_HEIGHT;
             buttonState = ButtonState.None;
@@ -230,6 +301,7 @@ namespace MaterialWinforms.Controls
             ShadowBorder = new GraphicsPath();
             ShadowBorder.AddLine(new Point(Location.X, Location.Y + Height), new Point(Location.X + Width, Location.Y + Height));
             Height = ACTION_BAR_HEIGHT;
+            CalculateActionBarButtonPosition();
             Refresh();
         }
 
@@ -388,6 +460,31 @@ namespace MaterialWinforms.Controls
         public void setDrawerAnimationProgress(int newProgress)
         {
             DrawerAnimationProgress = newProgress;
+            Invalidate();
+        }
+
+         public void CalculateActionBarButtonPosition()
+        {
+            if (ActionBarButtons != null) { 
+            int RightX = Right;
+            if (IntegratedSearchBar)
+            {
+                RightX = SearchButtonBounds.X;
+            }
+            else if (ActionBarMenu != null)
+            {
+                RightX = menuButtonBounds.X;
+            }
+
+            RightX -= 5;
+
+            for (int i = ActionBarButtons.Count - 1; i >= 0; i--)
+            {
+                
+                //ActionBarButtons(i).Location = new Point(RightX - ACTION_BAR_HEIGHT, 0);
+                RightX = RightX - ACTION_BAR_HEIGHT;
+            }
+         }
             Invalidate();
         }
 
@@ -1567,6 +1664,322 @@ namespace MaterialWinforms.Controls
                     selectAll
                 });
                 }
+            }
+        }
+    }
+
+    [Designer(typeof(System.Windows.Forms.Design.ScrollableControlDesigner))]
+    public class MaterialActionBarButton : Button,IMaterialControl
+    {
+        [Browsable(false)]
+        public int Depth { get; set; }
+        [Browsable(false)]
+        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+        [Browsable(false)]
+        public MouseState MouseState { get; set; }
+
+        public Color BackColor { get { return SkinManager.ColorScheme.PrimaryColor; } }
+
+        private  AnimationManager animationManager;
+        private  AnimationManager hoverAnimationManager;
+
+
+        public Image Image { get; set; }
+
+        public MaterialActionBarButton()
+        {
+            init();
+        }
+
+        public MaterialActionBarButton(String pName)
+        {
+            this.Name = pName;
+            init();
+        }
+
+        public MaterialActionBarButton(Image pIcon)
+        {
+ 
+            this.Image = pIcon;
+
+            init();
+        }
+
+        public MaterialActionBarButton(String pName,Image pIcon)
+        {
+            this.Name = pName;
+            this.Image = pIcon;
+
+            init();
+        }
+
+        private void init()
+        {
+            animationManager = new AnimationManager(false)
+            {
+                Increment = 0.03,
+                AnimationType = AnimationType.EaseOut
+            };
+            hoverAnimationManager = new AnimationManager
+            {
+                Increment = 0.07,
+                AnimationType = AnimationType.Linear
+            };
+
+            hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
+            animationManager.OnAnimationProgress += sender => Invalidate();
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            Width = MaterialActionBar.ACTION_BAR_HEIGHT;
+            Height = MaterialActionBar.ACTION_BAR_HEIGHT;
+            Margin = new Padding(4, 6, 4, 6);
+            Padding = new Padding(0);
+
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+        }
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+           // base.OnPaint(e);
+            g.Clear(SkinManager.ColorScheme.PrimaryColor);
+            
+
+            //Hover
+            Color c = SkinManager.GetFlatButtonHoverBackgroundColor();
+            using (Brush b = new SolidBrush(Color.FromArgb((int)(hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
+                g.FillEllipse(b, ClientRectangle);
+
+            //Ripple
+            if (animationManager.IsAnimating())
+            {
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                for (int i = 0; i < animationManager.GetAnimationCount(); i++)
+                {
+                    var animationValue = animationManager.GetProgress(i);
+                    var animationSource = animationManager.GetSource(i);
+
+                    using (Brush rippleBrush = new SolidBrush(Color.FromArgb((int)(101 - (animationValue * 100)), Color.Black)))
+                    {
+                        var rippleSize = (int)(animationValue * Width * 2);
+                        g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleSize / 2, animationSource.Y - rippleSize / 2, rippleSize, rippleSize));
+                    }
+                }
+                g.SmoothingMode = SmoothingMode.None;
+            }
+
+            e.Graphics.DrawImage(Image, new Rectangle(0, 0, Width, Height));
+           
+        }
+
+    }
+
+
+    internal class MaterialActionBarButtonDesigner :
+    System.Windows.Forms.Design.ParentControlDesigner
+    {
+
+        #region Private Instance Variables
+
+        private DesignerVerbCollection m_verbs = new
+        DesignerVerbCollection();
+        private IDesignerHost m_DesignerHost;
+        private ISelectionService m_SelectionService;
+
+        #endregion
+
+        public MaterialActionBarButtonDesigner()
+            : base()
+        {
+            DesignerVerb verb1 = new DesignerVerb("Add ActionBarButton", new
+            EventHandler(OnAddActionBarButton));
+            DesignerVerb verb2 = new DesignerVerb("ActionBarButton Tab", new
+            EventHandler(OnRemoveActionBarButton));
+            m_verbs.AddRange(new DesignerVerb[] { verb1, verb2 });
+        }
+
+        #region Properties
+
+        public override DesignerVerbCollection Verbs
+        {
+            get
+            {
+                if (m_verbs.Count == 2)
+                {
+                    MaterialTabControl MyControl = (MaterialTabControl)Control;
+                    if (MyControl.TabCount == 0)
+                    {
+                        m_verbs[1].Enabled = true;
+                    }
+                    else
+                    {
+                        m_verbs[1].Enabled = false;
+                    }
+                }
+                return m_verbs;
+            }
+        }
+
+        public IDesignerHost DesignerHost
+        {
+            get
+            {
+                if (m_DesignerHost == null)
+                    m_DesignerHost =
+                    (IDesignerHost)(GetService(typeof(IDesignerHost)));
+
+                return m_DesignerHost;
+            }
+        }
+
+        public ISelectionService SelectionService
+        {
+            get
+            {
+                if (m_SelectionService == null)
+                    m_SelectionService =
+                    (ISelectionService)(this.GetService(typeof(ISelectionService)));
+                return m_SelectionService;
+            }
+        }
+
+        #endregion
+
+        void OnAddActionBarButton(Object sender, EventArgs e)
+        {
+            MaterialActionBar ParentControl = (MaterialActionBar)Control;
+            //List<MaterialActionBarButton> oldButtons = ParentControl.ActionBarButtons;
+
+            RaiseComponentChanging(TypeDescriptor.GetProperties(ParentControl)["ActionBarButtons"]);
+
+            MaterialActionBarButton P =
+            (MaterialActionBarButton)(DesignerHost.CreateComponent(typeof(MaterialActionBarButton)));
+            P.Text = P.Name;
+            ParentControl.ActionBarButtons.Add(P);
+
+            RaiseComponentChanged(TypeDescriptor.GetProperties(ParentControl)["TabPages"],
+            oldButtons, ParentControl.ActionBarButtons);
+
+            SetVerbs();
+            ParentControl.CalculateActionBarButtonPosition();
+        }
+
+        void OnRemoveActionBarButton(Object sender, EventArgs e)
+        {
+            MaterialActionBar ParentControl = (MaterialActionBar)Control;
+            List<MaterialActionBarButton> oldButtons = ParentControl.ActionBarButtons;
+            
+
+            RaiseComponentChanging(TypeDescriptor.GetProperties(ParentControl)["ActionBarButtons"]);
+
+           // DesignerHost.DestroyComponent(ParentControl.ActionBarButtons[ParentControl.SelectedIndex]);
+
+            RaiseComponentChanged(TypeDescriptor.GetProperties(ParentControl)["ActionBarButtons"],
+            oldButtons, ParentControl.ActionBarButtons);
+
+            SelectionService.SetSelectedComponents(new IComponent[] {
+ParentControl }, SelectionTypes.Auto);
+
+            SetVerbs();
+            ParentControl.CalculateActionBarButtonPosition();
+        }
+
+        private void SetVerbs()
+        {
+            MaterialTabControl ParentControl = (MaterialTabControl)Control;
+
+            switch (ParentControl.TabPages.Count)
+            {
+                case 0:
+                    Verbs[1].Enabled = false;
+                    break;
+                default:
+                    Verbs[1].Enabled = true;
+                    break;
+            }
+        }
+
+        private const int WM_NCHITTEST = 0x84;
+
+        private const int HTTRANSPARENT = -1;
+        private const int HTCLIENT = 1;
+
+        protected override void WndProc(ref System.Windows.Forms.Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == WM_NCHITTEST)
+            {
+                //select tabcontrol when Tabcontrol clicked outside of
+                if (m.Result.ToInt32() == HTTRANSPARENT)
+                    m.Result = (IntPtr)HTCLIENT;
+            }
+
+        }
+
+        private enum TabControlHitTest
+        {
+            TCHT_NOWHERE = 1,
+            TCHT_ONITEMICON = 2,
+            TCHT_ONITEMLABEL = 4,
+            TCHT_ONITEM = TCHT_ONITEMICON | TCHT_ONITEMLABEL
+        }
+
+        private const int TCM_HITTEST = 0x130D;
+
+        private struct TCHITTESTINFO
+        {
+            public System.Drawing.Point pt;
+            public TabControlHitTest flags;
+        }
+
+        protected override bool GetHitTest(System.Drawing.Point point)
+        {
+            if (this.SelectionService.PrimarySelection == this.Control)
+            {
+                TCHITTESTINFO hti = new TCHITTESTINFO();
+
+                hti.pt = this.Control.PointToClient(point);
+                hti.flags = 0;
+
+                System.Windows.Forms.Message m = new
+                System.Windows.Forms.Message();
+                m.HWnd = this.Control.Handle;
+                m.Msg = TCM_HITTEST;
+
+                IntPtr lparam =
+                System.Runtime.InteropServices.Marshal.AllocHGlobal(System.Runtime.InteropServices.Marshal.SizeOf(hti));
+                System.Runtime.InteropServices.Marshal.StructureToPtr(hti,
+                lparam, false);
+                m.LParam = lparam;
+
+                base.WndProc(ref m);
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(lparam);
+
+                if (m.Result.ToInt32() != -1)
+                    return hti.flags != TabControlHitTest.TCHT_NOWHERE;
+
+            }
+
+            return false;
+        }
+
+        protected override void
+        OnPaintAdornments(System.Windows.Forms.PaintEventArgs pe)
+        {
+            //Don't want DrawGrid dots.
+        }
+
+        //Fix the AllSizable selectionrule on DockStyle.Fill
+        public override System.Windows.Forms.Design.SelectionRules
+        SelectionRules
+        {
+            get
+            {
+                if (Control.Dock == System.Windows.Forms.DockStyle.Fill)
+                    return
+                    System.Windows.Forms.Design.SelectionRules.Visible;
+                return base.SelectionRules;
             }
         }
     }

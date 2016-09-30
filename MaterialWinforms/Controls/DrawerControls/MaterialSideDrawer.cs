@@ -65,6 +65,15 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        public  void Redraw()
+        {
+            base.Invalidate();
+            foreach (Control objItem in Controls)
+            {
+                objItem.Invalidate();
+            }
+        }
+
         private bool _HideSideDrawer;
         public bool HideSideDrawer
         {

@@ -22,16 +22,12 @@ namespace MaterialWinforms.Controls
         public Color BackColor { get { return SkinManager.GetCardsColor() ; } }
 
         [Category("Appearance")]
-        public ObservableCollection<BreadCrumbItem> Items
+        public  ObservableCollection<BreadCrumbItem> Items
         {
             get { return _Teile; }
-            set
-            {
-                _Teile = value;
-            }
         }
 
-        public delegate void BreadCrumbItemClicked(String pTitel);
+        public delegate void BreadCrumbItemClicked(String pTitel,Object pTag);
         public event BreadCrumbItemClicked onBreadCrumbItemClicked;
 
         private int ItemLengt;
@@ -61,7 +57,10 @@ namespace MaterialWinforms.Controls
                 Increment = 0.03
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
+
         }
+
+
 
         private void Redraw(object sender, System.EventArgs e)
         {
@@ -82,7 +81,7 @@ namespace MaterialWinforms.Controls
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (mouseDown)
+            if (mouseDown && _Teile.Count>0)
             {
                 bool move = false;
 
@@ -186,9 +185,9 @@ namespace MaterialWinforms.Controls
                     animationManager.SetProgress(0);
                     animationManager.StartNewAnimation(AnimationDirection.In);
                     Invalidate();
-                    if (onBreadCrumbItemClicked != null)
+                    if (onBreadCrumbItemClicked != null && SelectedItemIndex > -1)
                     {
-                        onBreadCrumbItemClicked(_Teile[SelectedItemIndex].Text);
+                        onBreadCrumbItemClicked(_Teile[SelectedItemIndex].Text, _Teile[SelectedItemIndex].Tag);
                     }
                 }
                 UpdateTabRects();
@@ -286,13 +285,15 @@ namespace MaterialWinforms.Controls
                     }
                 }
             }
+            Invalidate();
         }
     }
 
     [Serializable]
     public class BreadCrumbItem
     {
-        public string Text;
+        public string Text{get;set;}
+        public Object Tag { get; set; }
         public Rectangle ItemRect;
         public BreadCrumbItem()
         {

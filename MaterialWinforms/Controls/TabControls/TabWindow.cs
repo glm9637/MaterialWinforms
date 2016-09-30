@@ -14,6 +14,8 @@ namespace MaterialWinforms.Controls
         private MaterialTabControl Root;
         private Rectangle ReturnButtonBounds;
         private RetButtonState ReturnButtonState;
+        private bool Closable;
+        private bool allowClose;
 
         public TabWindow(MaterialTabPage tabPage,ref MaterialTabSelector baseTab)
         {
@@ -23,9 +25,10 @@ namespace MaterialWinforms.Controls
             Root.TabPages.Add(TabPage);
             Root.Dock= System.Windows.Forms.DockStyle.Fill;
             BaseTabControl = baseTab;
-
+            Closable = tabPage.Closable;
             Size = TabPage.Size;
             Controls.Add(Root);
+            allowClose = false;
         }
 
         protected enum RetButtonState
@@ -38,13 +41,15 @@ namespace MaterialWinforms.Controls
         protected override void UpdateButtons(MouseEventArgs e, bool up = false)
         {
             base.UpdateButtons(e, up);
-
             RetButtonState oldState = ReturnButtonState;
             if (e.Button == MouseButtons.Left && !up)
             {
 
                 if (ReturnButtonBounds.Contains(e.Location))
+                {
                     ReturnButtonState = RetButtonState.ReturnButtonDown;
+                   
+                }
                 else
                     ReturnButtonState = RetButtonState.None;
             }
@@ -67,7 +72,8 @@ namespace MaterialWinforms.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            ReturnButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 4 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+            ReturnButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) -  4 * STATUS_BAR_BUTTON_WIDTH , 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
+
         }
 
         private void Return()
@@ -75,13 +81,25 @@ namespace MaterialWinforms.Controls
             Root.TabPages.Remove(TabPage);
             BaseTabControl.BaseTabControl.TabPages.Add(TabPage);
             BaseTabControl.Invalidate();
+            allowClose = true;
             Close();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            e.Cancel = !allowClose;
         }
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             base.OnPaint(e);
             Graphics g = e.Graphics;
+
+            if (!Closable)
+            {
+                g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, xButtonBounds);
+            }
+
             var downBrush = SkinManager.GetFlatButtonPressedBackgroundBrush();
             if (ReturnButtonState == RetButtonState.ReturnButtonOver )
                 g.FillRectangle(downBrush, ReturnButtonBounds);

@@ -113,6 +113,9 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.materialActionBarButton1 = new MaterialWinforms.Controls.MaterialActionBarButton();
+            this.materialActionBarButton2 = new MaterialWinforms.Controls.MaterialActionBarButton();
+            this.materialActionBarButton3 = new MaterialWinforms.Controls.MaterialActionBarButton();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -130,6 +133,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton3.AutoSize = true;
             this.materialFlatButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton3.Capitalized = true;
             this.materialFlatButton3.Depth = 0;
             this.materialFlatButton3.Enabled = false;
             this.materialFlatButton3.IconImage = null;
@@ -150,6 +154,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton1.AutoSize = true;
             this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton1.Capitalized = true;
             this.materialFlatButton1.Depth = 0;
             this.materialFlatButton1.IconImage = null;
             this.materialFlatButton1.Location = new System.Drawing.Point(622, 651);
@@ -221,6 +226,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.materialFlatButton2.AutoSize = true;
             this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButton2.Capitalized = true;
             this.materialFlatButton2.Depth = 0;
             this.materialFlatButton2.IconImage = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
             this.materialFlatButton2.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
@@ -490,6 +496,7 @@ namespace MaterialWinformsExample
             this.materialSingleLineTextField1.MaxLength = 32767;
             this.materialSingleLineTextField1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
+            this.materialSingleLineTextField1.PasswordChar = '\0';
             this.materialSingleLineTextField1.ReadOnly = false;
             this.materialSingleLineTextField1.SelectedText = "";
             this.materialSingleLineTextField1.SelectionLength = 0;
@@ -497,6 +504,8 @@ namespace MaterialWinformsExample
             this.materialSingleLineTextField1.Size = new System.Drawing.Size(213, 38);
             this.materialSingleLineTextField1.TabIndex = 44;
             this.materialSingleLineTextField1.TabStop = false;
+            this.materialSingleLineTextField1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.materialSingleLineTextField1.UseSystemPasswordChar = false;
             // 
             // materialComboBox1
             // 
@@ -991,6 +1000,7 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.ShadowBorder = graphicsPath10;
             this.materialTabSelectorClosable1.Size = new System.Drawing.Size(1043, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
+            this.materialTabSelectorClosable1.TabPadding = 24;
             this.materialTabSelectorClosable1.Text = "materialTabSelectorClosable1";
             // 
             // materialDivider1
@@ -1003,6 +1013,46 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
+            // materialActionBarButton1
+            // 
+            this.materialActionBarButton1.AutoSize = true;
+            this.materialActionBarButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialActionBarButton1.Depth = 0;
+            this.materialActionBarButton1.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
+            this.materialActionBarButton1.Location = new System.Drawing.Point(0, 0);
+            this.materialActionBarButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialActionBarButton1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialActionBarButton1.Name = "materialActionBarButton1";
+            this.materialActionBarButton1.Size = new System.Drawing.Size(0, 0);
+            this.materialActionBarButton1.TabIndex = 0;
+            this.materialActionBarButton1.Text = "materialActionBarButton1";
+            // 
+            // materialActionBarButton2
+            // 
+            this.materialActionBarButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialActionBarButton2.Depth = 0;
+            this.materialActionBarButton2.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
+            this.materialActionBarButton2.Location = new System.Drawing.Point(0, 0);
+            this.materialActionBarButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialActionBarButton2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialActionBarButton2.Name = "materialActionBarButton2";
+            this.materialActionBarButton2.Size = new System.Drawing.Size(42, 42);
+            this.materialActionBarButton2.TabIndex = 0;
+            this.materialActionBarButton2.Text = "materialActionBarButton2";
+            // 
+            // materialActionBarButton3
+            // 
+            this.materialActionBarButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialActionBarButton3.Depth = 0;
+            this.materialActionBarButton3.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
+            this.materialActionBarButton3.Location = new System.Drawing.Point(0, 0);
+            this.materialActionBarButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialActionBarButton3.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialActionBarButton3.Name = "materialActionBarButton3";
+            this.materialActionBarButton3.Size = new System.Drawing.Size(42, 42);
+            this.materialActionBarButton3.TabIndex = 0;
+            this.materialActionBarButton3.Text = "materialActionBarButton3";
+            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -1010,6 +1060,7 @@ namespace MaterialWinformsExample
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1043, 693);
+            this.ControlBox = false;
             this.Controls.Add(this.materialSideDrawer3);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialFlatButton3);
@@ -1113,5 +1164,8 @@ namespace MaterialWinformsExample
         private MaterialLabel materialLabel2;
         private MaterialTextBox materialTextBox1;
         private TextBox textBox1;
+        private MaterialActionBarButton materialActionBarButton1;
+        private MaterialActionBarButton materialActionBarButton2;
+        private MaterialActionBarButton materialActionBarButton3;
     }
 }

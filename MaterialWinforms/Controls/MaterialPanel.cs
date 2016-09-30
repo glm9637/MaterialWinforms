@@ -17,7 +17,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public Color BackColor { get { return SkinManager.GetApplicationBackgroundColor(); } }
+        public override Color BackColor { get { return SkinManager.GetApplicationBackgroundColor(); } }
 
         public MaterialPanel()
         {

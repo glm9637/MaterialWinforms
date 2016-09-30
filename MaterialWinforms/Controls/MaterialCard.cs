@@ -6,7 +6,7 @@ using System.Drawing.Text;
 
 namespace MaterialWinforms.Controls
 {
-    public  class MaterialCard : Panel, IShadowedMaterialControl
+    public class MaterialCard : Panel, IShadowedMaterialControl
     {
 
         private string _Text;
@@ -20,18 +20,20 @@ namespace MaterialWinforms.Controls
         public Color BackColor { get { return SkinManager.GetCardsColor(); } }
 
         public int Elevation { get; set; }
-          [Browsable(false)]
+        [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
         [Category("Appearance")]
         public string Title
         {
-            get { return _Text;
-            Invalidate();
+            get
+            {
+                return _Text;
             }
             set
             {
                 _Text = value;
+                Invalidate();
             }
         }
 
@@ -56,7 +58,7 @@ namespace MaterialWinforms.Controls
                                     Location.Y,
                                     ClientRectangle.Width, ClientRectangle.Height, 10);
             this.Region = new Region(DrawHelper.CreateRoundRect(ClientRectangle.X,
-                                    ClientRectangle.Y ,
+                                    ClientRectangle.Y,
                                     ClientRectangle.Width, ClientRectangle.Height, 10));
             Invalidate();
             if (Parent != null)
@@ -64,7 +66,7 @@ namespace MaterialWinforms.Controls
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
                 Parent.Invalidate();
             }
-           
+
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -73,28 +75,19 @@ namespace MaterialWinforms.Controls
             var g = pevent.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-            
-        
 
-            g.Clear(Parent.BackColor);
-          
+            g.Clear(SkinManager.GetCardsColor());
 
-            using (var backgroundPath = DrawHelper.CreateRoundRect(ClientRectangle.X ,
-                    ClientRectangle.Y,
-                    ClientRectangle.Width  , ClientRectangle.Height  , 10))
-            {
-                g.FillPath(SkinManager.getCardsBrush(), backgroundPath);
-               
-            }
             if (!string.IsNullOrWhiteSpace(_Text))
             {
                 g.DrawString(
                _Text,
                SkinManager.ROBOTO_MEDIUM_10,
                SkinManager.ColorScheme.PrimaryBrush,
-               new Rectangle(ClientRectangle.X+10,ClientRectangle.Y+10,ClientRectangle.Width,ClientRectangle.Height),
+               new Rectangle(ClientRectangle.X + 10, ClientRectangle.Y + 10, ClientRectangle.Width, ClientRectangle.Height),
                new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
             }
+            g.ResetClip();
         }
     }
 }

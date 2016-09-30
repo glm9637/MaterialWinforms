@@ -77,6 +77,8 @@ namespace MaterialWinformsExample
                     MaterialWinformsManager.ColorScheme = ColorScheme.GreenOrange();
                     break;
             }
+
+
         }
 
 

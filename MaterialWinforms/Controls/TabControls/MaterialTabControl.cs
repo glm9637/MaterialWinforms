@@ -60,7 +60,7 @@ namespace MaterialWinforms.Controls
             CreateCollectionForm()
             {
                 CollectionForm baseForm = base.CreateCollectionForm();
-                baseForm.Text = "MyTabPage Collection Editor";
+                baseForm.Text = "TabPage Collection Editor";
                 return baseForm;
             }
 

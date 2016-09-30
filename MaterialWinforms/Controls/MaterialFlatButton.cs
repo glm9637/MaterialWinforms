@@ -23,6 +23,8 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public bool Selected { get; set; }
 
+        public bool Capitalized { get; set; }
+
         public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
         private readonly AnimationManager animationManager;
@@ -34,6 +36,7 @@ namespace MaterialWinforms.Controls
         {
             Primary = false;
             Accent = false;
+            Capitalized = true;
 
             animationManager = new AnimationManager(false)
             {
@@ -61,7 +64,14 @@ namespace MaterialWinforms.Controls
             set
             {
                 base.Text = value;
+                if (String.IsNullOrEmpty(value))
+                {
+                    textSize = new Size(5, 5);
+                }
+                else
+                {
                 textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.ROBOTO_MEDIUM_10);
+                }
                 if(IconImage!= null)
                 textSize = new Size((int)textSize.Width + (int)ClientRectangle.Height, (int)textSize.Height);
                 if (AutoSize)
@@ -126,7 +136,7 @@ namespace MaterialWinforms.Controls
                 }
                 g.SmoothingMode = SmoothingMode.None;
             }
-            g.DrawString(Text.ToUpper(), SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : Accent ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = (IconImage == null ? StringAlignment.Center : StringAlignment.Far), LineAlignment = StringAlignment.Center });
+            g.DrawString(Capitalized ?Text.ToUpper():Text, SkinManager.ROBOTO_MEDIUM_10, Enabled ? (Primary ? SkinManager.ColorScheme.PrimaryBrush : Accent ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetPrimaryTextBrush()) : SkinManager.GetFlatButtonDisabledTextBrush(), ClientRectangle, new StringFormat { Alignment = (IconImage == null ? StringAlignment.Center : StringAlignment.Far), LineAlignment = StringAlignment.Center });
         }
 
         private Size GetPreferredSize()
