@@ -18,7 +18,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public Color BackColor { get { return Parent==null?SkinManager.GetApplicationBackgroundColor():Parent.BackColor; } }
+        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : Parent.BackColor; } }
 
         private bool _TabsAreClosable;
         public bool TabsAreClosable
@@ -54,6 +54,7 @@ namespace MaterialWinforms.Controls
                 return base.TabPages;
             }
         }
+
         internal class MaterialTabPageCollectionEditor : CollectionEditor
         {
             protected override CollectionEditor.CollectionForm
@@ -74,7 +75,7 @@ namespace MaterialWinforms.Controls
             }
             protected override Type[] CreateNewItemTypes()
             {
-                return new Type[] {typeof(MaterialTabPage) };
+                return new Type[] { typeof(MaterialTabPage) };
             }
 
         }
@@ -93,12 +94,13 @@ namespace MaterialWinforms.Controls
 
         public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
-         [Category("Behavior")]
-        public Boolean Closable {get;set;}
+        [Category("Behavior")]
+        public Boolean Closable { get; set; }
 
-        public MaterialTabPage() {
+        public MaterialTabPage()
+        {
 
-                SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         }
 
         public MaterialTabPage(string pText)
@@ -134,7 +136,7 @@ namespace MaterialWinforms.Controls
         }
     }
 
-   
+
     internal class MaterialTabControlDesigner :
     System.Windows.Forms.Design.ParentControlDesigner
     {

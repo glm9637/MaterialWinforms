@@ -22,6 +22,7 @@ namespace MaterialWinforms.Controls
         public Color BackColor { get { return SkinManager.GetCardsColor() ; } }
 
         [Category("Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public  ObservableCollection<BreadCrumbItem> Items
         {
             get { return _Teile; }
