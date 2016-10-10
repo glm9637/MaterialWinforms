@@ -57,17 +57,17 @@ namespace MaterialWinforms.Controls
             MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
         }
 
-        public static void Show(MaterialForm pForm, string title,UserControl pContent)
+        public static DialogResult Show(MaterialForm pForm, string title,UserControl pContent)
         {
             _msgBox = new MaterialDialog(pForm.SkinManager);
-            _msgBox.Controls.Remove(_msgBox.pnl_Top);
-            pContent.Location = new Point(0,0);
-            _msgBox.Controls.Add(pContent);
+            pContent.Location = new Point(0, 0);
+            _msgBox.pnl_Message.Controls.Add(pContent);
             _msgBox.Width = pContent.Width;
+            _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
             _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
             _msgBox.lbl_Title.Text = title;
             MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
-            _msgBox.ShowDialog();
+            return _buttonResult;
         }
 
         public static void Show(MaterialForm pForm, string message, string title)
@@ -92,17 +92,18 @@ namespace MaterialWinforms.Controls
             return _buttonResult;
         }
 
-        public static void Show(MaterialForm pForm, string title, UserControl pContent, Buttons buttons)
+        public static DialogResult Show(MaterialForm pForm, string title, UserControl pContent, Buttons buttons)
         {
             _msgBox = new MaterialDialog(pForm.SkinManager);
-            _msgBox.Controls.Remove(_msgBox.pnl_Top);
             pContent.Location = new Point(0, 0);
-            _msgBox.Controls.Add(pContent);
+            _msgBox.pnl_Message.Controls.Add(pContent);
             _msgBox.Width = pContent.Width;
-            _msgBox.Height = _msgBox.pnl_Footer.Height + 5 + pContent.Height;
+            _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
+            _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
             _msgBox.lbl_Title.Text = title;
             MaterialDialog.InitButtons(buttons);
             _msgBox.ShowDialog();
+            return _buttonResult;
         }
 
         public static DialogResult Show(MaterialForm pForm, string message, string title, Buttons buttons, Icon icon)
