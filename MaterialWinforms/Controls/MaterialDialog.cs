@@ -66,6 +66,9 @@ namespace MaterialWinforms.Controls
             _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
             _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
             _msgBox.lbl_Title.Text = title;
+            _msgBox.pnl_Message.Size = pContent.Size;
+            _msgBox.pnl_Top.Size = new Size(pContent.Size.Width, pContent.Size.Height + _msgBox.lbl_Title.Height);
+            _msgBox.Size = new Size(pContent.Width, _msgBox.pnl_Top.Height + _msgBox.pnl_Footer.Height);
             MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
             return _buttonResult;
         }
@@ -101,6 +104,10 @@ namespace MaterialWinforms.Controls
             _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
             _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
             _msgBox.lbl_Title.Text = title;
+            _msgBox.pnl_Message.Size = pContent.Size;
+            _msgBox.pnl_Top.Size = new Size(pContent.Size.Width, pContent.Size.Height + _msgBox.lbl_Title.Height);
+            _msgBox.Size = new Size(pContent.Width,_msgBox.pnl_Top.Height+_msgBox.pnl_Footer.Height);
+
             MaterialDialog.InitButtons(buttons);
             _msgBox.ShowDialog();
             return _buttonResult;
