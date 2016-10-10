@@ -1034,6 +1034,17 @@ namespace MaterialWinforms.Controls
                new Rectangle(ClientRectangle.X , 0, ClientRectangle.Width, ClientRectangle.Height),
                new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
             }
+            else if(!Enabled && String.IsNullOrWhiteSpace(Text)&& !String.IsNullOrWhiteSpace(Hint))
+            {
+                g.DrawString(
+                              Hint,
+                              SkinManager.ROBOTO_REGULAR_11,
+                              SkinManager.ColorScheme.AccentBrush,
+                              new Rectangle(baseTextBox.Location.X, baseTextBox.Location.Y, baseTextBox.Size.Width, baseTextBox.Size.Height),
+                              new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
+            }
+
+            
         }
 
         public bool Focused()

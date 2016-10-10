@@ -62,6 +62,8 @@ namespace MaterialWinforms.Controls
 
         private ActionBarButtonCollection _ActionBarButtons;
 
+        private List<MaterialActionBarButton> _ActionBarButtonsToReveal;
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ActionBarButtonCollection ActionBarButtons
         {
@@ -154,9 +156,12 @@ namespace MaterialWinforms.Controls
             }
             else
             {
-                foreach (MaterialActionBarButton objItem in _ActionBarButtons)
+                if (_ActionBarButtonsToReveal != null)
                 {
-                    objItem.Visible = true;
+                    foreach (MaterialActionBarButton objItem in _ActionBarButtonsToReveal)
+                    {
+                        objItem.Visible = true;
+                    }
                 }
             }
 
@@ -254,9 +259,15 @@ namespace MaterialWinforms.Controls
                 }
                 else
                 {
+                    _ActionBarButtonsToReveal = new List<MaterialActionBarButton>();
                     foreach (MaterialActionBarButton objItem in _ActionBarButtons)
                     {
-                        objItem.Visible = false;
+                        if (objItem.Visible)
+                        {
+                            objItem.Visible = false;
+                            _ActionBarButtonsToReveal.Add(objItem);
+
+                        }
                     }
                     objAnimationManager.StartNewAnimation(AnimationDirection.In);
                     searchOpen = true;
@@ -1813,7 +1824,11 @@ namespace MaterialWinforms.Controls
             }
             g.ResetClip();
             if (Image != null)
-                e.Graphics.DrawImage(Image, new Rectangle(0, 0, Width, Height));
+            {
+                float fPosition = (float)(Width * 0.1);
+                float fSize = (float)(Width * 0.8);
+                e.Graphics.DrawImage(Image, new RectangleF(fPosition, fPosition, fSize, fSize));
+            }
 
         }
 
