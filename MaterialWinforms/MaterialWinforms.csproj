@@ -161,6 +161,21 @@
     <Compile Include="Controls\MaterialUserControl.Designer.cs">
       <DependentUpon>MaterialUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Settings\ColorOverlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Settings\ColorOverlay.Designer.cs">
+      <DependentUpon>ColorOverlay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings\MaterialSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Settings\MaterialThemeSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Settings\MaterialThemeSettings.Designer.cs">
+      <DependentUpon>MaterialThemeSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TabControls\MaterialTabSelector.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -198,6 +213,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MaterialForm.resx">
       <DependentUpon>MaterialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Settings\ColorOverlay.resx">
+      <DependentUpon>ColorOverlay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Settings\MaterialSettings.resx">
+      <DependentUpon>MaterialSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Settings\MaterialThemeSettings.resx">
+      <DependentUpon>MaterialThemeSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

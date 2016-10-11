@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using MaterialWinforms;
 using MaterialWinforms.Controls;
+using MaterialWinforms.Controls.Settings;
 
 namespace MaterialWinformsExample
 {
@@ -132,7 +133,9 @@ namespace MaterialWinformsExample
 
         private void materialFloatingActionButton1_Click(object sender, EventArgs e)
         {
-            colorDialog1.ShowDialog();
+            MaterialSettings objSettings = new MaterialSettings();
+            objSettings.ShowThemeSettings = true;
+            objSettings.Show();
         }
 
 

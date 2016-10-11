@@ -115,6 +115,7 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -244,14 +245,15 @@ namespace MaterialWinformsExample
             // 
             // SideDrawerList
             // 
-            this.SideDrawerList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.SideDrawerList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.SideDrawerList.Depth = 0;
             this.SideDrawerList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tmi_Datenbank1,
-            this.tmi_Datenbank2});
+            this.tmi_Datenbank2,
+            this.testToolStripMenuItem1});
             this.SideDrawerList.MouseState = MaterialWinforms.MouseState.HOVER;
             this.SideDrawerList.Name = "materialContextMenuStrip1";
-            this.SideDrawerList.Size = new System.Drawing.Size(141, 64);
+            this.SideDrawerList.Size = new System.Drawing.Size(141, 86);
             // 
             // tmi_Datenbank1
             // 
@@ -1044,6 +1046,12 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
+            // testToolStripMenuItem1
+            // 
+            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
+            this.testToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.testToolStripMenuItem1.Text = "Test";
+            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -1157,5 +1165,6 @@ namespace MaterialWinformsExample
         private TextBox textBox1;
         private MaterialActionBarButton materialActionBarButton1;
         private MaterialActionBarButton materialActionBarButton2;
+        private ToolStripMenuItem testToolStripMenuItem1;
     }
 }

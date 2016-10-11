@@ -99,6 +99,8 @@ namespace MaterialWinforms.Controls
             set
             {
                 _SideDrawer = value;
+                _SideDrawer.ItemAdded += ItemCollectionChanged;
+                _SideDrawer.ItemRemoved += ItemCollectionChanged;
                 initSideDrawer();
             }
         }
@@ -137,7 +139,6 @@ namespace MaterialWinforms.Controls
             AutoScroll = true;
             Elevation = 10;
 
-            Location = new Point(0, MaterialActionBar.ACTION_BAR_HEIGHT + MaterialForm.STATUS_BAR_HEIGHT + (_SideDrawerUnterActionBar ? 48 : 0));
             MinimumSize = new Size(0, MaximumSize.Height);
 
         }
@@ -145,7 +146,7 @@ namespace MaterialWinforms.Controls
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
-            MaximumSize = new Size(Math.Min(Parent.Width * 80, MaterialActionBar.ACTION_BAR_HEIGHT * 5), Parent.Height - MaterialActionBar.ACTION_BAR_HEIGHT);
+            MaximumSize = new Size(Math.Min(Parent.Width * 80, MaterialActionBar.ACTION_BAR_HEIGHT * 5), 10000);
             Width = _SideDrawerFixiert ? MaximumSize.Width : 0;
         }
 
@@ -153,8 +154,6 @@ namespace MaterialWinforms.Controls
         {
             if (Parent != null)
             {
-                MaximumSize = new Size(Math.Min(Parent.Width * 80, MaterialActionBar.ACTION_BAR_HEIGHT * 5), Parent.Height - MaterialActionBar.ACTION_BAR_HEIGHT);
-
                 Width = _SideDrawerFixiert ? MaximumSize.Width : Width;
             }
             ShadowBorder = new GraphicsPath();
@@ -264,6 +263,12 @@ namespace MaterialWinforms.Controls
                 }
             }
         }
+
+        private void ItemCollectionChanged(object sender, EventArgs e)
+        {
+            initSideDrawer();
+        }
+
         private void DrawerItemClicked(object sender, EventArgs e)
         {
             String strText;
