@@ -1,6 +1,6 @@
 ﻿namespace MaterialWinforms.Controls.Settings
 {
-    partial class ColorOverlay
+    partial class BackGroundDim
     {
         /// <summary>
         /// Required designer variable.
@@ -30,19 +30,16 @@
         {
             this.SuspendLayout();
             // 
-            // ColorOverlay
+            // BackGroundDim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Magenta;
-            this.ClientSize = new System.Drawing.Size(0, 0);
+            this.ClientSize = new System.Drawing.Size(284, 261);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ColorOverlay";
+            this.Name = "BackGroundDim";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "ColorOverlay";
-            this.TopMost = true;
-            this.TransparencyKey = System.Drawing.Color.Magenta;
+            this.Text = "BackGroundDim";
             this.ResumeLayout(false);
 
         }

@@ -16,8 +16,8 @@ namespace MaterialWinforms.Controls.Settings
         private Boolean _ThemeSettings;
         private MaterialPanel pnl_SettingsView;
         private MaterialContextMenuStrip SettingsDrawerItems;
-
-
+        private MaterialForm _BaseForm;
+        private BackGroundDim objDimmer;
 
         public Boolean ShowThemeSettings
         {
@@ -42,26 +42,64 @@ namespace MaterialWinforms.Controls.Settings
         }
         private MaterialToolStripMenuItem _ThemeSettingsToolStripItem;
 
-        public MaterialSettings()
+        public MaterialSettings(MaterialForm Parent)
         {
+
+            StartPosition = FormStartPosition.Manual;
+            objDimmer = new BackGroundDim(Parent);
+            _BaseForm = Parent;
             SkinManager.AddFormToManage(this);
 
             InitializeComponent();
+
+
 
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
             _ThemeSettingsToolStripItem.Click += DisplayThemeSettings;
         }
 
+        private void CalculateStart()
+        {
+            Location = new Point(Convert.ToInt32(_BaseForm.Location.X+ _BaseForm.Width *0.1), Convert.ToInt32(_BaseForm.Location.Y +_BaseForm.Height* 0.1));
+            Size = new Size( Convert.ToInt32(_BaseForm.Width * 0.8),Convert.ToInt32(_BaseForm.Height * 0.8));
+        }
+
+
         protected override void OnLoad(EventArgs e)
         {
+            CalculateStart();
+            objDimmer.Show();
             base.OnLoad(e);
 
         }
 
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            objDimmer.Close();
+            base.OnClosing(e);
+        }
+
+        protected override void WndProc(ref Message message)
+        {
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_MOVE = 0xF010;
+
+            switch (message.Msg)
+            {
+                case WM_SYSCOMMAND:
+                    int command = message.WParam.ToInt32() & 0xfff0;
+                    if (command == SC_MOVE)
+                        return;
+                    break;
+            }
+
+            base.WndProc(ref message);
+        }
+
         private void DisplayThemeSettings(object sender, EventArgs e)
         {
-            MaterialThemeSettings objSettings = new MaterialThemeSettings();
+            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm);
             objSettings.Dock = DockStyle.Fill;
             pnl_SettingsView.Controls.Clear();
             pnl_SettingsView.Controls.Add(objSettings);
@@ -134,6 +172,7 @@ namespace MaterialWinforms.Controls.Settings
             this.Controls.Add(this.pnl_SettingsView);
             this.Name = "MaterialSettings";
             this.SideDrawer = this.SettingsDrawer;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.ResumeLayout(false);
 
@@ -141,7 +180,7 @@ namespace MaterialWinforms.Controls.Settings
 
         private void SettingsDrawer_onSideDrawerItemClicked(object sender, MaterialSideDrawer.SideDrawerEventArgs e)
         {
-            MaterialThemeSettings objSettings = new MaterialThemeSettings();
+            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm);
             objSettings.Dock = DockStyle.Fill;
             pnl_SettingsView.Controls.Clear();
             pnl_SettingsView.Controls.Add(objSettings);

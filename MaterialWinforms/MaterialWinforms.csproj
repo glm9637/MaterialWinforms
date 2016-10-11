@@ -161,6 +161,12 @@
     <Compile Include="Controls\MaterialUserControl.Designer.cs">
       <DependentUpon>MaterialUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Settings\BackGroundDim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Settings\BackGroundDim.Designer.cs">
+      <DependentUpon>BackGroundDim.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Settings\ColorOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MaterialForm.resx">
       <DependentUpon>MaterialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Settings\BackGroundDim.resx">
+      <DependentUpon>BackGroundDim.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Settings\ColorOverlay.resx">
       <DependentUpon>ColorOverlay.cs</DependentUpon>

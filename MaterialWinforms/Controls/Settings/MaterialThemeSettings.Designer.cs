@@ -35,10 +35,12 @@
             // 
             this.materialToggle1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.materialToggle1.AutoSize = true;
+            this.materialToggle1.Checked = true;
+            this.materialToggle1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.materialToggle1.Depth = 0;
             this.materialToggle1.EllipseBorderColor = "#3b73d1";
             this.materialToggle1.EllipseColor = "#508ef5";
-            this.materialToggle1.Location = new System.Drawing.Point(437, 18);
+            this.materialToggle1.Location = new System.Drawing.Point(221, 18);
             this.materialToggle1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialToggle1.Name = "materialToggle1";
             this.materialToggle1.Size = new System.Drawing.Size(47, 19);

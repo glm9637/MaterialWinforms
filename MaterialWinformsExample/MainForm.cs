@@ -133,7 +133,7 @@ namespace MaterialWinformsExample
 
         private void materialFloatingActionButton1_Click(object sender, EventArgs e)
         {
-            MaterialSettings objSettings = new MaterialSettings();
+            MaterialSettings objSettings = new MaterialSettings(this);
             objSettings.ShowThemeSettings = true;
             objSettings.Show();
         }

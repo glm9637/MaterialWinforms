@@ -14,15 +14,14 @@ namespace MaterialWinforms.Controls.Settings
     public partial class ColorOverlay : Form
     {
 
-
-
         private AnimationManager objAnimationManager;
         private Point _Origin;
         private MaterialSkinManager.Themes _ThemeToApply;
         private Brush FillBrush;
         private Brush BackBrush;
         private bool close = false;
-        public ColorOverlay(Point Origin,MaterialSkinManager.Themes Theme)
+        private MaterialForm _BaseForm;
+        public ColorOverlay(Point Origin,MaterialSkinManager.Themes Theme,MaterialForm BaseFormToOverlay)
         {
             BackBrush = Brushes.Magenta;
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
@@ -34,10 +33,10 @@ namespace MaterialWinforms.Controls.Settings
             _ThemeToApply = Theme;
             FillBrush = new SolidBrush(_ThemeToApply == MaterialSkinManager.Themes.DARK ? Color.FromArgb(255, 51, 51, 51) : Color.White);
             _Origin = PointToScreen(Origin);
-
+            _BaseForm = BaseFormToOverlay;
             objAnimationManager = new AnimationManager()
             {
-                Increment = 0.03,
+                Increment = 0.02,
                 AnimationType = AnimationType.EaseInOut
             };
             DoubleBuffered = true;
@@ -56,6 +55,7 @@ namespace MaterialWinforms.Controls.Settings
             {
                 close = true;
                 MaterialSkinManager.Instance.Theme = _ThemeToApply;
+                objAnimationManager.AnimationType = AnimationType.EaseOut;
                 objAnimationManager.SetProgress(0);
                 Brush tmpBrush = FillBrush;
                 FillBrush = BackBrush;
@@ -77,7 +77,9 @@ namespace MaterialWinforms.Controls.Settings
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            this.WindowState = FormWindowState.Maximized;         
+            //this.WindowState = FormWindowState.Maximized; 
+            this.Location = _BaseForm.Location;
+            this.Size = _BaseForm.Size;
             objAnimationManager.SetProgress(0);
             objAnimationManager.StartNewAnimation(AnimationDirection.In);
         }
