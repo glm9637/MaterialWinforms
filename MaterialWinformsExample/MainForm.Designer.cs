@@ -62,6 +62,7 @@ namespace MaterialWinformsExample
             this.tmi_Funktionen = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
             this.tmi_Prozeduren = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
             this.tmi_Trigger = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
+            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.materialSideDrawer3 = new MaterialWinforms.Controls.MaterialSideDrawer();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -74,11 +75,6 @@ namespace MaterialWinformsExample
             this.materialScrollBar1 = new MaterialWinforms.Controls.MaterialScrollBar();
             this.materialSingleLineTextField1 = new MaterialWinforms.Controls.MaterialSingleLineTextField();
             this.materialComboBox1 = new MaterialWinforms.Controls.MaterialComboBox();
-            this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wert3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.materialProgressBar1 = new MaterialWinforms.Controls.MaterialProgressBar();
             this.materialLoadingFloatingActionButton1 = new MaterialWinforms.Controls.MaterialLoadingFloatingActionButton();
             this.materialLabel1 = new MaterialWinforms.Controls.MaterialLabel();
@@ -101,6 +97,11 @@ namespace MaterialWinformsExample
             this.materialDropDownDatePicker1 = new MaterialWinforms.Controls.MaterialDropDownDatePicker();
             this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
             this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
+            this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wert3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.materialActionBar1 = new MaterialWinforms.Controls.MaterialActionBar();
             this.materialActionBarButton1 = new MaterialWinforms.Controls.MaterialActionBarButton();
             this.materialActionBarButton2 = new MaterialWinforms.Controls.MaterialActionBarButton();
@@ -115,15 +116,14 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
             this.materialCard3.SuspendLayout();
-            this.mcm_ComboBox1.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.materialCard1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
+            this.mcm_ComboBox1.SuspendLayout();
             this.materialActionBar1.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
             this.SuspendLayout();
@@ -346,6 +346,12 @@ namespace MaterialWinformsExample
             this.tmi_Trigger.Size = new System.Drawing.Size(120, 30);
             this.tmi_Trigger.Text = "Trigger";
             // 
+            // testToolStripMenuItem1
+            // 
+            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
+            this.testToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.testToolStripMenuItem1.Text = "Test";
+            // 
             // materialSideDrawer3
             // 
             this.materialSideDrawer3.AutoScroll = true;
@@ -354,7 +360,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer3.Elevation = 0;
             this.materialSideDrawer3.HideSideDrawer = false;
             this.materialSideDrawer3.Location = new System.Drawing.Point(0, 101);
-            this.materialSideDrawer3.MaximumSize = new System.Drawing.Size(210, 651);
+            this.materialSideDrawer3.MaximumSize = new System.Drawing.Size(210, 10000);
             this.materialSideDrawer3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSideDrawer3.Name = "materialSideDrawer3";
             this.materialSideDrawer3.SelectOnClick = false;
@@ -512,58 +518,19 @@ namespace MaterialWinformsExample
             // 
             // materialComboBox1
             // 
+            this.materialComboBox1.AllowDrop = true;
             this.materialComboBox1.Depth = 0;
-            this.materialComboBox1.DropDownItems = this.mcm_ComboBox1;
-            this.materialComboBox1.FocusedColor = "#508ef5";
-            this.materialComboBox1.FontColor = "#999999";
-            this.materialComboBox1.Hint = "materialComboBox1";
-            this.materialComboBox1.IsEnabled = true;
+            this.materialComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.materialComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.materialComboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.materialComboBox1.Items.AddRange(new object[] {
+            "Test"});
             this.materialComboBox1.Location = new System.Drawing.Point(320, 218);
             this.materialComboBox1.MaxLength = 32767;
             this.materialComboBox1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialComboBox1.Name = "materialComboBox1";
-            this.materialComboBox1.ReadOnly = false;
-            this.materialComboBox1.Size = new System.Drawing.Size(213, 38);
+            this.materialComboBox1.Size = new System.Drawing.Size(213, 21);
             this.materialComboBox1.TabIndex = 43;
-            this.materialComboBox1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialComboBox1.UseSystemPasswordChar = false;
-            // 
-            // mcm_ComboBox1
-            // 
-            this.mcm_ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.mcm_ComboBox1.Depth = 0;
-            this.mcm_ComboBox1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.testToolStripMenuItem,
-            this.test2ToolStripMenuItem,
-            this.wert3ToolStripMenuItem,
-            this.toolStripMenuItem4});
-            this.mcm_ComboBox1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.mcm_ComboBox1.Name = "mcm_ComboBox1";
-            this.mcm_ComboBox1.Size = new System.Drawing.Size(106, 92);
-            // 
-            // testToolStripMenuItem
-            // 
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.testToolStripMenuItem.Text = "Test";
-            // 
-            // test2ToolStripMenuItem
-            // 
-            this.test2ToolStripMenuItem.Name = "test2ToolStripMenuItem";
-            this.test2ToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.test2ToolStripMenuItem.Text = "Test2";
-            // 
-            // wert3ToolStripMenuItem
-            // 
-            this.wert3ToolStripMenuItem.Name = "wert3ToolStripMenuItem";
-            this.wert3ToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.wert3ToolStripMenuItem.Text = "Wert3";
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(105, 22);
-            this.toolStripMenuItem4.Text = "42";
             // 
             // materialProgressBar1
             // 
@@ -900,6 +867,43 @@ namespace MaterialWinformsExample
             this.materialDatePicker1.TabIndex = 1;
             this.materialDatePicker1.Text = "materialDatePicker1";
             // 
+            // mcm_ComboBox1
+            // 
+            this.mcm_ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.mcm_ComboBox1.Depth = 0;
+            this.mcm_ComboBox1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testToolStripMenuItem,
+            this.test2ToolStripMenuItem,
+            this.wert3ToolStripMenuItem,
+            this.toolStripMenuItem4});
+            this.mcm_ComboBox1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.mcm_ComboBox1.Name = "mcm_ComboBox1";
+            this.mcm_ComboBox1.Size = new System.Drawing.Size(106, 92);
+            // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.testToolStripMenuItem.Text = "Test";
+            // 
+            // test2ToolStripMenuItem
+            // 
+            this.test2ToolStripMenuItem.Name = "test2ToolStripMenuItem";
+            this.test2ToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.test2ToolStripMenuItem.Text = "Test2";
+            // 
+            // wert3ToolStripMenuItem
+            // 
+            this.wert3ToolStripMenuItem.Name = "wert3ToolStripMenuItem";
+            this.wert3ToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.wert3ToolStripMenuItem.Text = "Wert3";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(105, 22);
+            this.toolStripMenuItem4.Text = "42";
+            // 
             // materialActionBar1
             // 
             this.materialActionBar1.ActionBarButtons.Add(this.materialActionBarButton1);
@@ -914,6 +918,7 @@ namespace MaterialWinformsExample
             this.materialActionBar1.Location = new System.Drawing.Point(0, 24);
             this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBar1.Name = "materialActionBar1";
+            this.materialActionBar1.SearchBarFilterIcon = true;
             graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
             this.materialActionBar1.ShadowBorder = graphicsPath9;
             this.materialActionBar1.Size = new System.Drawing.Size(1043, 42);
@@ -1046,12 +1051,6 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // testToolStripMenuItem1
-            // 
-            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
-            this.testToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
-            this.testToolStripMenuItem1.Text = "Test";
-            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -1079,11 +1078,11 @@ namespace MaterialWinformsExample
             this.materialTabPage1.PerformLayout();
             this.materialCard3.ResumeLayout(false);
             this.materialCard3.PerformLayout();
-            this.mcm_ComboBox1.ResumeLayout(false);
             this.materialCard2.ResumeLayout(false);
             this.materialCard2.PerformLayout();
             this.materialCard1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
+            this.mcm_ComboBox1.ResumeLayout(false);
             this.materialActionBar1.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
             this.ResumeLayout(false);

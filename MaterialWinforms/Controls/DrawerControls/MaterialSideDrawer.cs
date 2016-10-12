@@ -99,9 +99,11 @@ namespace MaterialWinforms.Controls
             set
             {
                 _SideDrawer = value;
+                if (_SideDrawer != null) { 
                 _SideDrawer.ItemAdded += ItemCollectionChanged;
                 _SideDrawer.ItemRemoved += ItemCollectionChanged;
                 initSideDrawer();
+                }
             }
         }
 

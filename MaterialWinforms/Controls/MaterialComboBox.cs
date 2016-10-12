@@ -1,435 +1,393 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace MaterialWinforms.Controls
 {
 
-[DefaultEvent("TextChanged")]
-public class MaterialComboBox : Control, IMaterialControl
-{
-
-    #region  Variables
-
-    Button InPutBTN = new Button();
-    MaterialWinforms.Controls.MaterialSingleLineTextField MaterialTB = new MaterialWinforms.Controls.MaterialSingleLineTextField();
-
-    HorizontalAlignment ALNType;
-    int maxchars = 32767;
-    bool readOnly;
-    bool previousReadOnly;
-    bool isPasswordMasked = false;
-    bool Enable = true;
-       
-    Timer AnimationTimer = new Timer { Interval = 1 };
-    FontManager font = new FontManager();
-
-    bool Focus = false;
-    bool mouseOver = false;
-
-    float SizeAnimation = 0;
-    float SizeInc_Dec;
-
-    float PointAnimation;
-    float PointInc_Dec;
-
-    string fontColor = "#999999";
-    string focusColor = "#508ef5";
-    ContextMenuStrip _DropDownItems;
-
-    Color EnabledFocusedColor;
-    Color EnabledStringColor;
-
-    Color EnabledInPutColor = ColorTranslator.FromHtml("#acacac");
-    Color EnabledUnFocusedColor = ColorTranslator.FromHtml("#dbdbdb");
-
-    Color DisabledInputColor = ColorTranslator.FromHtml("#d1d2d4");
-    Color DisabledUnFocusedColor = ColorTranslator.FromHtml("#e9ecee");
-    Color DisabledStringColor = ColorTranslator.FromHtml("#babbbd");
-
-    [Browsable(false)]
-    public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
-
-    #endregion
-
-    #region  Properties
-
-    //Properties for managing the material design properties
-    [Browsable(false)]
-    public int Depth { get; set; }
-    [Browsable(false)]
-    public MouseState MouseState { get; set; }
-
-    public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
-
-    public HorizontalAlignment TextAlignment
+    [DefaultEvent("TextChanged")]
+    public class MaterialComboBox : ComboBox, IMaterialControl
     {
-        get
-        {
-            return ALNType;
-        }
-        set
-        {
-            ALNType = value;
-            Invalidate();
-        }
-    }
 
-    [Category("Behavior")]
-    public int MaxLength
-    {
-        get
-        {
-            return maxchars;
-        }
-        set
-        {
-            maxchars = value;
-            MaterialTB.MaxLength = MaxLength;
-            Invalidate();
-        }
-    }
+        #region  Variables
 
-    [Category("Behavior")]
-    public bool UseSystemPasswordChar
-    {
-        get
-        {
-            return isPasswordMasked;
-        }
-        set
-        {
-            MaterialTB.UseSystemPasswordChar = UseSystemPasswordChar;
-            isPasswordMasked = value;
-            Invalidate();
-        }
-    }
+        private Timer _dropDownCheck = new Timer();
+        FontManager font = new FontManager();
 
-    [Category("Behavior")]
-    public bool ReadOnly
-    {
-        get
+        private Rectangle _ButtonArea;
+
+
+
+        [Browsable(false)]
+        public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
+
+        #endregion
+
+        #region  Properties
+
+        //Properties for managing the material design properties
+        [Browsable(false)]
+        public int Depth { get; set; }
+        [Browsable(false)]
+        public MouseState MouseState { get; set; }
+
+        public override Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+
+
+        #endregion
+
+        public MaterialComboBox()
         {
-            return readOnly;
+            SetStyle(ControlStyles.UserPaint, true);
+            DropDownStyle = ComboBoxStyle.DropDownList;
+            _ButtonArea = new Rectangle(ClientRectangle.X - 1, ClientRectangle.Y - 1, ClientRectangle.Width + 2, ClientRectangle.Height + 2);
+            _dropDownCheck.Interval = 10;
+            _dropDownCheck.Tick += new EventHandler(dropDownCheck_Tick);
+           MeasureItem += new MeasureItemEventHandler(CustMeasureItem);
         }
-        set
+        public enum PenStyles
         {
-            readOnly = value;
-            if (MaterialTB != null)
+            PS_SOLID = 0,
+            PS_DASH = 1,
+            PS_DOT = 2,
+            PS_DASHDOT = 3,
+            PS_DASHDOTDOT = 4
+        }
+
+        public enum ComboBoxButtonState
+        {
+            STATE_SYSTEM_NONE = 0,
+            STATE_SYSTEM_INVISIBLE = 0x00008000,
+            STATE_SYSTEM_PRESSED = 0x00000008
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct COMBOBOXINFO
+        {
+            public Int32 cbSize;
+            public RECT rcItem;
+            public RECT rcButton;
+            public ComboBoxButtonState buttonState;
+            public IntPtr hwndCombo;
+            public IntPtr hwndEdit;
+            public IntPtr hwndList;
+        }
+
+        [Serializable, StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+
+            public RECT(int left_, int top_, int right_, int bottom_)
             {
-                MaterialTB.ReadOnly = value;
+                Left = left_;
+                Top = top_;
+                Right = right_;
+                Bottom = bottom_;
             }
-        }
-    }
 
-    [Category("Behavior")]
-    public ContextMenuStrip DropDownItems
-    {
-        get
-        {
-            return _DropDownItems;
-        }
-        set
-        {
-            _DropDownItems = value;
-            if (_DropDownItems != null)
+            public override bool Equals(object obj)
             {
-                _DropDownItems.ItemClicked += new ToolStripItemClickedEventHandler(ItemSelected);
-                foreach (ToolStripItem item in _DropDownItems.Items)
+                if (obj == null || !(obj is RECT))
                 {
-                    AddHandler(item);
+                    return false;
+                }
+                return this.Equals((RECT)obj);
+            }
+
+            public bool Equals(RECT value)
+            {
+                return this.Left == value.Left &&
+                       this.Top == value.Top &&
+                       this.Right == value.Right &&
+                       this.Bottom == value.Bottom;
+            }
+
+            public int Height
+            {
+                get
+                {
+                    return Bottom - Top + 1;
                 }
             }
-        }
-    }
 
-    private void AddHandler(ToolStripItem pItem)
-    {
-        if (typeof(ToolStripMenuItem) == pItem.GetType()|| typeof(MaterialToolStripMenuItem)== pItem.GetType() )
-        {
-            ToolStripMenuItem t = (pItem as ToolStripMenuItem);
-            if (t.HasDropDownItems)
+            public int Width
             {
-                t.DropDownItemClicked += new ToolStripItemClickedEventHandler(ItemSelected);
-                foreach (ToolStripItem item in t.DropDownItems)
+                get
                 {
-                    AddHandler(item);
+                    return Right - Left + 1;
                 }
             }
-        }
-    }
 
-    [Category("Behavior")]
-    public bool IsEnabled
-    {
-        get { return Enable; }
-        set
-        {
-            Enable = value;
+            public Size Size { get { return new Size(Width, Height); } }
 
-            if (IsEnabled)
+            public Point Location { get { return new Point(Left, Top); } }
+
+            // Handy method for converting to a System.Drawing.Rectangle
+            public System.Drawing.Rectangle ToRectangle()
             {
-                readOnly = previousReadOnly;
-                MaterialTB.ReadOnly = previousReadOnly;
-                MaterialTB.ForeColor = EnabledStringColor;
-                InPutBTN.Enabled = true;
+                return System.Drawing.Rectangle.FromLTRB(Left, Top, Right, Bottom);
+            }
+
+            public static RECT FromRectangle(Rectangle rectangle)
+            {
+                return new RECT(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
+            }
+
+            public void Inflate(int width, int height)
+            {
+                this.Left -= width;
+                this.Top -= height;
+                this.Right += width;
+                this.Bottom += height;
+            }
+
+            public override int GetHashCode()
+            {
+                return Left ^ ((Top << 13) | (Top >> 0x13))
+                    ^ ((Width << 0x1a) | (Width >> 6))
+                    ^ ((Height << 7) | (Height >> 0x19));
+            }
+
+            public static implicit operator Rectangle(RECT rect)
+            {
+                return System.Drawing.Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            }
+
+            public static implicit operator RECT(Rectangle rect)
+            {
+                return new RECT(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            }
+        }
+
+
+        /// <summary>
+        /// Override window messages
+        /// </summary>
+        protected override void WndProc(ref Message m)
+        {
+            // Filter window messages
+            switch (m.Msg)
+            {
+                // Draw a custom color border around the drop down list cintaining popup
+                case WM_CTLCOLORLISTBOX:
+                    base.WndProc(ref m);
+                    DrawNativeBorder(m.LParam);
+                    break;
+
+                default: base.WndProc(ref m); break;
+            }
+        }
+
+        public const int WM_CTLCOLORLISTBOX = 0x0134;
+
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowDC(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetFocus(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetComboBoxInfo(IntPtr hWnd, ref COMBOBOXINFO pcbi);
+
+        [DllImport("gdi32.dll")]
+        public static extern int ExcludeClipRect(IntPtr hdc, int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreatePen(PenStyles enPenStyle, int nWidth, int crColor);
+
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr SelectObject(IntPtr hdc, IntPtr hObject);
+
+        [DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
+        [DllImport("gdi32.dll")]
+        public static extern void Rectangle(IntPtr hdc, int X1, int Y1, int X2, int Y2);
+
+        public static int RGB(int R, int G, int B)
+        {
+            return (R | (G << 8) | (B << 16));
+        }
+
+        /// <summary>
+        /// On drop down
+        /// </summary>
+        protected override void OnDropDown(EventArgs e)
+        {
+            base.OnDropDown(e);
+
+            // Start checking for the dropdown visibility
+            _dropDownCheck.Start();
+        }
+
+        /// <summary>
+        /// Checks when the drop down is fully visible
+        /// </summary>
+        private void dropDownCheck_Tick(object sender, EventArgs e)
+        {
+            // If the drop down has been fully dropped
+            if (DroppedDown)
+            {
+                // Stop the time, send a listbox update
+                _dropDownCheck.Stop();
+                Message m = GetControlListBoxMessage(this.Handle);
+                WndProc(ref m);
+            }
+        }
+
+        /// <summary>
+        /// Non client area border drawing
+        /// </summary>
+        /// <param name="m">The window message to process</param>
+        /// <param name="handle">The handle to the control</param>
+        public void DrawNativeBorder(IntPtr handle)
+        {
+            // Define the windows frame rectangle of the control
+            RECT controlRect;
+            GetWindowRect(handle, out controlRect);
+            controlRect.Right -= controlRect.Left; controlRect.Bottom -= controlRect.Top;
+            controlRect.Top = controlRect.Left = 0;
+
+            // Get the device context of the control
+            IntPtr dc = GetWindowDC(handle);
+
+            // Define the client area inside the control rect
+            RECT clientRect = controlRect;
+            clientRect.Left += 1;
+            clientRect.Top += 1;
+            clientRect.Right -= 1;
+            clientRect.Bottom -= 1;
+            ExcludeClipRect(dc, clientRect.Left, clientRect.Top, clientRect.Right, clientRect.Bottom);
+
+            // Create a pen and select it
+            Color borderColor = SkinManager.GetCardsColor();
+            IntPtr border = CreatePen(PenStyles.PS_SOLID, 1, RGB(borderColor.R, borderColor.G, borderColor.B));
+
+            // Draw the border rectangle
+            IntPtr borderPen = SelectObject(dc, border);
+            Rectangle(dc, controlRect.Left, controlRect.Top, controlRect.Right, controlRect.Bottom);
+            SelectObject(dc, borderPen);
+            DeleteObject(border);
+
+            // Release the device context
+            ReleaseDC(handle, dc);
+            SetFocus(handle);
+        }
+
+        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        {
+            Pen objPen = new Pen(DroppedDown ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetDividersBrush(), 1);
+            Graphics g = e.Graphics;
+            g.Clear(BackColor);
+            g.DrawLine(objPen, new Point(0, Height - 2), new Point(Width, Height - 2));
+            if (SelectedIndex >= 0) { 
+            e.Graphics.DrawString(Items[SelectedIndex].ToString(), font.Roboto_Medium10, SkinManager.ColorScheme.TextBrush, 0, 0);
+            }
+            Point[] objTriangle = new Point[3];
+
+            objTriangle[0] = new Point(Width - 15, Convert.ToInt32(Height * (DroppedDown ? 0.6 : 0.3)));
+            objTriangle[1] = new Point(Width - 10, Convert.ToInt32(Height * (DroppedDown ? 0.3 : 0.6)));
+            objTriangle[2] = new Point(Width - 5, Convert.ToInt32(Height * (DroppedDown ? 0.6 : 0.3)));
+
+            e.Graphics.FillPolygon(DroppedDown ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetDividersBrush(), objTriangle);
+
+            base.OnPaint(e);
+
+        }
+
+        protected override void OnDrawItem(DrawItemEventArgs e)
+        {
+
+            if (e.Index < 0)
+                return;
+
+
+
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                e.Graphics.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), e.Bounds);
             }
             else
             {
-                previousReadOnly = ReadOnly;
-                ReadOnly = true;
-                MaterialTB.ForeColor = DisabledStringColor;
-                InPutBTN.Enabled = false;
+                e.Graphics.FillRectangle(SkinManager.getCardsBrush(), e.Bounds);
             }
 
-            Invalidate();
+            Rectangle rectangle = new Rectangle(2, e.Bounds.Top + 2,
+                e.Bounds.Height, e.Bounds.Height - 4);
+            // Draw each string in the array, using a different size, color,
+            // and font for each item.
+            e.Graphics.DrawString(Items[e.Index].ToString(), font.Roboto_Medium10, SkinManager.ColorScheme.TextBrush, new RectangleF(e.Bounds.X + rectangle.Width, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
+
+
         }
-    }
 
-   
-    [Category("Appearance")]
-    public string FocusedColor
-    {
-        get { return focusColor; }
-        set
+        private void CustMeasureItem(object sender,
+    System.Windows.Forms.MeasureItemEventArgs e)
         {
-            focusColor = value;
-            Invalidate();
-        }
-    }
 
-    [Category("Appearance")]
-    public string FontColor
-    {
-        get { return fontColor; }
-        set
-        {
-            fontColor = value;
-            Invalidate();
-        }
-    }
-
-    [Category("Appearance")]
-    public string Hint
-    {
-        get { return MaterialTB.Hint; }
-        set
-        {
-            MaterialTB.Hint = value;
-            Invalidate();
-        }
-    }
-
-    [Browsable(false)]
-    public bool Enabled
-    {
-        get { return base.Enabled; }
-        set { base.Enabled = value; }
-    }
-
-    [Browsable(false)]
-    public Font Font
-    {
-        get { return base.Font; }
-        set { base.Font = value; }
-    }
-
-    [Browsable(false)]
-    public Color ForeColor
-    {
-        get { return base.ForeColor; }
-        set { base.ForeColor = value; }
-    }
-
-    #endregion
-
-    #region  Events
-
-    protected void OnKeyDown(object Obj, KeyEventArgs e)
-    {
-        if (e.Control && e.KeyCode == Keys.A)
-        {
-            MaterialTB.SelectAll();
-            e.SuppressKeyPress = true;
-        }
-        if (e.Control && e.KeyCode == Keys.C)
-        {
-            MaterialTB.Copy();
-            e.SuppressKeyPress = true;
-        }
-        if (e.Control && e.KeyCode == Keys.X)
-        {
-            MaterialTB.Cut();
-            e.SuppressKeyPress = true;
-        }
-    }
-    private void ShowDropDown(object Obj, EventArgs e)
-    {
-        if (_DropDownItems != null) { 
-        _DropDownItems.Show(MaterialTB, 0, this.Height);
-    }
-        
-    }
-
-    private void ItemSelected(object Obj, ToolStripItemClickedEventArgs e)
-    {
-        ToolStripItem result = e.ClickedItem;
-            Text = result.Text;
-        
-    }
-    protected override void OnTextChanged(System.EventArgs e)
-    {
-        base.OnTextChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnGotFocus(System.EventArgs e)
-    {
-        base.OnGotFocus(e);
-        MaterialTB.Focus();
-        MaterialTB.SelectionLength = 0;
-    }
-    protected override void OnResize(System.EventArgs e)
-    {
-        base.OnResize(e);
-
-        Height = MaterialTB.Height;
-
-        PointAnimation = Width / 2;
-        SizeInc_Dec = Width / 18;
-        PointInc_Dec = Width / 36;
-
-        MaterialTB.Width = Width - 21;
-        InPutBTN.Location = new Point(Width - 21, 1);
-        InPutBTN.Size = new Size(21, this.Height-2);
-    }  
-
-    #endregion
-    public void AddButton()
-    {
-        InPutBTN.Location = new Point(Width - 21, 1);
-        InPutBTN.Size = new Size(21, this.Height - 2);
-
-        InPutBTN.ForeColor = Color.FromArgb(255, 255, 255);
-        InPutBTN.TextAlign = ContentAlignment.MiddleCenter;
-        InPutBTN.BackColor = Color.Transparent;
-        
-        InPutBTN.TabStop = false;
-        InPutBTN.FlatStyle = FlatStyle.Flat;
-        InPutBTN.FlatAppearance.MouseOverBackColor = Color.Transparent;
-        InPutBTN.FlatAppearance.MouseDownBackColor = Color.Transparent;
-        InPutBTN.FlatAppearance.BorderSize = 0;
-
-        InPutBTN.MouseDown += ShowDropDown;
-        InPutBTN.MouseEnter += (sender, args) => mouseOver = true;
-        InPutBTN.MouseLeave += (sender, args) => mouseOver = false;
-    }
-    public void AddTextBox()
-    {
-        MaterialTB.Text = Text;
-        MaterialTB.Location = new Point(0, 1);
-        MaterialTB.Size = new Size(Width - 21, 20);
-
-        MaterialTB.Font = font.Roboto_Regular10;
-        MaterialTB.UseSystemPasswordChar = UseSystemPasswordChar;       
-        
-        MaterialTB.KeyDown += OnKeyDown;
-
-        MaterialTB.GotFocus += (sender, args) => Focus = true; AnimationTimer.Start();
-        MaterialTB.LostFocus += (sender, args) => Focus = false; AnimationTimer.Start();
-    }
-    public MaterialComboBox()
-    {
-        Width = 300;
-        DoubleBuffered = true;       
-        previousReadOnly = ReadOnly;
-
-        AddTextBox();
-        AddButton();
-       
-        Controls.Add(MaterialTB);
-        Controls.Add(InPutBTN);
-
-        MaterialTB.TextChanged += (sender, args) => Text = MaterialTB.Text;
-        base.TextChanged += (sender, args) => MaterialTB.Text = Text;
-
-        AnimationTimer.Tick += new EventHandler(AnimationTick);
-    }
-
-    protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
-    {
-        base.OnPaint(e);
-        Bitmap B = new Bitmap(Width, Height);
-        Graphics G = Graphics.FromImage(B);
-        G.Clear(BackColor);
-
-        EnabledStringColor = ColorTranslator.FromHtml(fontColor);
-        EnabledFocusedColor = ColorTranslator.FromHtml(focusColor);
-
-        MaterialTB.TextAlign = TextAlignment;
-        MaterialTB.ForeColor = IsEnabled ? EnabledStringColor : DisabledStringColor;
-        MaterialTB.UseSystemPasswordChar = UseSystemPasswordChar;
-
-        G.DrawLine(new Pen(new SolidBrush(IsEnabled ? SkinManager.GetDividersColor() : DisabledUnFocusedColor)), new Point(0, Height - 1), new Point(Width, Height - 1));
-        if (IsEnabled)
-        { G.FillRectangle(MaterialTB.Focused() ? SkinManager.ColorScheme.PrimaryBrush : SkinManager.GetDividersBrush(), PointAnimation, (float)Height - 1, SizeAnimation, MaterialTB.Focused() ? 2 : 1); }
-
-
-        G.SmoothingMode = SmoothingMode.AntiAlias;
-        PointF p1 = new Point( Width - 5, 24);
-        PointF p2 = new Point( Width - 15, 24);
-        PointF p3 = new Point( Width - 10,29);
-        PointF[] curvePoints = {
-                                  p1,p2,p3
-                              };
-        G.FillPolygon(new SolidBrush(IsEnabled ? mouseOver ? SkinManager.ColorScheme.AccentColor : SkinManager.GetDividersColor() : DisabledInputColor), curvePoints, FillMode.Winding);
-
-        e.Graphics.DrawImage((Image)(B.Clone()), 0, 0);
-        G.Dispose();
-        B.Dispose();
-    }
-
-
-    protected void AnimationTick(object sender, EventArgs e)
-    {
-        if (Focus)
-        {
-            if (SizeAnimation < Width)
+            switch (e.Index)
             {
-                SizeAnimation += SizeInc_Dec;
-                this.Invalidate();
+                case 0:
+                    e.ItemHeight = 45;
+                    break;
+                case 1:
+                    e.ItemHeight = 20;
+                    break;
+                case 2:
+                    e.ItemHeight = 35;
+                    break;
             }
+            e.ItemWidth = 260;
 
-            if (PointAnimation > 0)
-            {
-                PointAnimation -= PointInc_Dec;
-                this.Invalidate();
-            }
         }
-        else
-        {
-            if (SizeAnimation > 0)
-            {
-                SizeAnimation -= SizeInc_Dec;
-                this.Invalidate();
-            }
 
-            if (PointAnimation < Width / 2)
-            {
-                PointAnimation += PointInc_Dec;
-                this.Invalidate();
-            }
+        /// <summary>
+        /// Creates a default WM_CTLCOLORLISTBOX message
+        /// </summary>
+        /// <param name="handle">The drop down handle</param>
+        /// <returns>A WM_CTLCOLORLISTBOX message</returns>
+        public Message GetControlListBoxMessage(IntPtr handle)
+        {
+            // Force non-client redraw for focus border
+            Message m = new Message();
+            m.HWnd = handle;
+            m.LParam = GetListHandle(handle);
+            m.WParam = IntPtr.Zero;
+            m.Msg = WM_CTLCOLORLISTBOX;
+            m.Result = IntPtr.Zero;
+            return m;
+        }
+
+        /// <summary>
+        /// Gets the list control of a combo box
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        public static IntPtr GetListHandle(IntPtr handle)
+        {
+            COMBOBOXINFO info;
+            info = new COMBOBOXINFO();
+            info.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(info);
+            return GetComboBoxInfo(handle, ref info) ? info.hwndList : IntPtr.Zero;
         }
     }
-
-}
 }
 
 

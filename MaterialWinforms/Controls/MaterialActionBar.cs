@@ -35,6 +35,9 @@ namespace MaterialWinforms.Controls
         public delegate void SideDrawerButtonClicked();
         public event SideDrawerButtonClicked onSideDrawerButtonClicked;
 
+
+        public delegate void FilterButtonClicked();
+        public event FilterButtonClicked onFilterButtonClicked;
         public delegate void Searched(String pText);
         public event Searched onSearched;
 
@@ -49,10 +52,12 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        public bool SearchBarFilterIcon { get; set; }
+
         private Rectangle menuButtonBounds;
         private Rectangle drawerButtonBounds;
         private Rectangle SearchButtonBounds;
-
+        private Rectangle FilterButtonBounds;
         private ButtonState buttonState;
         private int DrawerAnimationProgress;
         private bool searchOpen = false;
@@ -78,6 +83,8 @@ namespace MaterialWinforms.Controls
             DrawerDown,
             MenuDown,
             SearchDown,
+            FilterOver,
+            FilterDown,
             None
         }
 
@@ -150,9 +157,11 @@ namespace MaterialWinforms.Controls
             if (searchOpen)
             {
                 SearchTextBox.Hint = "Suchbegriff eingeben";
-                SearchTextBox.Size = new Size(SearchButtonBounds.X - 15, Height);
+                SearchTextBox.Size = new Size(FilterButtonBounds.X - 15, Height);
                 Controls.Add(SearchTextBox);
                 SearchTextBox.Location = new Point(15, SearchTextBox.Location.Y);
+                SearchTextBox.Select();
+                         
             }
             else
             {
@@ -206,6 +215,15 @@ namespace MaterialWinforms.Controls
                 }
                 return;
             }
+             else if(FilterButtonBounds.Contains(e.Location) && searchOpen && SearchBarFilterIcon)
+            {
+                 if (buttonState != ButtonState.FilterOver)
+                 {
+                     buttonState = ButtonState.FilterOver;
+                     Invalidate();
+                 }
+                
+            }
             else
             {
                 if (buttonState != ButtonState.None)
@@ -215,6 +233,7 @@ namespace MaterialWinforms.Controls
                 }
                 return;
             }
+
         }
 
         protected override void OnMouseLeave(EventArgs e)
@@ -271,7 +290,7 @@ namespace MaterialWinforms.Controls
                     }
                     objAnimationManager.StartNewAnimation(AnimationDirection.In);
                     searchOpen = true;
-
+                   
                 }
             }
             else if (drawerButtonBounds.Contains(e.Location) && onSideDrawerButtonClicked != null)
@@ -280,6 +299,12 @@ namespace MaterialWinforms.Controls
                 onSideDrawerButtonClicked();
                 Invalidate();
 
+            }
+            else if (FilterButtonBounds.Contains(e.Location) && onFilterButtonClicked != null && searchOpen && SearchBarFilterIcon)
+            {
+                buttonState = ButtonState.FilterDown;
+                onFilterButtonClicked();
+                Invalidate();
             }
             base.OnMouseUp(e);
         }
@@ -291,6 +316,7 @@ namespace MaterialWinforms.Controls
             drawerButtonBounds = new Rectangle(SkinManager.FORM_PADDING, 0, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
             menuButtonBounds = new Rectangle(Width - SkinManager.FORM_PADDING - ACTION_BAR_HEIGHT, 0, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
             SearchButtonBounds = new Rectangle(menuButtonBounds.X - ACTION_BAR_HEIGHT, 0, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
+            FilterButtonBounds = new Rectangle(SearchButtonBounds.X - ACTION_BAR_HEIGHT, 0, ACTION_BAR_HEIGHT, ACTION_BAR_HEIGHT);
             ShadowBorder = new GraphicsPath();
             ShadowBorder.AddLine(new Point(Location.X, Location.Y + Height), new Point(Location.X + Width, Location.Y + Height));
             Height = ACTION_BAR_HEIGHT;
@@ -333,14 +359,41 @@ namespace MaterialWinforms.Controls
 
                 }
 
-                var hoverBrush = SkinManager.GetFlatButtonHoverBackgroundBrush();
-                var downBrush = SkinManager.GetFlatButtonPressedBackgroundBrush();
+                if (SearchBarFilterIcon)
+                {
+                    using (var CloseButtonPen = new Pen(Color.DarkGray, 2))
+                    {
+                        g.DrawLine(
+                               CloseButtonPen,
+                               FilterButtonBounds.X + (int)(FilterButtonBounds.Width * (0.2)),
+                               FilterButtonBounds.Y + (int)(FilterButtonBounds.Height * (0.35 )),
+                               FilterButtonBounds.X + (int)(FilterButtonBounds.Width * (0.8 )),
+                               FilterButtonBounds.Y + (int)(FilterButtonBounds.Height * (0.35 )));
+                        g.DrawLine(
+                           CloseButtonPen,
+                           FilterButtonBounds.X + (int)(FilterButtonBounds.Width * (0.3 )),
+                           FilterButtonBounds.Y + (int)(FilterButtonBounds.Height * (0.5 )),
+                           FilterButtonBounds.X + (int)(FilterButtonBounds.Width * (0.7 )),
+                           FilterButtonBounds.Y + (int)(FilterButtonBounds.Height * (0.5)));
+                        g.DrawLine(
+                          CloseButtonPen,
+                          FilterButtonBounds.X + (int)(FilterButtonBounds.Width * (0.45)),
+                          FilterButtonBounds.Y + (int)(FilterButtonBounds.Height * (0.65 )),
+                          FilterButtonBounds.X + (int)(FilterButtonBounds.Width * (0.55 )),
+                          FilterButtonBounds.Y + (int)(FilterButtonBounds.Height * (0.65)));
+                    }
+                }
+
+                var hoverBrush = new SolidBrush(Color.FromArgb(20.PercentageToColorComponent(), 0x999999.ToColor()));
 
                 if (buttonState == ButtonState.MenuOver)
                     g.FillEllipse(hoverBrush, menuButtonBounds);
 
                 if (buttonState == ButtonState.SearchOver)
                     g.FillEllipse(hoverBrush, SearchButtonBounds);
+
+                if (buttonState == ButtonState.FilterOver)
+                    g.FillEllipse(hoverBrush, FilterButtonBounds);
             }
             else
             {
@@ -509,6 +562,8 @@ namespace MaterialWinforms.Controls
             public void Copy() { baseTextBox.Copy(); }
 
             public void Cut() { baseTextBox.Cut(); }
+
+            public new void Select() { baseTextBox.Select(); }
 
             public bool ReadOnly { get { return baseTextBox.ReadOnly; } set { baseTextBox.ReadOnly = value; } }
 

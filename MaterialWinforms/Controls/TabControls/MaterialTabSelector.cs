@@ -221,6 +221,8 @@ namespace MaterialWinforms.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            try
+            { 
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
@@ -296,8 +298,7 @@ namespace MaterialWinforms.Controls
 
             if (tabRects.Count >= baseTabControl.SelectedIndex)
             {
-                try
-                {
+
                     //Animate tab indicator
                     int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
                     Rectangle previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne].TabRect;
@@ -309,17 +310,18 @@ namespace MaterialWinforms.Controls
 
                     g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
                 }
-                catch (Exception)
-                {
 
-                    //Todo: Protokollierung
-                }
-
+            }
+            
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
         {
+            try { 
             int primaryA = SkinManager.ACTION_BAR_TEXT.A;
             int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY.A;
 
@@ -335,11 +337,19 @@ namespace MaterialWinforms.Controls
             {
                 return primaryA - (int)((primaryA - secondaryA) * animationProgress);
             }
+
             return secondaryA + (int)((primaryA - secondaryA) * animationProgress);
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            try { 
             base.OnMouseMove(e);
             if (baseTabControl != null && tabRects != null)
             {
@@ -398,6 +408,12 @@ namespace MaterialWinforms.Controls
                 }
                 HoveredXButtonIndex = -1;
                 return;
+            }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -460,6 +476,7 @@ namespace MaterialWinforms.Controls
 
         private void UpdateTabRects()
         {
+            try { 
             tabRects = new List<TabRectangle>();
             TabLength = 0;
             //If there isn't a base tab control, the rects shouldn't be calculated
@@ -530,6 +547,12 @@ namespace MaterialWinforms.Controls
                         }
                     }
                 }
+            }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
