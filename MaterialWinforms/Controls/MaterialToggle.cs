@@ -33,6 +33,7 @@ namespace MaterialWinforms.Controls
         Color DisabledEllipseBorderBackColor = ColorTranslator.FromHtml("#90949a");
 
         int PointAnimationNum = 4;
+        bool AnimationRunning = false;
 
         #endregion
         #region  Properties
@@ -92,6 +93,9 @@ namespace MaterialWinforms.Controls
             Invalidate();
         }
 
+        public delegate void AnimationFinished();
+        public event AnimationFinished onAnimationFinished;
+
         #endregion
         public MaterialToggle()
         {
@@ -122,13 +126,36 @@ namespace MaterialWinforms.Controls
                 if (PointAnimationNum < 24)
                 {
                     PointAnimationNum += 1;
+                    AnimationRunning = true;
                     this.Invalidate();
                 }
+                else if (AnimationRunning)
+                {
+                    if (onAnimationFinished != null)
+                    {
+                        onAnimationFinished();
+                    }
+                    AnimationRunning = false;
+                }
             }
-            else if (PointAnimationNum > 4)
+            else
             {
-                PointAnimationNum -= 1;
-                this.Invalidate();
+
+
+                if (PointAnimationNum > 4)
+                {
+                    PointAnimationNum -= 1;
+                    AnimationRunning = true;
+                    this.Invalidate();
+                }
+                else if(AnimationRunning)
+                {
+                    if (onAnimationFinished != null)
+                    {
+                        onAnimationFinished();
+                    }
+                    AnimationRunning = false;
+                }
             }
         }
     }

@@ -97,7 +97,7 @@ namespace MaterialWinforms.Controls
             animationManager.OnAnimationProgress += sender => Invalidate();
             SizeChanged += Redraw;
             LocationChanged += Redraw;
-            ParentChanged += new System.EventHandler(Redraw);
+            ParentChanged += new System.EventHandler(onParentChanged);
             MouseEnter += MaterialCard_MouseEnter;
             MouseLeave += MaterialCard_MouseLeave;
         }
@@ -127,12 +127,16 @@ namespace MaterialWinforms.Controls
                 Height = Math.Min(Width, Height);
             }
             Invalidate();
+
+        }
+
+        private void onParentChanged(object sender, System.EventArgs e)
+        {
             if (Parent != null)
             {
                 Parent.BackColorChanged += new System.EventHandler(Redraw);
                 Parent.Invalidate();
             }
-
         }
 
         void ProgressTimer_Tick(object sender, System.EventArgs e)

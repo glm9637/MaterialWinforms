@@ -17,12 +17,15 @@ namespace MaterialWinforms.Controls.Settings
         private AnimationManager objAnimationManager;
         private Point _Origin;
         private MaterialSkinManager.Themes _ThemeToApply;
+        private ColorSchemePreset _ColorSchemeToApply;
         private Brush FillBrush;
         private Brush BackBrush;
         private bool close = false;
         private MaterialForm _BaseForm;
+        private bool applyTheme;
         public ColorOverlay(Point Origin,MaterialSkinManager.Themes Theme,MaterialForm BaseFormToOverlay)
         {
+            applyTheme = true;
             BackBrush = Brushes.Magenta;
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -32,11 +35,36 @@ namespace MaterialWinforms.Controls.Settings
             this.TransparencyKey = Color.Magenta;
             _ThemeToApply = Theme;
             FillBrush = new SolidBrush(_ThemeToApply == MaterialSkinManager.Themes.DARK ? Color.FromArgb(255, 51, 51, 51) : Color.White);
-            _Origin = PointToScreen(Origin);
+            _Origin = Origin;
             _BaseForm = BaseFormToOverlay;
             objAnimationManager = new AnimationManager()
             {
-                Increment = 0.02,
+                Increment = 0.015,
+                AnimationType = AnimationType.EaseInOut
+            };
+            DoubleBuffered = true;
+            objAnimationManager.OnAnimationProgress += sender => Invalidate();
+            objAnimationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
+            Visible = false;
+        }
+
+        public ColorOverlay(Point Origin, ColorSchemePreset Theme, MaterialForm BaseFormToOverlay)
+        {
+            applyTheme = false;
+            BackBrush = Brushes.Magenta;
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            InitializeComponent();
+            //set the backcolor and transparencykey on same color.
+            this.BackColor = Color.Magenta;
+            this.TransparencyKey = Color.Magenta;
+            _ColorSchemeToApply = Theme;
+            FillBrush = new SolidBrush(((int)_ColorSchemeToApply.PrimaryColor).ToColor());
+            _Origin = Origin;
+            _BaseForm = BaseFormToOverlay;
+            objAnimationManager = new AnimationManager()
+            {
+                Increment = 0.015,
                 AnimationType = AnimationType.EaseInOut
             };
             DoubleBuffered = true;
@@ -54,7 +82,13 @@ namespace MaterialWinforms.Controls.Settings
             else
             {
                 close = true;
+                if (applyTheme) { 
                 MaterialSkinManager.Instance.Theme = _ThemeToApply;
+                }
+                else
+                {
+                    MaterialSkinManager.Instance.LoadColorSchemeFromPreset(_ColorSchemeToApply);
+                }
                 objAnimationManager.AnimationType = AnimationType.EaseOut;
                 objAnimationManager.SetProgress(0);
                 Brush tmpBrush = FillBrush;
@@ -73,14 +107,14 @@ namespace MaterialWinforms.Controls.Settings
             e.Graphics.FillRectangle(BackBrush, e.ClipRectangle);
 
             e.Graphics.FillEllipse(FillBrush, CalculateCurrentRect());
-        }
+                }
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            //this.WindowState = FormWindowState.Maximized; 
             this.Location = _BaseForm.Location;
             this.Size = _BaseForm.Size;
             objAnimationManager.SetProgress(0);
+            _Origin = PointToClient(_Origin); ;
             objAnimationManager.StartNewAnimation(AnimationDirection.In);
         }
 

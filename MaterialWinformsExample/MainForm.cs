@@ -13,9 +13,13 @@ namespace MaterialWinformsExample
     public partial class MainForm : MaterialWinforms.Controls.MaterialForm
     {
         private readonly MaterialSkinManager MaterialWinformsManager;
+        private ColorSchemePresetCollection objSchemes;
         public MainForm()
         {
             InitializeComponent();
+
+            objSchemes = new ColorSchemePresetCollection();
+
 
             // Initialize MaterialWinformsManager
             MaterialWinformsManager = MaterialSkinManager.Instance;
@@ -66,19 +70,7 @@ namespace MaterialWinformsExample
             colorSchemeIndex++;
             if (colorSchemeIndex > 2) colorSchemeIndex = 0;
 
-            //These are just example color schemes
-            switch (colorSchemeIndex)
-            {
-                case 0:
-                    MaterialWinformsManager.ColorScheme = ColorScheme.BluePink();
-                    break;
-                case 1:
-                    MaterialWinformsManager.ColorScheme = ColorScheme.BlueGrey();
-                    break;
-                case 2:
-                    MaterialWinformsManager.ColorScheme = ColorScheme.GreenOrange();
-                    break;
-            }
+            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get(colorSchemeIndex));
 
 
         }
@@ -108,17 +100,17 @@ namespace MaterialWinformsExample
 
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MaterialWinformsManager.ColorScheme = ColorScheme.BluePink();
+            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get("Indigo Pink"));
         }
 
         private void greenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MaterialWinformsManager.ColorScheme = ColorScheme.BlueGrey();
+            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get(1));
         }
 
         private void standardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MaterialWinformsManager.ColorScheme = ColorScheme.GreenOrange();
+            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get(2));
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

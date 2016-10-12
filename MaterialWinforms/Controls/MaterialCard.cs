@@ -23,6 +23,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
+
         [Category("Appearance")]
         public string Title
         {
@@ -61,11 +62,7 @@ namespace MaterialWinforms.Controls
                                     ClientRectangle.Y,
                                     ClientRectangle.Width, ClientRectangle.Height, 10));
             Invalidate();
-            if (Parent != null)
-            {
-                Parent.BackColorChanged += new System.EventHandler(Redraw);
-                Parent.Invalidate();
-            }
+
 
         }
 

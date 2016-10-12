@@ -44,7 +44,7 @@ namespace MaterialWinforms.Controls.Settings
 
         public MaterialSettings(MaterialForm Parent)
         {
-
+            
             StartPosition = FormStartPosition.Manual;
             objDimmer = new BackGroundDim(Parent);
             _BaseForm = Parent;
@@ -53,10 +53,17 @@ namespace MaterialWinforms.Controls.Settings
             InitializeComponent();
 
 
-
+            _BaseForm.GotFocus += _BaseForm_GotFocus;
+            _BaseForm.Activated += _BaseForm_GotFocus;
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
             _ThemeSettingsToolStripItem.Click += DisplayThemeSettings;
+        }
+
+        void _BaseForm_GotFocus(object sender, EventArgs e)
+        {
+            objDimmer.Focus();
+            Focus();
         }
 
         private void CalculateStart()
@@ -73,6 +80,8 @@ namespace MaterialWinforms.Controls.Settings
             base.OnLoad(e);
 
         }
+
+
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
@@ -171,6 +180,8 @@ namespace MaterialWinforms.Controls.Settings
             this.Controls.Add(this.SettingsDrawer);
             this.Controls.Add(this.pnl_SettingsView);
             this.Name = "MaterialSettings";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.SideDrawer = this.SettingsDrawer;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";

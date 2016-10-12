@@ -47,6 +47,7 @@
     <Compile Include="Animations\AnimationManager.cs" />
     <Compile Include="Animations\Animations.cs" />
     <Compile Include="ColorScheme.cs" />
+    <Compile Include="ColorSchemePresetCollection.cs" />
     <Compile Include="Controls\DrawerControls\MaterialDrawerItem.cs">
       <SubType>Component</SubType>
     </Compile>

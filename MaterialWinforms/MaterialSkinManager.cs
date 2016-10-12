@@ -41,6 +41,11 @@ namespace MaterialWinforms
             }
         }
 
+        public void LoadColorSchemeFromPreset(ColorSchemePreset pPreset)
+        {
+            ColorScheme = new ColorScheme(pPreset.PrimaryColor, pPreset.DarkPrimaryColor, pPreset.LightPrimaryColor, pPreset.AccentColor, pPreset.TextShade);
+        }
+
         public enum Themes : byte
         {
             LIGHT,
@@ -261,7 +266,7 @@ namespace MaterialWinforms
             ROBOTO_REGULAR_11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
 			Theme = Themes.DARK;
-            ColorScheme = ColorScheme.BluePink();
+            ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
         }
 
         public static MaterialSkinManager Instance

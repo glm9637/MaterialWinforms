@@ -275,6 +275,24 @@ namespace MaterialWinforms.Controls
         {
             String strText;
             Object objTag;
+
+            if (sender.GetType() == typeof(MaterialDrawerItem))
+            {
+                MaterialDrawerItem t = (MaterialDrawerItem)sender;
+                if (t.Selected)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                MaterialFlatButton t = (MaterialFlatButton)sender;
+                if (t.Selected)
+                {
+                    return;
+                }
+            }
+
             foreach (Control objSideControl in Controls)
             {
                 if (objSideControl.GetType() == typeof(MaterialFlatButton))
@@ -301,7 +319,7 @@ namespace MaterialWinforms.Controls
             else
             {
                 MaterialFlatButton t = (MaterialFlatButton)sender;
-                t.Selected = true&&SelectOnClick;
+                t.Selected = true && SelectOnClick;
                 strText = t.Text;
                 objTag = t.Tag;
             }
