@@ -178,7 +178,7 @@ namespace MaterialWinforms.Controls
                 }
 
                 offset = 0;
-                if (!ignoreClick)
+                if (!ignoreClick && HoveredItem > -1)
                 {
                     SelectedItemIndex = HoveredItem;
                     animationSource = e.Location;

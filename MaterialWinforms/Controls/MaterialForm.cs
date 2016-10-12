@@ -33,7 +33,13 @@ namespace MaterialWinforms.Controls
             }
             set
             {
+                if (Controls.Contains(_SideDrawer))
+                {
+                    Controls.Remove(_SideDrawer);
+                }
+
                 _SideDrawer = value;
+                Controls.Add(_SideDrawer);
             }
         }
 
@@ -564,11 +570,6 @@ namespace MaterialWinforms.Controls
             minButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 3 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             maxButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
-
-            if (SideDrawer != null)
-            {
-                SideDrawer.Height = this.Height;
-            }
         }
 
 
