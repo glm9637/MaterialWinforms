@@ -25,7 +25,7 @@ namespace MaterialWinforms.Controls
 
         public bool Capitalized { get; set; }
 
-        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+        public new Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
         private readonly AnimationManager animationManager;
         private readonly AnimationManager hoverAnimationManager;

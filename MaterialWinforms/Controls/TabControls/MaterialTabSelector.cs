@@ -212,10 +212,14 @@ namespace MaterialWinforms.Controls
 
         protected override void OnResize(System.EventArgs e)
         {
+
             base.OnResize(e);
             Height = 35;
             ShadowBorder = new GraphicsPath();
             ShadowBorder.AddLine(new Point(Location.X, Location.Y + Height), new Point(Location.X + Width, Location.Y + Height));
+            UpdateTabRects();
+            Invalidate();
+
         }
 
 
@@ -321,9 +325,9 @@ namespace MaterialWinforms.Controls
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
         {
-            try { 
-            int primaryA = SkinManager.ACTION_BAR_TEXT.A;
-            int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY.A;
+            try {
+                int primaryA = SkinManager.ACTION_BAR_TEXT().A;
+            int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY().A;
 
             if (tabIndex == baseTabControl.SelectedIndex && !animationManager.IsAnimating())
             {

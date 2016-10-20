@@ -278,7 +278,8 @@ namespace MaterialWinforms
         BlueGrey700 = 0x455A64,
         BlueGrey800 = 0x37474F,
         BlueGrey900 = 0x263238,
-
+        Black = 0x000000,
+        White = 0xffffff,
     }
 
     public enum Accent
@@ -347,6 +348,8 @@ namespace MaterialWinforms
         DeepOrange200 = 0xFF6E40,
         DeepOrange400 = 0xFF3D00,
         DeepOrange700 = 0xDD2C00,
+        Black = 0x000000,
+        White = 0xffffff
     }
 
     public class ColorSchemePreset

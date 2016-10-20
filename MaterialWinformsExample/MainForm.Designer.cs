@@ -63,6 +63,47 @@ namespace MaterialWinformsExample
             this.tmi_Prozeduren = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
             this.tmi_Trigger = new MaterialWinforms.Controls.MaterialToolStripMenuItem();
             this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.eafToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asdfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sadfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sadfToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.asdfToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.asdfToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.asToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.qToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.weToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.qToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fgvsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.asdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.qToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.weToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sdToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.vToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sdToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.qvgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sfdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.materialSideDrawer3 = new MaterialWinforms.Controls.MaterialSideDrawer();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -194,7 +235,7 @@ namespace MaterialWinformsExample
             this.materialRaisedButton1.Location = new System.Drawing.Point(841, 650);
             this.materialRaisedButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
-            this.materialRaisedButton1.Primary = true;
+            this.materialRaisedButton1.Primary = false;
             graphicsPath2.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
             this.materialRaisedButton1.ShadowBorder = graphicsPath2;
             this.materialRaisedButton1.Size = new System.Drawing.Size(179, 36);
@@ -250,10 +291,51 @@ namespace MaterialWinformsExample
             this.SideDrawerList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tmi_Datenbank1,
             this.tmi_Datenbank2,
-            this.testToolStripMenuItem1});
+            this.testToolStripMenuItem1,
+            this.eafToolStripMenuItem,
+            this.asdfToolStripMenuItem,
+            this.sadfToolStripMenuItem,
+            this.sadfToolStripMenuItem1,
+            this.asdfToolStripMenuItem1,
+            this.asdfToolStripMenuItem2,
+            this.asToolStripMenuItem,
+            this.vdToolStripMenuItem,
+            this.asToolStripMenuItem1,
+            this.dToolStripMenuItem,
+            this.vToolStripMenuItem,
+            this.aToolStripMenuItem,
+            this.sdToolStripMenuItem,
+            this.vToolStripMenuItem1,
+            this.qToolStripMenuItem,
+            this.weToolStripMenuItem,
+            this.qToolStripMenuItem1,
+            this.fgvsToolStripMenuItem,
+            this.dToolStripMenuItem1,
+            this.fToolStripMenuItem,
+            this.asToolStripMenuItem2,
+            this.dToolStripMenuItem2,
+            this.fToolStripMenuItem1,
+            this.asdToolStripMenuItem,
+            this.vToolStripMenuItem2,
+            this.aToolStripMenuItem1,
+            this.sdToolStripMenuItem1,
+            this.fToolStripMenuItem2,
+            this.qToolStripMenuItem2,
+            this.weToolStripMenuItem1,
+            this.fToolStripMenuItem3,
+            this.aToolStripMenuItem2,
+            this.sdToolStripMenuItem2,
+            this.vToolStripMenuItem3,
+            this.aToolStripMenuItem3,
+            this.sdToolStripMenuItem3,
+            this.qvgToolStripMenuItem,
+            this.eToolStripMenuItem,
+            this.rToolStripMenuItem,
+            this.bgToolStripMenuItem,
+            this.sfdToolStripMenuItem});
             this.SideDrawerList.MouseState = MaterialWinforms.MouseState.HOVER;
             this.SideDrawerList.Name = "materialContextMenuStrip1";
-            this.SideDrawerList.Size = new System.Drawing.Size(141, 86);
+            this.SideDrawerList.Size = new System.Drawing.Size(141, 988);
             // 
             // tmi_Datenbank1
             // 
@@ -351,6 +433,252 @@ namespace MaterialWinformsExample
             this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
             this.testToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
             this.testToolStripMenuItem1.Text = "Test";
+            // 
+            // eafToolStripMenuItem
+            // 
+            this.eafToolStripMenuItem.Name = "eafToolStripMenuItem";
+            this.eafToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.eafToolStripMenuItem.Text = "eaf";
+            // 
+            // asdfToolStripMenuItem
+            // 
+            this.asdfToolStripMenuItem.Name = "asdfToolStripMenuItem";
+            this.asdfToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.asdfToolStripMenuItem.Text = "asdf";
+            // 
+            // sadfToolStripMenuItem
+            // 
+            this.sadfToolStripMenuItem.Name = "sadfToolStripMenuItem";
+            this.sadfToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.sadfToolStripMenuItem.Text = "sadf";
+            // 
+            // sadfToolStripMenuItem1
+            // 
+            this.sadfToolStripMenuItem1.Name = "sadfToolStripMenuItem1";
+            this.sadfToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.sadfToolStripMenuItem1.Text = "sadf";
+            // 
+            // asdfToolStripMenuItem1
+            // 
+            this.asdfToolStripMenuItem1.Name = "asdfToolStripMenuItem1";
+            this.asdfToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.asdfToolStripMenuItem1.Text = "asdf";
+            // 
+            // asdfToolStripMenuItem2
+            // 
+            this.asdfToolStripMenuItem2.Name = "asdfToolStripMenuItem2";
+            this.asdfToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.asdfToolStripMenuItem2.Text = "asdf";
+            // 
+            // asToolStripMenuItem
+            // 
+            this.asToolStripMenuItem.Name = "asToolStripMenuItem";
+            this.asToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.asToolStripMenuItem.Text = "as";
+            // 
+            // vdToolStripMenuItem
+            // 
+            this.vdToolStripMenuItem.Name = "vdToolStripMenuItem";
+            this.vdToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.vdToolStripMenuItem.Text = "vd";
+            // 
+            // asToolStripMenuItem1
+            // 
+            this.asToolStripMenuItem1.Name = "asToolStripMenuItem1";
+            this.asToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.asToolStripMenuItem1.Text = "as";
+            // 
+            // dToolStripMenuItem
+            // 
+            this.dToolStripMenuItem.Name = "dToolStripMenuItem";
+            this.dToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.dToolStripMenuItem.Text = "d";
+            // 
+            // vToolStripMenuItem
+            // 
+            this.vToolStripMenuItem.Name = "vToolStripMenuItem";
+            this.vToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.vToolStripMenuItem.Text = "v";
+            // 
+            // aToolStripMenuItem
+            // 
+            this.aToolStripMenuItem.Name = "aToolStripMenuItem";
+            this.aToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.aToolStripMenuItem.Text = "a";
+            // 
+            // sdToolStripMenuItem
+            // 
+            this.sdToolStripMenuItem.Name = "sdToolStripMenuItem";
+            this.sdToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.sdToolStripMenuItem.Text = "sd";
+            // 
+            // vToolStripMenuItem1
+            // 
+            this.vToolStripMenuItem1.Name = "vToolStripMenuItem1";
+            this.vToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.vToolStripMenuItem1.Text = "v";
+            // 
+            // qToolStripMenuItem
+            // 
+            this.qToolStripMenuItem.Name = "qToolStripMenuItem";
+            this.qToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.qToolStripMenuItem.Text = "q";
+            // 
+            // weToolStripMenuItem
+            // 
+            this.weToolStripMenuItem.Name = "weToolStripMenuItem";
+            this.weToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.weToolStripMenuItem.Text = "we";
+            // 
+            // qToolStripMenuItem1
+            // 
+            this.qToolStripMenuItem1.Name = "qToolStripMenuItem1";
+            this.qToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.qToolStripMenuItem1.Text = "q";
+            // 
+            // fgvsToolStripMenuItem
+            // 
+            this.fgvsToolStripMenuItem.Name = "fgvsToolStripMenuItem";
+            this.fgvsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.fgvsToolStripMenuItem.Text = "fgvs";
+            // 
+            // dToolStripMenuItem1
+            // 
+            this.dToolStripMenuItem1.Name = "dToolStripMenuItem1";
+            this.dToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.dToolStripMenuItem1.Text = "d";
+            // 
+            // fToolStripMenuItem
+            // 
+            this.fToolStripMenuItem.Name = "fToolStripMenuItem";
+            this.fToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.fToolStripMenuItem.Text = "f";
+            // 
+            // asToolStripMenuItem2
+            // 
+            this.asToolStripMenuItem2.Name = "asToolStripMenuItem2";
+            this.asToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.asToolStripMenuItem2.Text = "as";
+            // 
+            // dToolStripMenuItem2
+            // 
+            this.dToolStripMenuItem2.Name = "dToolStripMenuItem2";
+            this.dToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.dToolStripMenuItem2.Text = "d";
+            // 
+            // fToolStripMenuItem1
+            // 
+            this.fToolStripMenuItem1.Name = "fToolStripMenuItem1";
+            this.fToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.fToolStripMenuItem1.Text = "f";
+            // 
+            // asdToolStripMenuItem
+            // 
+            this.asdToolStripMenuItem.Name = "asdToolStripMenuItem";
+            this.asdToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.asdToolStripMenuItem.Text = "asd";
+            // 
+            // vToolStripMenuItem2
+            // 
+            this.vToolStripMenuItem2.Name = "vToolStripMenuItem2";
+            this.vToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.vToolStripMenuItem2.Text = "v";
+            // 
+            // aToolStripMenuItem1
+            // 
+            this.aToolStripMenuItem1.Name = "aToolStripMenuItem1";
+            this.aToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.aToolStripMenuItem1.Text = "a";
+            // 
+            // sdToolStripMenuItem1
+            // 
+            this.sdToolStripMenuItem1.Name = "sdToolStripMenuItem1";
+            this.sdToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.sdToolStripMenuItem1.Text = "sd";
+            // 
+            // fToolStripMenuItem2
+            // 
+            this.fToolStripMenuItem2.Name = "fToolStripMenuItem2";
+            this.fToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.fToolStripMenuItem2.Text = "f";
+            // 
+            // qToolStripMenuItem2
+            // 
+            this.qToolStripMenuItem2.Name = "qToolStripMenuItem2";
+            this.qToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.qToolStripMenuItem2.Text = "q";
+            // 
+            // weToolStripMenuItem1
+            // 
+            this.weToolStripMenuItem1.Name = "weToolStripMenuItem1";
+            this.weToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+            this.weToolStripMenuItem1.Text = "we";
+            // 
+            // fToolStripMenuItem3
+            // 
+            this.fToolStripMenuItem3.Name = "fToolStripMenuItem3";
+            this.fToolStripMenuItem3.Size = new System.Drawing.Size(140, 22);
+            this.fToolStripMenuItem3.Text = "f";
+            // 
+            // aToolStripMenuItem2
+            // 
+            this.aToolStripMenuItem2.Name = "aToolStripMenuItem2";
+            this.aToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.aToolStripMenuItem2.Text = "a";
+            // 
+            // sdToolStripMenuItem2
+            // 
+            this.sdToolStripMenuItem2.Name = "sdToolStripMenuItem2";
+            this.sdToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.sdToolStripMenuItem2.Text = "sd";
+            // 
+            // vToolStripMenuItem3
+            // 
+            this.vToolStripMenuItem3.Name = "vToolStripMenuItem3";
+            this.vToolStripMenuItem3.Size = new System.Drawing.Size(140, 22);
+            this.vToolStripMenuItem3.Text = "v";
+            // 
+            // aToolStripMenuItem3
+            // 
+            this.aToolStripMenuItem3.Name = "aToolStripMenuItem3";
+            this.aToolStripMenuItem3.Size = new System.Drawing.Size(140, 22);
+            this.aToolStripMenuItem3.Text = "a";
+            // 
+            // sdToolStripMenuItem3
+            // 
+            this.sdToolStripMenuItem3.Name = "sdToolStripMenuItem3";
+            this.sdToolStripMenuItem3.Size = new System.Drawing.Size(140, 22);
+            this.sdToolStripMenuItem3.Text = "sd";
+            // 
+            // qvgToolStripMenuItem
+            // 
+            this.qvgToolStripMenuItem.Name = "qvgToolStripMenuItem";
+            this.qvgToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.qvgToolStripMenuItem.Text = "qvg";
+            // 
+            // eToolStripMenuItem
+            // 
+            this.eToolStripMenuItem.Name = "eToolStripMenuItem";
+            this.eToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.eToolStripMenuItem.Text = "e";
+            // 
+            // rToolStripMenuItem
+            // 
+            this.rToolStripMenuItem.Name = "rToolStripMenuItem";
+            this.rToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.rToolStripMenuItem.Text = "r";
+            // 
+            // bgToolStripMenuItem
+            // 
+            this.bgToolStripMenuItem.Name = "bgToolStripMenuItem";
+            this.bgToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.bgToolStripMenuItem.Text = "bg";
+            // 
+            // sfdToolStripMenuItem
+            // 
+            this.sfdToolStripMenuItem.Name = "sfdToolStripMenuItem";
+            this.sfdToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.sfdToolStripMenuItem.Text = "sfd";
             // 
             // materialSideDrawer3
             // 
@@ -1165,5 +1493,46 @@ namespace MaterialWinformsExample
         private MaterialActionBarButton materialActionBarButton1;
         private MaterialActionBarButton materialActionBarButton2;
         private ToolStripMenuItem testToolStripMenuItem1;
+        private ToolStripMenuItem eafToolStripMenuItem;
+        private ToolStripMenuItem asdfToolStripMenuItem;
+        private ToolStripMenuItem sadfToolStripMenuItem;
+        private ToolStripMenuItem sadfToolStripMenuItem1;
+        private ToolStripMenuItem asdfToolStripMenuItem1;
+        private ToolStripMenuItem asdfToolStripMenuItem2;
+        private ToolStripMenuItem asToolStripMenuItem;
+        private ToolStripMenuItem vdToolStripMenuItem;
+        private ToolStripMenuItem asToolStripMenuItem1;
+        private ToolStripMenuItem dToolStripMenuItem;
+        private ToolStripMenuItem vToolStripMenuItem;
+        private ToolStripMenuItem aToolStripMenuItem;
+        private ToolStripMenuItem sdToolStripMenuItem;
+        private ToolStripMenuItem vToolStripMenuItem1;
+        private ToolStripMenuItem qToolStripMenuItem;
+        private ToolStripMenuItem weToolStripMenuItem;
+        private ToolStripMenuItem qToolStripMenuItem1;
+        private ToolStripMenuItem fgvsToolStripMenuItem;
+        private ToolStripMenuItem dToolStripMenuItem1;
+        private ToolStripMenuItem fToolStripMenuItem;
+        private ToolStripMenuItem asToolStripMenuItem2;
+        private ToolStripMenuItem dToolStripMenuItem2;
+        private ToolStripMenuItem fToolStripMenuItem1;
+        private ToolStripMenuItem asdToolStripMenuItem;
+        private ToolStripMenuItem vToolStripMenuItem2;
+        private ToolStripMenuItem aToolStripMenuItem1;
+        private ToolStripMenuItem sdToolStripMenuItem1;
+        private ToolStripMenuItem fToolStripMenuItem2;
+        private ToolStripMenuItem qToolStripMenuItem2;
+        private ToolStripMenuItem weToolStripMenuItem1;
+        private ToolStripMenuItem fToolStripMenuItem3;
+        private ToolStripMenuItem aToolStripMenuItem2;
+        private ToolStripMenuItem sdToolStripMenuItem2;
+        private ToolStripMenuItem vToolStripMenuItem3;
+        private ToolStripMenuItem aToolStripMenuItem3;
+        private ToolStripMenuItem sdToolStripMenuItem3;
+        private ToolStripMenuItem qvgToolStripMenuItem;
+        private ToolStripMenuItem eToolStripMenuItem;
+        private ToolStripMenuItem rToolStripMenuItem;
+        private ToolStripMenuItem bgToolStripMenuItem;
+        private ToolStripMenuItem sfdToolStripMenuItem;
     }
 }

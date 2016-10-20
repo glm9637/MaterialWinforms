@@ -26,7 +26,7 @@ namespace MaterialWinforms
                 TextShade = TextShade.WHITE
             });
 
-            objSchemes.Add(new ColorSchemePreset("BlueGry LightBlue")
+            objSchemes.Add(new ColorSchemePreset("BlueGrey LightBlue")
             {
                 PrimaryColor = Primary.BlueGrey800,
                 DarkPrimaryColor = Primary.BlueGrey900,
@@ -41,6 +41,69 @@ namespace MaterialWinforms
                 DarkPrimaryColor = Primary.Green700,
                 LightPrimaryColor = Primary.Green200,
                 AccentColor = Accent.Red100,
+                TextShade = TextShade.WHITE
+            });
+
+            objSchemes.Add(new ColorSchemePreset("Purple Green")
+            {
+                PrimaryColor = Primary.Purple500,
+                DarkPrimaryColor = Primary.Purple700,
+                LightPrimaryColor = Primary.Purple200,
+                AccentColor = Accent.Green200,
+                TextShade = TextShade.WHITE
+            });
+
+            objSchemes.Add(new ColorSchemePreset("Black White")
+            {
+                PrimaryColor = Primary.Black,
+                DarkPrimaryColor = Primary.Black,
+                LightPrimaryColor = Primary.Grey900,
+                AccentColor = Accent.White,
+                TextShade = TextShade.WHITE
+            });
+
+            objSchemes.Add(new ColorSchemePreset("White Black")
+            {
+                PrimaryColor = Primary.White,
+                DarkPrimaryColor = Primary.Grey100,
+                LightPrimaryColor = Primary.White,
+                AccentColor = Accent.Black,
+                TextShade = TextShade.BLACK
+            });
+
+            objSchemes.Add(new ColorSchemePreset("Black Red")
+            {
+                PrimaryColor = Primary.Black,
+                DarkPrimaryColor = Primary.Black,
+                LightPrimaryColor = Primary.Grey900,
+                AccentColor = Accent.Red200,
+                TextShade = TextShade.WHITE
+            });
+
+            objSchemes.Add(new ColorSchemePreset("Brown Cyan")
+            {
+                PrimaryColor = Primary.Brown500,
+                DarkPrimaryColor = Primary.Brown700,
+                LightPrimaryColor = Primary.Brown200,
+                AccentColor = Accent.Green200,
+                TextShade = TextShade.WHITE
+            });
+
+            objSchemes.Add(new ColorSchemePreset("Amber Red")
+            {
+                PrimaryColor = Primary.Amber500,
+                DarkPrimaryColor = Primary.Amber700,
+                LightPrimaryColor = Primary.Amber200,
+                AccentColor = Accent.Red100,
+                TextShade = TextShade.WHITE
+            });
+
+            objSchemes.Add(new ColorSchemePreset("Purple LightBlue")
+            {
+                PrimaryColor = Primary.Purple500,
+                DarkPrimaryColor = Primary.Purple700,
+                LightPrimaryColor = Primary.Purple200,
+                AccentColor = Accent.LightBlue200,
                 TextShade = TextShade.WHITE
             });
         }

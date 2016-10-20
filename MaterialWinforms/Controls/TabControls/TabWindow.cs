@@ -104,7 +104,7 @@ namespace MaterialWinforms.Controls
             if (ReturnButtonState == RetButtonState.ReturnButtonOver )
                 g.FillRectangle(downBrush, ReturnButtonBounds);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
+            using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY(), 2))
             {
                 g.DrawLine(
                    DrawerButtonPen,

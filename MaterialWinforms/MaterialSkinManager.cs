@@ -18,6 +18,10 @@ namespace MaterialWinforms
         //Forms to control
         private readonly List<MaterialForm> formsToManage = new List<MaterialForm>();
 
+        public String ThemeName = "";
+        public delegate void ThemeChanged();
+        public event ThemeChanged onThemeChanged;
+
         //Theme
         private Themes theme;
         public Themes Theme
@@ -27,6 +31,10 @@ namespace MaterialWinforms
             {
                 theme = value;
                 UpdateBackgrounds();
+                if (onThemeChanged != null)
+                {
+                    onThemeChanged();
+                }
             }
         }
 
@@ -38,11 +46,16 @@ namespace MaterialWinforms
             {
 				colorScheme = value;
                 UpdateBackgrounds();
+                if (onThemeChanged != null)
+                {
+                    onThemeChanged();
+                }
             }
         }
 
         public void LoadColorSchemeFromPreset(ColorSchemePreset pPreset)
         {
+            ThemeName = pPreset.Name;
             ColorScheme = new ColorScheme(pPreset.PrimaryColor, pPreset.DarkPrimaryColor, pPreset.LightPrimaryColor, pPreset.AccentColor, pPreset.TextShade);
         }
 
@@ -121,12 +134,25 @@ namespace MaterialWinforms
         private static readonly Color BACKGROUND_DARK = Color.FromArgb(255, 51, 51, 51);
         private static Brush BACKGROUND_DARK_BRUSH = new SolidBrush(BACKGROUND_DARK);
 
-        //Application action bar
-        public readonly Color ACTION_BAR_TEXT = Color.FromArgb(255, 255, 255, 255);
-        public readonly Brush ACTION_BAR_TEXT_BRUSH = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
-        public readonly Color ACTION_BAR_TEXT_SECONDARY = Color.FromArgb(153, 255, 255, 255);
-        public readonly Brush ACTION_BAR_TEXT_SECONDARY_BRUSH = new SolidBrush(Color.FromArgb(153, 255, 255, 255));
+        public Color ACTION_BAR_TEXT()
+        {
+            return (ColorScheme.PrimaryColor.GetBrightness()<0.5? Color.White: Color.Black);
+        }
 
+        public Brush ACTION_BAR_TEXT_BRUSH()
+        {
+            return new SolidBrush((ColorScheme.PrimaryColor.GetBrightness() < 0.5 ? Color.White : Color.Black));
+        }
+
+        public Color ACTION_BAR_TEXT_SECONDARY()
+        {
+            return (ColorScheme.PrimaryColor.GetBrightness() < 0.5 ? Color.White : Color.DarkGray);
+        }
+
+        public Brush ACTION_BAR_TEXT_SECONDARY_BRUSH()
+        {
+            return new SolidBrush((ColorScheme.PrimaryColor.GetBrightness() < 0.5 ? Color.White : Color.DarkGray));
+        }
         public Color GetPrimaryTextColor()
         {
             return (Theme == Themes.LIGHT ? PRIMARY_TEXT_BLACK : PRIMARY_TEXT_WHITE);
@@ -209,7 +235,7 @@ namespace MaterialWinforms
 
         public Brush GetRaisedButtonTextBrush(bool primary)
         {
-            return (primary ? RAISED_BUTTON_TEXT_LIGHT_BRUSH : RAISED_BUTTON_TEXT_DARK_BRUSH);
+            return (primary ? ACTION_BAR_TEXT_BRUSH() : RAISED_BUTTON_TEXT_DARK_BRUSH);
         }
 
         public Color GetFlatButtonHoverBackgroundColor()

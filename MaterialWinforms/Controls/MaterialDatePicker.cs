@@ -235,10 +235,10 @@ namespace MaterialWinforms.Controls
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
 
-            g.DrawString(CurrentDate.ToString("dddd"), TopDayFont, SkinManager.ACTION_BAR_TEXT_BRUSH, TopDayRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-            g.DrawString(CurrentDate.ToString("MMMM"), MonthFont, SkinManager.ACTION_BAR_TEXT_BRUSH, MonthRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far });
-            g.DrawString(CurrentDate.ToString("dd"), DayFont, SkinManager.ACTION_BAR_TEXT_BRUSH, DayRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-            g.DrawString(CurrentDate.ToString("yyyy"), YeahrFont, new SolidBrush(Color.FromArgb(80, SkinManager.ACTION_BAR_TEXT)), YearRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(CurrentDate.ToString("dddd"), TopDayFont, SkinManager.ACTION_BAR_TEXT_BRUSH(), TopDayRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(CurrentDate.ToString("MMMM"), MonthFont, SkinManager.ACTION_BAR_TEXT_BRUSH(), MonthRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far });
+            g.DrawString(CurrentDate.ToString("dd"), DayFont, SkinManager.ACTION_BAR_TEXT_BRUSH(), DayRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+            g.DrawString(CurrentDate.ToString("yyyy"), YeahrFont, new SolidBrush(Color.FromArgb(80, SkinManager.ACTION_BAR_TEXT())), YearRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 
             g.DrawString(CurrentDate.ToString("MMMM"), SkinManager.ROBOTO_REGULAR_11, SkinManager.GetPrimaryTextBrush(), CurrentCal_Header, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 

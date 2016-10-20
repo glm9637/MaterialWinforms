@@ -460,7 +460,7 @@ namespace MaterialWinforms.Controls
                     if (!objParent.SideDrawer.SideDrawerFixiert)
                     {
                         DrawerIcon = true;
-                        using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT, 2))
+                        using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT(), 2))
                         {
                             g.DrawLine(
                                DrawerButtonPen,
@@ -533,6 +533,36 @@ namespace MaterialWinforms.Controls
                 }
             }
             Invalidate();
+        }
+
+        public void OpenSearchBar()
+        {
+            if (!searchOpen)
+            {
+                _ActionBarButtonsToReveal = new List<MaterialActionBarButton>();
+                foreach (MaterialActionBarButton objItem in _ActionBarButtons)
+                {
+                    if (objItem.Visible)
+                    {
+                        objItem.Visible = false;
+                        _ActionBarButtonsToReveal.Add(objItem);
+
+                    }
+                }
+                objAnimationManager.StartNewAnimation(AnimationDirection.In);
+                searchOpen = true;
+            }
+        }
+
+        public void CloseSearchBar()
+        {
+            if (searchOpen)
+            {
+                objAnimationManager.StartNewAnimation(AnimationDirection.Out);
+                SearchTextBox.Text = "";
+                searchOpen = false;
+                Controls.Remove(SearchTextBox);
+            }
         }
 
         class SearchTextField : Control, IMaterialControl

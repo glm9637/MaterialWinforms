@@ -283,8 +283,8 @@ namespace MaterialWinforms.Controls
 
                 if (_ProgressFinished)
                 {
-                    g.DrawLine(new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2), new Point(Convert.ToInt32(Width / 2.4), Height / 2), new Point(Width / 2, Convert.ToInt32(Height / 1.8)));
-                    g.DrawLine(new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH, 2), new Point(Convert.ToInt32(Width / 1.6), Convert.ToInt32(Height / 2.8)), new Point(Width / 2, Convert.ToInt32(Height / 1.8)));
+                    g.DrawLine(new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH(), 2), new Point(Convert.ToInt32(Width / 2.4), Height / 2), new Point(Width / 2, Convert.ToInt32(Height / 1.8)));
+                    g.DrawLine(new Pen(SkinManager.ACTION_BAR_TEXT_BRUSH(), 2), new Point(Convert.ToInt32(Width / 1.6), Convert.ToInt32(Height / 2.8)), new Point(Width / 2, Convert.ToInt32(Height / 1.8)));
                     Region = new Region(DrawHelper.CreateCircle(ClientRectangle.X + ShadowDepth,
                                 ClientRectangle.Y + ShadowDepth,
                                 ClientRectangle.Width / 2 - ShadowDepth));

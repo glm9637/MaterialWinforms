@@ -19,7 +19,7 @@ namespace MaterialWinforms.Controls
 		public MouseState MouseState { get; set; }
 		[Browsable(false)]
 		public Point MouseLocation { get; set; }
-        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
+        public new Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IShadowedMaterialControl).IsAssignableFrom(Parent.GetType()) ? ((IMaterialControl)Parent).BackColor : Parent.BackColor; } }
 
 		public MaterialListView()
 		{
@@ -64,6 +64,12 @@ namespace MaterialWinforms.Controls
 				new Rectangle(e.Bounds.X + ITEM_PADDING, e.Bounds.Y + ITEM_PADDING, e.Bounds.Width - ITEM_PADDING * 2, e.Bounds.Height - ITEM_PADDING * 2), 
 				getStringFormat());
 		}
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+
+            pevent.Graphics.Clear(SkinManager.GetApplicationBackgroundColor());
+        }
 
 		private const int ITEM_PADDING = 12;
 		protected override void OnDrawItem(DrawListViewItemEventArgs e)

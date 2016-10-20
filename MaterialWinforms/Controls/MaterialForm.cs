@@ -617,7 +617,7 @@ namespace MaterialWinforms.Controls
             if (buttonState == ButtonState.XDown && ControlBox)
                 g.FillRectangle(downBrush, xButtonBounds);
 
-            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY, 2))
+            using (var formButtonsPen = new Pen(SkinManager.ACTION_BAR_TEXT_SECONDARY(), 2))
             {
                 // Minimize button.
                 if (showMin)

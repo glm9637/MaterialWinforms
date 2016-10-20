@@ -50,6 +50,7 @@ namespace MaterialWinforms.Controls.Settings
             _BaseForm = Parent;
             SkinManager.AddFormToManage(this);
 
+
             InitializeComponent();
 
 
@@ -57,8 +58,11 @@ namespace MaterialWinforms.Controls.Settings
             _BaseForm.Activated += _BaseForm_GotFocus;
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
-            _ThemeSettingsToolStripItem.Click += DisplayThemeSettings;
+            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm);
+            objSettings.Dock = DockStyle.Fill;
+            _ThemeSettingsToolStripItem.Tag = objSettings;
         }
+
 
         void _BaseForm_GotFocus(object sender, EventArgs e)
         {
@@ -70,6 +74,8 @@ namespace MaterialWinforms.Controls.Settings
         {
             Location = new Point(Convert.ToInt32(_BaseForm.Location.X+ _BaseForm.Width *0.1), Convert.ToInt32(_BaseForm.Location.Y +_BaseForm.Height* 0.1));
             Size = new Size( Convert.ToInt32(_BaseForm.Width * 0.8),Convert.ToInt32(_BaseForm.Height * 0.8));
+            MaximumSize = Size;
+            MinimumSize = Size;
         }
 
 
@@ -106,13 +112,6 @@ namespace MaterialWinforms.Controls.Settings
             base.WndProc(ref message);
         }
 
-        private void DisplayThemeSettings(object sender, EventArgs e)
-        {
-            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm);
-            objSettings.Dock = DockStyle.Fill;
-            pnl_SettingsView.Controls.Clear();
-            pnl_SettingsView.Controls.Add(objSettings);
-        }
 
         protected override CreateParams CreateParams
         {
@@ -123,6 +122,24 @@ namespace MaterialWinforms.Controls.Settings
                 cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
             }
+        }
+
+        public void AddPage(string Name,UserControl Content)
+        {
+            MaterialToolStripMenuItem objNeuesItem = new MaterialToolStripMenuItem();
+            objNeuesItem.Text = Name;
+            objNeuesItem.Name = Name;
+            objNeuesItem.Tag = Content;
+            objNeuesItem.Click += OpenPage;
+            SettingsDrawerItems.Items.Add(objNeuesItem);
+
+        }
+
+        private void OpenPage(object sender, EventArgs e)
+        {
+            pnl_SettingsView.Controls.Clear();
+            pnl_SettingsView.Controls.Add((UserControl)((MaterialToolStripMenuItem)sender).Tag);
+            pnl_SettingsView.Controls[0].Dock = DockStyle.Fill;
         }
 
         private void InitializeComponent()
@@ -191,10 +208,9 @@ namespace MaterialWinforms.Controls.Settings
 
         private void SettingsDrawer_onSideDrawerItemClicked(object sender, MaterialSideDrawer.SideDrawerEventArgs e)
         {
-            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm);
-            objSettings.Dock = DockStyle.Fill;
+
             pnl_SettingsView.Controls.Clear();
-            pnl_SettingsView.Controls.Add(objSettings);
+            pnl_SettingsView.Controls.Add((UserControl)e.getTag());
         }
 
     }
