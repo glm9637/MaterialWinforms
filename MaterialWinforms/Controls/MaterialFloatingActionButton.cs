@@ -35,7 +35,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
-        public Color BackColor { get { return SkinManager.ColorScheme.AccentColor; } }
+        public new Color BackColor { get { return SkinManager.ColorScheme.AccentColor; } }
 
         [Browsable(false)]
         [DefaultValue (typeof(int),"48")]

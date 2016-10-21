@@ -157,6 +157,7 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.materialProgressBar2 = new MaterialWinforms.Controls.MaterialProgressBar();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -726,12 +727,12 @@ namespace MaterialWinformsExample
             this.materialTabControl1.Controls.Add(this.materialTabPage1);
             this.materialTabControl1.Controls.Add(this.materialTabPage2);
             this.materialTabControl1.Depth = 0;
-            this.materialTabControl1.Location = new System.Drawing.Point(222, 117);
+            this.materialTabControl1.Location = new System.Drawing.Point(222, 190);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
-            this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(809, 508);
+            this.materialTabControl1.SelectedIndex = 1;
+            this.materialTabControl1.Size = new System.Drawing.Size(809, 435);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
             // 
@@ -755,7 +756,7 @@ namespace MaterialWinformsExample
             this.materialTabPage1.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage1.Name = "materialTabPage1";
-            this.materialTabPage1.Size = new System.Drawing.Size(801, 482);
+            this.materialTabPage1.Size = new System.Drawing.Size(801, 409);
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
             // 
@@ -863,10 +864,16 @@ namespace MaterialWinformsExample
             // materialProgressBar1
             // 
             this.materialProgressBar1.Depth = 0;
+            this.materialProgressBar1.InvertedProgressBar = false;
             this.materialProgressBar1.Location = new System.Drawing.Point(26, 443);
+            this.materialProgressBar1.Maximum = 0;
+            this.materialProgressBar1.Minimum = 0;
             this.materialProgressBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialProgressBar1.Name = "materialProgressBar1";
+            this.materialProgressBar1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.materialProgressBar1.Size = new System.Drawing.Size(769, 5);
+            this.materialProgressBar1.Step = 0;
+            this.materialProgressBar1.Style = MaterialWinforms.Controls.MaterialProgressBar.ProgressStyle.Determinate;
             this.materialProgressBar1.TabIndex = 42;
             this.materialProgressBar1.Value = 50;
             // 
@@ -1143,7 +1150,7 @@ namespace MaterialWinformsExample
             this.materialTabPage2.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage2.Name = "materialTabPage2";
-            this.materialTabPage2.Size = new System.Drawing.Size(801, 482);
+            this.materialTabPage2.Size = new System.Drawing.Size(801, 409);
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
             // 
@@ -1379,6 +1386,23 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
+            // materialProgressBar2
+            // 
+            this.materialProgressBar2.Depth = 0;
+            this.materialProgressBar2.InvertedProgressBar = false;
+            this.materialProgressBar2.Location = new System.Drawing.Point(69, 141);
+            this.materialProgressBar2.Maximum = 100;
+            this.materialProgressBar2.Minimum = 0;
+            this.materialProgressBar2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialProgressBar2.Name = "materialProgressBar2";
+            this.materialProgressBar2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.materialProgressBar2.Size = new System.Drawing.Size(324, 5);
+            this.materialProgressBar2.Step = 0;
+            this.materialProgressBar2.Style = MaterialWinforms.Controls.MaterialProgressBar.ProgressStyle.Indeterminate;
+            this.materialProgressBar2.TabIndex = 34;
+            this.materialProgressBar2.Text = "materialProgressBar2";
+            this.materialProgressBar2.Value = 30;
+            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -1387,6 +1411,7 @@ namespace MaterialWinformsExample
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1043, 693);
             this.Controls.Add(this.materialSideDrawer3);
+            this.Controls.Add(this.materialProgressBar2);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialFlatButton3);
             this.Controls.Add(this.materialFlatButton2);
@@ -1400,6 +1425,7 @@ namespace MaterialWinformsExample
             this.Name = "MainForm";
             this.SideDrawer = this.materialSideDrawer3;
             this.Text = "Datenbank Dokumentation";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.SideDrawerList.ResumeLayout(false);
             this.materialTabControl1.ResumeLayout(false);
             this.materialTabPage1.ResumeLayout(false);
@@ -1534,5 +1560,6 @@ namespace MaterialWinformsExample
         private ToolStripMenuItem rToolStripMenuItem;
         private ToolStripMenuItem bgToolStripMenuItem;
         private ToolStripMenuItem sfdToolStripMenuItem;
+        private MaterialProgressBar materialProgressBar2;
     }
 }
