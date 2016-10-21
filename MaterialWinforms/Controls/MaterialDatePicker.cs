@@ -222,6 +222,7 @@ namespace MaterialWinforms.Controls
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             HoverBrush = new SolidBrush(Color.FromArgb(100, SkinManager.ColorScheme.PrimaryColor));
 
             g.Clear(SkinManager.GetCardsColor());

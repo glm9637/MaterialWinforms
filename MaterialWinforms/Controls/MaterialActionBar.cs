@@ -329,6 +329,7 @@ namespace MaterialWinforms.Controls
 
             Bitmap B = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(B);
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             e.Graphics.Clear(SkinManager.ColorScheme.PrimaryColor);
             bool DrawerIcon = false;
             if (objAnimationManager.GetProgress() == 1)

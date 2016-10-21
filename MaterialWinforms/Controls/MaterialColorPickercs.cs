@@ -505,6 +505,7 @@ namespace MaterialWinforms.Controls
             Bitmap bmp = new Bitmap(Width, Height);
             Graphics g = Graphics.FromImage(bmp);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.Clear(SkinManager.GetCardsColor());
             Color LineColor;
             Brush DisabledBrush;

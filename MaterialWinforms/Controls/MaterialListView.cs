@@ -57,6 +57,7 @@ namespace MaterialWinforms.Controls
 
 		protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
 		{
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 			e.Graphics.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(e.Bounds.X, e.Bounds.Y, Width, e.Bounds.Height));
 			e.Graphics.DrawString(e.Header.Text, 
 				SkinManager.ROBOTO_MEDIUM_10, 
@@ -78,6 +79,7 @@ namespace MaterialWinforms.Controls
 			var b = new Bitmap(e.Item.Bounds.Width, e.Item.Bounds.Height);
 			var g = Graphics.FromImage(b);
 
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 			//always draw default background
 			g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
 			

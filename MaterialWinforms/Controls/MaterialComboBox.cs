@@ -294,6 +294,7 @@ namespace MaterialWinforms.Controls
         {
             Pen objPen = new Pen(DroppedDown ? SkinManager.ColorScheme.AccentBrush : SkinManager.GetDividersBrush(), 1);
             Graphics g = e.Graphics;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.Clear(BackColor);
             g.DrawLine(objPen, new Point(0, Height - 2), new Point(Width, Height - 2));
             if (SelectedIndex >= 0) { 

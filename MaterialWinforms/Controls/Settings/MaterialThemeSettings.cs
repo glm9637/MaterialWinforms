@@ -98,7 +98,7 @@ namespace MaterialWinforms.Controls.Settings
         {
             Graphics g = e.Graphics;
             GraphicsPath objPath = new GraphicsPath();
-
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             g.FillRectangle(PrimaryDark, TopDark);

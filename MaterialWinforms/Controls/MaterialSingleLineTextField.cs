@@ -1001,6 +1001,7 @@ namespace MaterialWinforms.Controls
         {
             var g = pevent.Graphics;
             g.Clear(BackColor);
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             baseTextBox.BackColor = BackColor;
 
             int lineY = baseTextBox.Bottom + 3;

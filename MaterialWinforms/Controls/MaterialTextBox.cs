@@ -990,6 +990,7 @@ namespace MaterialWinforms.Controls
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             g.Clear(BackColor);
             baseTextBox.BackColor = BackColor;
 
