@@ -18,33 +18,45 @@ namespace MaterialWinforms.Controls
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             Maximum = 100;
-            AnimationManager = new Animations.AnimationManager();
-            AnimationManager.AnimationType = Animations.AnimationType.Linear;
-            AnimationManager.Increment = 0.03;
-            AnimationManager.SetProgress(-0.4);
-            AnimationManager.OnAnimationFinished += AnimationManager_OnAnimationFinished;
-            AnimationManager.OnAnimationProgress += AnimationManager_OnAnimationProgress;
+            AnimationManagerStart = new Animations.AnimationManager();
+            AnimationManagerStart.AnimationType = Animations.AnimationType.EaseInOut;
+            AnimationManagerStart.Increment = 0.025;
+            AnimationManagerStart.SetProgress(0);
+            AnimationManagerStart.OnAnimationFinished += AnimationManager_OnAnimationFinished;
+            AnimationManagerStart.OnAnimationProgress += AnimationManager_OnAnimationProgress;
+            AnimationManagerEnd = new Animations.AnimationManager();
+            AnimationManagerEnd.AnimationType = Animations.AnimationType.EaseInOut;
+            AnimationManagerEnd.Increment = 0.025;
+            AnimationManagerEnd.OnAnimationProgress += AnimationManager_OnAnimationProgress;
         }
+
 
         void AnimationManager_OnAnimationProgress(object sender)
         {
+            if (AnimationManagerEnd.GetProgress() >= 0.4 && !AnimationManagerStart.IsAnimating())
+            {
+                AnimationManagerStart.StartNewAnimation(Animations.AnimationDirection.In);
+            }
             Invalidate();
         }
 
         void AnimationManager_OnAnimationFinished(object sender)
         {
             Invalidate();
-            if (AnimationManager.Increment == 0.02)
+            if (AnimationManagerStart.Increment == 0.02)
             {
-                AnimationManager.Increment = 0.03;
+                AnimationManagerStart.Increment = 0.025;
+                AnimationManagerEnd.Increment = 0.025;
             }
             else
             {
-                AnimationManager.Increment = 0.02;
+                AnimationManagerStart.Increment = 0.02;
+                AnimationManagerEnd.Increment = 0.02;
             }
 
-            AnimationManager.SetProgress(0.4);
-            AnimationManager.StartNewAnimation(Animations.AnimationDirection.In);
+            AnimationManagerStart.SetProgress(0);
+            AnimationManagerEnd.SetProgress(0);
+            AnimationManagerEnd.StartNewAnimation(Animations.AnimationDirection.In);
         }
 
         /// <summary>
@@ -120,27 +132,103 @@ namespace MaterialWinforms.Controls
             Indeterminate
         }
 
-        private Animations.AnimationManager AnimationManager;
+        private Animations.AnimationManager AnimationManagerStart, AnimationManagerEnd;
 
         /// <summary>
         /// Gets or sets the maxium Progress Value
         /// </summary>
-        public int Maximum { get; set; }
+        public int Maximum
+        {
+            get
+            {
+                return _Maximum;
+            }
+            set
+            {
+                if (value <= Minimum)
+                {
+                    _Maximum = Minimum + 1;
+                }
+                else
+                {
+                    _Maximum = value;
+                }
+            }
+        }
+        private int _Maximum;
 
         /// <summary>
         /// Gets or sets the Minimum Progress Value;
         /// </summary>
-        public int Minimum { get; set; }
-
+        public int Minimum
+        {
+            get
+            {
+                return _Minimum;
+            }
+            set
+            {
+                if (value >= Maximum)
+                {
+                    _Minimum = Maximum - 1;
+                }
+                else
+                {
+                    _Minimum = value;
+                }
+            }
+        }
+        private int _Minimum;
         /// <summary>
         /// Gets or Sets The Amount of Progress on Step consists off
         /// </summary>
-        public int Step { get; set; }
+        public int Step
+        {
+            get
+            {
+                return _Step;
+            }
+            set
+            {
+                if (value >= Maximum-Minimum )
+                {
+                    _Step = Maximum - Minimum;
+                }
+                else if(value <= Minimum-Maximum)
+                {
+                    _Step = Minimum - Maximum;
+                }
+                else
+                {
+                    _Step = value;
+                }
+            }
+        }
+        private int _Step;
 
         /// <summary>
         /// Gets or sets the Current Value
         /// </summary>
-        public int Value { get; set; }
+        public int Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                _Value = value;
+                if (_Value > Maximum)
+                {
+                    _Value = Maximum;
+                }
+                else if (_Value < Minimum)
+                {
+                    _Value = Minimum;
+                }
+            }
+        }
+        private int _Value;
 
         private ProgressStyle _Style;
         public ProgressStyle Style
@@ -154,14 +242,15 @@ namespace MaterialWinforms.Controls
                 if (_Style == ProgressStyle.Determinate && value == ProgressStyle.Indeterminate)
                 {
                     _Style = value;
-                    AnimationManager.StartNewAnimation(Animations.AnimationDirection.In);
+                    AnimationManagerEnd.StartNewAnimation(Animations.AnimationDirection.In);
                 }
                 else if (_Style == ProgressStyle.Indeterminate && value == ProgressStyle.Determinate)
                 {
                     _Style = value;
-                    if (AnimationManager.IsAnimating())
+                    if (AnimationManagerEnd.IsAnimating() || AnimationManagerStart.IsAnimating())
                     {
-                        AnimationManager.SetProgress(1);
+                        AnimationManagerEnd.SetProgress(1);
+                        AnimationManagerStart.SetProgress(1);
                     }
                 }
             }
@@ -206,7 +295,7 @@ namespace MaterialWinforms.Controls
             {
                 if (Orientation == System.Windows.Forms.Orientation.Horizontal)
                 {
-                    var doneProgress = (int)(e.ClipRectangle.Width * ((double)Value / Maximum));
+                    var doneProgress = (int)(e.ClipRectangle.Width * ((double)Value / (Maximum-Minimum)));
                     if (InvertedProgressBar)
                     {
                         doneProgress = Width - doneProgress;
@@ -238,8 +327,8 @@ namespace MaterialWinforms.Controls
             }
             else
             {
-                double startProgress = Math.Max(AnimationManager.GetProgress(),0);
-                double EndProgress = Math.Min(1, AnimationManager.GetProgress()+0.6);
+                double startProgress = AnimationManagerStart.GetProgress();
+                double EndProgress = AnimationManagerEnd.GetProgress();
                 if (Orientation == System.Windows.Forms.Orientation.Horizontal)
                 {
                     var doneLocation = (int)(e.ClipRectangle.Width * EndProgress);
@@ -250,12 +339,12 @@ namespace MaterialWinforms.Controls
                         doneLocation = Width - doneLocation;
                         StartLocation = Width - StartLocation;
                         e.Graphics.FillRectangle(SkinManager.GetDisabledOrHintBrush(), 0, 0, e.ClipRectangle.Width, e.ClipRectangle.Height);
-                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, doneLocation, 0, StartLocation-doneLocation, e.ClipRectangle.Height);
+                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, doneLocation, 0, StartLocation - doneLocation, e.ClipRectangle.Height);
                     }
                     else
                     {
                         e.Graphics.FillRectangle(SkinManager.GetDisabledOrHintBrush(), 0, 0, e.ClipRectangle.Width, e.ClipRectangle.Height);
-                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, StartLocation, 0, doneLocation-StartLocation, e.ClipRectangle.Height);
+                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, StartLocation, 0, doneLocation - StartLocation, e.ClipRectangle.Height);
 
                     }
                 }
@@ -270,12 +359,12 @@ namespace MaterialWinforms.Controls
                         StartLocation = Height - StartLocation;
 
                         e.Graphics.FillRectangle(SkinManager.GetDisabledOrHintBrush(), 0, 0, e.ClipRectangle.Width, e.ClipRectangle.Height);
-                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, StartLocation, e.ClipRectangle.Height, doneLocation - StartLocation);
+                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, doneLocation, e.ClipRectangle.Height, StartLocation - doneLocation);
                     }
                     else
                     {
                         e.Graphics.FillRectangle(SkinManager.GetDisabledOrHintBrush(), 0, 0, e.ClipRectangle.Width, e.ClipRectangle.Height);
-                        e.Graphics.FillRectangle(SkinManager.GetDisabledOrHintBrush(), 0, doneLocation, e.ClipRectangle.Width, StartLocation-doneLocation);
+                        e.Graphics.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, 0, StartLocation, e.ClipRectangle.Width, doneLocation - StartLocation);
                     }
                 }
             }
