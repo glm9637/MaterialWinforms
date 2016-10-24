@@ -159,7 +159,7 @@ namespace MaterialWinforms.Controls
                 if (value == MaterialOrientation) return;
                 MaterialOrientation = value;
                 scrollOrientation = value == MaterialScrollOrientation.Vertical ? ScrollOrientation.VerticalScroll : ScrollOrientation.HorizontalScroll;
-                Size = new Size(Height, Width); // TODO: ???? why wrong order??
+                Size = new Size(Height, Width);
                 SetupScrollBar();
             }
         }
@@ -423,7 +423,7 @@ namespace MaterialWinforms.Controls
                 g.FillRectangle(b, thumbRect);
             }
 
-            using (var b = new SolidBrush(thumbColor))
+            using (var b = new SolidBrush(isHovered ?barColor:thumbColor))
             {
                 g.FillRectangle(b, thumbRectangle);
             }

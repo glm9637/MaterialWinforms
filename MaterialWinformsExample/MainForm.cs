@@ -32,6 +32,8 @@ namespace MaterialWinformsExample
 
             materialActionBar1.onSearched += materialActionBar1_onSearched;
             materialActionBar1.Invalidate();
+
+
         }
 
         void materialActionBar1_onSearched(string pText)
@@ -134,6 +136,8 @@ namespace MaterialWinformsExample
         {
 
         }
+
+
 
 
     }

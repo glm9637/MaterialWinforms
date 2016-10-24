@@ -154,7 +154,7 @@ namespace MaterialWinforms.Controls
                     t.Show();
                     return;
                 }
-            }  
+            }
         }
 
 
@@ -225,8 +225,7 @@ namespace MaterialWinforms.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            try
-            { 
+
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
@@ -302,47 +301,51 @@ namespace MaterialWinforms.Controls
 
             if (tabRects.Count >= baseTabControl.SelectedIndex)
             {
-
-                    //Animate tab indicator
-                    int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
-                    Rectangle previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne].TabRect;
-                    Rectangle activeTabPageRect = tabRects[baseTabControl.SelectedIndex].TabRect;
-
-                    int y = activeTabPageRect.Bottom - 2;
-                    int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress) + offset;
-                    int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
-
-                    g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
+                //Animate tab indicator
+                int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
+                if (previousSelectedTabIndex >BaseTabControl.TabCount-1) //Last tab was active and got closed
+                {
+                    previousSelectedTabIndex = BaseTabControl.TabCount - 1;
+                }
+                if (previousSelectedTabIndex<=0)
+                {
+                    return;
                 }
 
+                Rectangle previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne].TabRect;
+                Rectangle activeTabPageRect = tabRects[baseTabControl.SelectedIndex].TabRect;
+
+                int y = activeTabPageRect.Bottom - 2;
+                int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress) + offset;
+                int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
+
+                g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
             }
-            
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
         }
+
 
         private int CalculateTextAlpha(int tabIndex, double animationProgress)
         {
-            try {
+            try
+            {
                 int primaryA = SkinManager.ACTION_BAR_TEXT().A;
-            int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY().A;
+                int secondaryA = SkinManager.ACTION_BAR_TEXT_SECONDARY().A;
 
-            if (tabIndex == baseTabControl.SelectedIndex && !animationManager.IsAnimating())
-            {
-                return primaryA;
-            }
-            if (tabIndex != previousSelectedTabIndex && tabIndex != baseTabControl.SelectedIndex)
-            {
-                return secondaryA;
-            }
-            if (tabIndex == previousSelectedTabIndex)
-            {
-                return primaryA - (int)((primaryA - secondaryA) * animationProgress);
-            }
+                if (tabIndex == baseTabControl.SelectedIndex && !animationManager.IsAnimating())
+                {
+                    return primaryA;
+                }
+                if (tabIndex != previousSelectedTabIndex && tabIndex != baseTabControl.SelectedIndex)
+                {
+                    return secondaryA;
+                }
+                if (tabIndex == previousSelectedTabIndex)
+                {
+                    return primaryA - (int)((primaryA - secondaryA) * animationProgress);
+                }
 
-            return secondaryA + (int)((primaryA - secondaryA) * animationProgress);
+                return secondaryA + (int)((primaryA - secondaryA) * animationProgress);
             }
 
             catch (Exception ex)
@@ -353,66 +356,67 @@ namespace MaterialWinforms.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            try { 
-            base.OnMouseMove(e);
-            if (baseTabControl != null && tabRects != null)
+            try
             {
-                if (mouseDown && baseTabControl.TabPages.Count > 0)
+                base.OnMouseMove(e);
+                if (baseTabControl != null && tabRects != null)
                 {
-                    bool move = false;
-
-
-                    if (oldXLocation > 0)
+                    if (mouseDown && baseTabControl.TabPages.Count > 0)
                     {
+                        bool move = false;
 
-                        int off = offset;
-                        off -= oldXLocation - e.X;
-                        if (tabRects[0].TabRect.X + off < 0)
+
+                        if (oldXLocation > 0)
                         {
-                            if (tabRects[tabRects.Count - 1].TabRect.Right + off > Width)
+
+                            int off = offset;
+                            off -= oldXLocation - e.X;
+                            if (tabRects[0].TabRect.X + off < 0)
                             {
-                                move = true;
+                                if (tabRects[tabRects.Count - 1].TabRect.Right + off > Width)
+                                {
+                                    move = true;
+                                }
+                            }
+                            else
+                            {
+                                if (tabRects[tabRects.Count - 1].TabRect.Right + off < Width)
+                                {
+                                    move = true;
+                                }
+                            }
+
+                            if (move)
+                            {
+                                offset -= oldXLocation - e.X;
+                                oldXLocation = e.X;
+                                Refresh();
                             }
                         }
                         else
                         {
-                            if (tabRects[tabRects.Count - 1].TabRect.Right + off < Width)
-                            {
-                                move = true;
-                            }
-                        }
-
-                        if (move)
-                        {
-                            offset -= oldXLocation - e.X;
                             oldXLocation = e.X;
                             Refresh();
                         }
-                    }
-                    else
-                    {
-                        oldXLocation = e.X;
-                        Refresh();
-                    }
 
 
-                    return;
-                }
-                for (int i = 0; i < baseTabControl.TabCount; i++)
-                {
-                    if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
+                        return;
+                    }
+                    for (int i = 0; i < baseTabControl.TabCount; i++)
                     {
-                        if (tabRects[i].XButtonRect.Contains(e.Location))
+                        if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
                         {
-                            HoveredXButtonIndex = i;
-                            Refresh();
-                            return;
+                            if (tabRects[i].XButtonRect.Contains(e.Location))
+                            {
+                                HoveredXButtonIndex = i;
+                                Refresh();
+                                return;
+                            }
                         }
                     }
+                    HoveredXButtonIndex = -1;
+                    return;
                 }
-                HoveredXButtonIndex = -1;
-                return;
-            }
             }
 
             catch (Exception ex)
@@ -480,33 +484,22 @@ namespace MaterialWinforms.Controls
 
         private void UpdateTabRects()
         {
-            try { 
-            tabRects = new List<TabRectangle>();
-            TabLength = 0;
-            //If there isn't a base tab control, the rects shouldn't be calculated
-            //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
-            if (baseTabControl == null || baseTabControl.TabCount == 0) return;
-
-            //Calculate the bounds of each tab header specified in the base tab control
-            using (var b = new Bitmap(1, 1))
+            try
             {
-                using (var g = Graphics.FromImage(b))
+                tabRects = new List<TabRectangle>();
+                TabLength = 0;
+                //If there isn't a base tab control, the rects shouldn't be calculated
+                //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
+                if (baseTabControl == null || baseTabControl.TabCount == 0) return;
+
+                //Calculate the bounds of each tab header specified in the base tab control
+                using (var b = new Bitmap(1, 1))
                 {
-                    int xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[0]).Closable ? 18 : 0;
-                    TabRectangle CurrentTab = new TabRectangle();
-                    CurrentTab.TabRect = new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
-                    if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                    using (var g = Graphics.FromImage(b))
                     {
-                        CurrentTab.TabRect.Width = MaxTabWidht;
-                    }
-                    CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
-                    TabLength += CurrentTab.TabRect.Width;
-                    tabRects.Add(CurrentTab);
-                    for (int i = 1; i < baseTabControl.TabPages.Count; i++)
-                    {
-                        xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[i]).Closable ? 18 : 0;
-                        CurrentTab = new TabRectangle();
-                        CurrentTab.TabRect = new Rectangle(tabRects[i - 1].TabRect.Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                        int xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[0]).Closable ? 18 : 0;
+                        TabRectangle CurrentTab = new TabRectangle();
+                        CurrentTab.TabRect = new Rectangle(SkinManager.FORM_PADDING, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
                         if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
                         {
                             CurrentTab.TabRect.Width = MaxTabWidht;
@@ -514,44 +507,56 @@ namespace MaterialWinforms.Controls
                         CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
                         TabLength += CurrentTab.TabRect.Width;
                         tabRects.Add(CurrentTab);
-                    }
-
-                    if (CenterTabs)
-                    {
-                        int FreeSpace = Width - (tabRects[tabRects.Count - 1].TabRect.Right - SkinManager.FORM_PADDING);
-                        FreeSpace = FreeSpace / 2;
-                        for (int i = 0; i < baseTabControl.TabPages.Count; i++)
-                        {
-                            TabRectangle Centered = tabRects[i];
-                            Centered.TabRect.X += FreeSpace;
-                            Centered.XButtonRect.X += FreeSpace;
-                            tabRects[i] = Centered;
-                        }
-                    }
-                    if (TabOffset != 0)
-                    {
-                        CurrentTab = tabRects[0];
-                        CurrentTab.TabRect = new Rectangle(CurrentTab.TabRect.X + TabOffset, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
-                        if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
-                        {
-                            CurrentTab.TabRect.Width = MaxTabWidht;
-                        }
-                        CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), CurrentTab.XButtonRect.Width, CurrentTab.XButtonRect.Height);
-                        tabRects[0] = CurrentTab;
                         for (int i = 1; i < baseTabControl.TabPages.Count; i++)
                         {
-                            CurrentTab = tabRects[i];
+                            xButtonSize = ((MaterialTabPage)BaseTabControl.TabPages[i]).Closable ? 18 : 0;
+                            CurrentTab = new TabRectangle();
                             CurrentTab.TabRect = new Rectangle(tabRects[i - 1].TabRect.Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
                             if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
                             {
                                 CurrentTab.TabRect.Width = MaxTabWidht;
                             }
+                            CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), xButtonSize, xButtonSize);
+                            TabLength += CurrentTab.TabRect.Width;
+                            tabRects.Add(CurrentTab);
+                        }
+
+                        if (CenterTabs)
+                        {
+                            int FreeSpace = Width - (tabRects[tabRects.Count - 1].TabRect.Right - SkinManager.FORM_PADDING);
+                            FreeSpace = FreeSpace / 2;
+                            for (int i = 0; i < baseTabControl.TabPages.Count; i++)
+                            {
+                                TabRectangle Centered = tabRects[i];
+                                Centered.TabRect.X += FreeSpace;
+                                Centered.XButtonRect.X += FreeSpace;
+                                tabRects[i] = Centered;
+                            }
+                        }
+                        if (TabOffset != 0)
+                        {
+                            CurrentTab = tabRects[0];
+                            CurrentTab.TabRect = new Rectangle(CurrentTab.TabRect.X + TabOffset, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                            if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                            {
+                                CurrentTab.TabRect.Width = MaxTabWidht;
+                            }
                             CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), CurrentTab.XButtonRect.Width, CurrentTab.XButtonRect.Height);
-                            tabRects[i] = CurrentTab;
+                            tabRects[0] = CurrentTab;
+                            for (int i = 1; i < baseTabControl.TabPages.Count; i++)
+                            {
+                                CurrentTab = tabRects[i];
+                                CurrentTab.TabRect = new Rectangle(tabRects[i - 1].TabRect.Right, 0, TAB_HEADER_PADDING * 2 + (int)g.MeasureString(baseTabControl.TabPages[i].Text, SkinManager.ROBOTO_MEDIUM_10).Width + 22, Height);
+                                if (MaxTabWidht > 0 && CurrentTab.TabRect.Width > MaxTabWidht)
+                                {
+                                    CurrentTab.TabRect.Width = MaxTabWidht;
+                                }
+                                CurrentTab.XButtonRect = new Rectangle(CurrentTab.TabRect.X + CurrentTab.TabRect.Width - 20, CurrentTab.TabRect.Y + ((CurrentTab.TabRect.Height - 18) / 2), CurrentTab.XButtonRect.Width, CurrentTab.XButtonRect.Height);
+                                tabRects[i] = CurrentTab;
+                            }
                         }
                     }
                 }
-            }
             }
 
             catch (Exception ex)

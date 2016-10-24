@@ -33,16 +33,16 @@ namespace MaterialWinformsExample
         /// </summary>
         private void InitializeComponent()
         {
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath11 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath12 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath13 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath14 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath1 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath3 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath4 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath15 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath16 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath17 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath18 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -138,6 +138,9 @@ namespace MaterialWinformsExample
             this.materialDropDownDatePicker1 = new MaterialWinforms.Controls.MaterialDropDownDatePicker();
             this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
             this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
+            this.materialTabPage3 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialPanel1 = new MaterialWinforms.Controls.MaterialPanel();
+            this.materialDivider2 = new MaterialWinforms.Controls.MaterialDivider();
             this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -159,7 +162,6 @@ namespace MaterialWinformsExample
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.materialProgressBar2 = new MaterialWinforms.Controls.MaterialProgressBar();
             this.materialProgressBar3 = new MaterialWinforms.Controls.MaterialProgressBar();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -167,6 +169,7 @@ namespace MaterialWinformsExample
             this.materialCard2.SuspendLayout();
             this.materialCard1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
+            this.materialTabPage3.SuspendLayout();
             this.mcm_ComboBox1.SuspendLayout();
             this.materialActionBar1.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
@@ -222,8 +225,8 @@ namespace MaterialWinformsExample
             this.materialButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.Primary = true;
-            graphicsPath11.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialButton1.ShadowBorder = graphicsPath11;
+            graphicsPath1.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialButton1.ShadowBorder = graphicsPath1;
             this.materialButton1.Size = new System.Drawing.Size(135, 36);
             this.materialButton1.TabIndex = 0;
             this.materialButton1.Text = "Change Theme";
@@ -239,8 +242,8 @@ namespace MaterialWinformsExample
             this.materialRaisedButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = false;
-            graphicsPath12.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialRaisedButton1.ShadowBorder = graphicsPath12;
+            graphicsPath2.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialRaisedButton1.ShadowBorder = graphicsPath2;
             this.materialRaisedButton1.Size = new System.Drawing.Size(179, 36);
             this.materialRaisedButton1.TabIndex = 21;
             this.materialRaisedButton1.Text = "Change color scheme";
@@ -257,8 +260,8 @@ namespace MaterialWinformsExample
             this.materialFloatingActionButton1.Location = new System.Drawing.Point(222, 644);
             this.materialFloatingActionButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFloatingActionButton1.Name = "materialFloatingActionButton1";
-            graphicsPath13.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialFloatingActionButton1.ShadowBorder = graphicsPath13;
+            graphicsPath3.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialFloatingActionButton1.ShadowBorder = graphicsPath3;
             this.materialFloatingActionButton1.Size = new System.Drawing.Size(42, 42);
             this.materialFloatingActionButton1.TabIndex = 20;
             this.materialFloatingActionButton1.Text = "materialFloatingActionButton1";
@@ -695,8 +698,8 @@ namespace MaterialWinformsExample
             this.materialSideDrawer3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSideDrawer3.Name = "materialSideDrawer3";
             this.materialSideDrawer3.SelectOnClick = false;
-            graphicsPath14.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialSideDrawer3.ShadowBorder = graphicsPath14;
+            graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialSideDrawer3.ShadowBorder = graphicsPath4;
             this.materialSideDrawer3.SideDrawer = this.SideDrawerList;
             this.materialSideDrawer3.SideDrawerFixiert = false;
             this.materialSideDrawer3.SideDrawerUnterActionBar = false;
@@ -728,12 +731,13 @@ namespace MaterialWinformsExample
             // 
             this.materialTabControl1.Controls.Add(this.materialTabPage1);
             this.materialTabControl1.Controls.Add(this.materialTabPage2);
+            this.materialTabControl1.Controls.Add(this.materialTabPage3);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Location = new System.Drawing.Point(222, 190);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
-            this.materialTabControl1.SelectedIndex = 1;
+            this.materialTabControl1.SelectedIndex = 2;
             this.materialTabControl1.Size = new System.Drawing.Size(809, 435);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
@@ -797,8 +801,8 @@ namespace MaterialWinformsExample
             this.materialCard3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard3.Name = "materialCard3";
             this.materialCard3.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard3.ShadowBorder = graphicsPath4;
+            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard3.ShadowBorder = graphicsPath5;
             this.materialCard3.Size = new System.Drawing.Size(259, 54);
             this.materialCard3.TabIndex = 46;
             this.materialCard3.Title = null;
@@ -868,7 +872,7 @@ namespace MaterialWinformsExample
             this.materialProgressBar1.Depth = 0;
             this.materialProgressBar1.InvertedProgressBar = false;
             this.materialProgressBar1.Location = new System.Drawing.Point(26, 443);
-            this.materialProgressBar1.Maximum = 0;
+            this.materialProgressBar1.Maximum = 1;
             this.materialProgressBar1.Minimum = 0;
             this.materialProgressBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialProgressBar1.Name = "materialProgressBar1";
@@ -877,7 +881,7 @@ namespace MaterialWinformsExample
             this.materialProgressBar1.Step = 0;
             this.materialProgressBar1.Style = MaterialWinforms.Controls.MaterialProgressBar.ProgressStyle.Determinate;
             this.materialProgressBar1.TabIndex = 42;
-            this.materialProgressBar1.Value = 50;
+            this.materialProgressBar1.Value = 1;
             // 
             // materialLoadingFloatingActionButton1
             // 
@@ -887,8 +891,8 @@ namespace MaterialWinformsExample
             this.materialLoadingFloatingActionButton1.Location = new System.Drawing.Point(30, 389);
             this.materialLoadingFloatingActionButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialLoadingFloatingActionButton1.Name = "materialLoadingFloatingActionButton1";
-            graphicsPath15.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialLoadingFloatingActionButton1.ShadowBorder = graphicsPath15;
+            graphicsPath6.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialLoadingFloatingActionButton1.ShadowBorder = graphicsPath6;
             this.materialLoadingFloatingActionButton1.Size = new System.Drawing.Size(48, 48);
             this.materialLoadingFloatingActionButton1.TabIndex = 41;
             this.materialLoadingFloatingActionButton1.Text = "materialLoadingFloatingActionButton1";
@@ -960,8 +964,8 @@ namespace MaterialWinformsExample
             this.materialCard2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
             this.materialCard2.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath16.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard2.ShadowBorder = graphicsPath16;
+            graphicsPath7.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard2.ShadowBorder = graphicsPath7;
             this.materialCard2.Size = new System.Drawing.Size(349, 161);
             this.materialCard2.TabIndex = 37;
             this.materialCard2.Title = "Toggle";
@@ -1108,8 +1112,8 @@ namespace MaterialWinformsExample
             this.materialCard1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath17.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard1.ShadowBorder = graphicsPath17;
+            graphicsPath8.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard1.ShadowBorder = graphicsPath8;
             this.materialCard1.Size = new System.Drawing.Size(315, 161);
             this.materialCard1.TabIndex = 36;
             this.materialCard1.Title = "Slider";
@@ -1204,6 +1208,39 @@ namespace MaterialWinformsExample
             this.materialDatePicker1.TabIndex = 1;
             this.materialDatePicker1.Text = "materialDatePicker1";
             // 
+            // materialTabPage3
+            // 
+            this.materialTabPage3.Closable = false;
+            this.materialTabPage3.Controls.Add(this.materialPanel1);
+            this.materialTabPage3.Depth = 0;
+            this.materialTabPage3.Location = new System.Drawing.Point(4, 22);
+            this.materialTabPage3.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTabPage3.Name = "materialTabPage3";
+            this.materialTabPage3.Size = new System.Drawing.Size(801, 409);
+            this.materialTabPage3.TabIndex = 2;
+            this.materialTabPage3.Text = "materialTabPage3";
+            // 
+            // materialPanel1
+            // 
+            this.materialPanel1.AutoScroll = true;
+            this.materialPanel1.AutoScrollMargin = new System.Drawing.Size(10, 10);
+            this.materialPanel1.Depth = 0;
+            this.materialPanel1.Location = new System.Drawing.Point(44, 34);
+            this.materialPanel1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialPanel1.Name = "materialPanel1";
+            this.materialPanel1.Size = new System.Drawing.Size(254, 190);
+            this.materialPanel1.TabIndex = 0;
+            // 
+            // materialDivider2
+            // 
+            this.materialDivider2.Depth = 0;
+            this.materialDivider2.Location = new System.Drawing.Point(307, 174);
+            this.materialDivider2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialDivider2.Name = "materialDivider2";
+            this.materialDivider2.Size = new System.Drawing.Size(250, 1);
+            this.materialDivider2.TabIndex = 1;
+            this.materialDivider2.Text = "materialDivider2";
+            // 
             // mcm_ComboBox1
             // 
             this.mcm_ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
@@ -1256,8 +1293,8 @@ namespace MaterialWinformsExample
             this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBar1.Name = "materialActionBar1";
             this.materialActionBar1.SearchBarFilterIcon = true;
-            graphicsPath18.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialActionBar1.ShadowBorder = graphicsPath18;
+            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialActionBar1.ShadowBorder = graphicsPath9;
             this.materialActionBar1.Size = new System.Drawing.Size(1043, 42);
             this.materialActionBar1.TabIndex = 26;
             this.materialActionBar1.Text = "materialActionBar1";
@@ -1371,8 +1408,8 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.MaxTabWidht = 0;
             this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
-            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath9;
+            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath10;
             this.materialTabSelectorClosable1.Size = new System.Drawing.Size(1043, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
             this.materialTabSelectorClosable1.TabPadding = 24;
@@ -1422,13 +1459,6 @@ namespace MaterialWinformsExample
             this.materialProgressBar3.Text = "materialProgressBar3";
             this.materialProgressBar3.Value = 0;
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(173, 115);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(767, 23);
-            this.progressBar1.TabIndex = 36;
-            // 
             // MainForm
             // 
             this.ActionBar = this.materialActionBar1;
@@ -1437,7 +1467,6 @@ namespace MaterialWinformsExample
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1043, 693);
             this.Controls.Add(this.materialSideDrawer3);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.materialProgressBar3);
             this.Controls.Add(this.materialProgressBar2);
             this.Controls.Add(this.materialDivider1);
@@ -1464,6 +1493,7 @@ namespace MaterialWinformsExample
             this.materialCard2.PerformLayout();
             this.materialCard1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
+            this.materialTabPage3.ResumeLayout(false);
             this.mcm_ComboBox1.ResumeLayout(false);
             this.materialActionBar1.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
@@ -1590,6 +1620,8 @@ namespace MaterialWinformsExample
         private ToolStripMenuItem sfdToolStripMenuItem;
         private MaterialProgressBar materialProgressBar2;
         private MaterialProgressBar materialProgressBar3;
-        private ProgressBar progressBar1;
+        private MaterialTabPage materialTabPage3;
+        private MaterialPanel materialPanel1;
+        private MaterialDivider materialDivider2;
     }
 }
