@@ -7,11 +7,13 @@ using System.ComponentModel;
 using System.Drawing;
 
 using System.Runtime.InteropServices;
+using System.Windows.Forms.Design;
 
 namespace MaterialWinforms.Controls
 {
 
-    public class MaterialPanel : UserControl, IMaterialControl
+    [Designer(typeof(ParentControlDesigner))]
+    public class MaterialPanel : Control, IMaterialControl
     {
         [Browsable(false)]
         public int Depth { get; set; }
@@ -20,7 +22,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public new Boolean AutoScroll
+        public Boolean AutoScroll
         {
             get
             {
@@ -51,8 +53,6 @@ namespace MaterialWinforms.Controls
 
         public MaterialPanel()
         {
-
-            Size = new Size(50, 50);
             DoubleBuffered = true;
             VerticalScrollbar = new MaterialScrollBar(MaterialScrollOrientation.Vertical);
             VerticalScrollbar.Scroll += Scrolled;
@@ -63,30 +63,16 @@ namespace MaterialWinforms.Controls
             MainPanel.Resize += MainPanel_Resize;
             MainPanel.Location = new Point(0, 0);
 
-            MainPanel.Size = new Size(Width - VerticalScrollbar.Width, Height - HorizontalScrollbar.Height);
-            MainPanel.Anchor = ((AnchorStyles)AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right|AnchorStyles.Top);
 
-            VerticalScrollbar.Location = new Point(Width - VerticalScrollbar.Width, 0);
-            VerticalScrollbar.Size = new Size(VerticalScrollbar.Width, Height - HorizontalScrollbar.Height);
-            VerticalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right);
+            Size = new Size(90, 90);
 
-            HorizontalScrollbar.Location = new Point(0, Height - HorizontalScrollbar.Height);
-            HorizontalScrollbar.Size = new Size(Width - VerticalScrollbar.Width, HorizontalScrollbar.Height);
-            HorizontalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right);
-
-            base.Controls.Add(MainPanel);
+            //base.Controls.Add(MainPanel);
             base.Controls.Add(VerticalScrollbar);
             base.Controls.Add(HorizontalScrollbar);
             MainPanel.ControlAdded += MaterialPanel_ControlsChanged;
             MainPanel.ControlRemoved += MaterialPanel_ControlsChanged;
             MainPanel.onScrollBarChanged += MainPanel_onScrollBarChanged;
             AutoScroll = true;
-
-            Controls.Add(new MaterialCard()
-            {
-                Height = 1000,
-                Width = 1000
-            });
 
             ignoreResize = false;
         }
@@ -114,7 +100,16 @@ namespace MaterialWinforms.Controls
 
         protected override void OnResize(EventArgs eventargs)
         {
-
+            VerticalScrollbar.Location = new Point(Width - VerticalScrollbar.Width, 0);
+            VerticalScrollbar.Size = new Size(VerticalScrollbar.Width, Height - HorizontalScrollbar.Height);
+            VerticalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right);
+            VerticalScrollbar.Visible = false;
+            VerticalScrollbarAdded = false;
+            HorizontalScrollbar.Location = new Point(0, Height - HorizontalScrollbar.Height);
+            HorizontalScrollbar.Size = new Size(Width - VerticalScrollbar.Width, HorizontalScrollbar.Height);
+            HorizontalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right);
+            HorizontalScrollbar.Visible = false;
+            HorizontalScrollbarAdded = false;
             base.OnResize(eventargs);
             UpdateScrollbars();
 

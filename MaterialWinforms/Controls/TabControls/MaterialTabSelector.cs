@@ -303,11 +303,11 @@ namespace MaterialWinforms.Controls
             {
                 //Animate tab indicator
                 int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
-                if (previousSelectedTabIndex >BaseTabControl.TabCount-1) //Last tab was active and got closed
+                if (previousSelectedTabIndex > BaseTabControl.TabCount - 1) //Last tab was active and got closed
                 {
                     previousSelectedTabIndex = BaseTabControl.TabCount - 1;
                 }
-                if (previousSelectedTabIndex<=0)
+                if (previousSelectedTabIndex < 0 || baseTabControl.SelectedIndex < 0)
                 {
                     return;
                 }
