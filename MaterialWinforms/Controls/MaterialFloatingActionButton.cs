@@ -87,6 +87,10 @@ namespace MaterialWinforms.Controls
 
         private void Redraw(object sender, System.EventArgs e)
         {
+            if (ShadowBorder != null)
+            {
+                ShadowBorder.Dispose();
+            }
             ShadowBorder = new GraphicsPath();
             ShadowBorder = DrawHelper.CreateCircle(Location.X ,
                                     Location.Y,

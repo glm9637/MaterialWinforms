@@ -41,8 +41,9 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath11 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -139,8 +140,6 @@ namespace MaterialWinformsExample
             this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
             this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
             this.materialTabPage3 = new MaterialWinforms.Controls.MaterialTabPage();
-            this.materialPanel1 = new MaterialWinforms.Controls.MaterialPanel();
-            this.materialFlatButton4 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialDivider2 = new MaterialWinforms.Controls.MaterialDivider();
             this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -161,8 +160,8 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.materialProgressBar2 = new MaterialWinforms.Controls.MaterialProgressBar();
-            this.materialProgressBar3 = new MaterialWinforms.Controls.MaterialProgressBar();
+            this.materialScrollBar2 = new MaterialWinforms.Controls.MaterialScrollBar();
+            this.materialAvatarView1 = new MaterialWinforms.Controls.MaterialAvatarView();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -171,7 +170,6 @@ namespace MaterialWinformsExample
             this.materialCard1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
             this.materialTabPage3.SuspendLayout();
-            this.materialPanel1.SuspendLayout();
             this.mcm_ComboBox1.SuspendLayout();
             this.materialActionBar1.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
@@ -187,7 +185,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton3.Depth = 0;
             this.materialFlatButton3.Enabled = false;
             this.materialFlatButton3.IconImage = null;
-            this.materialFlatButton3.Location = new System.Drawing.Point(415, 649);
+            this.materialFlatButton3.Location = new System.Drawing.Point(354, 646);
             this.materialFlatButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFlatButton3.Name = "materialFlatButton3";
@@ -207,7 +205,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton1.Capitalized = true;
             this.materialFlatButton1.Depth = 0;
             this.materialFlatButton1.IconImage = null;
-            this.materialFlatButton1.Location = new System.Drawing.Point(633, 649);
+            this.materialFlatButton1.Location = new System.Drawing.Point(572, 646);
             this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFlatButton1.Name = "materialFlatButton1";
@@ -223,7 +221,7 @@ namespace MaterialWinformsExample
             this.materialButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.materialButton1.Depth = 0;
             this.materialButton1.Elevation = 5;
-            this.materialButton1.Location = new System.Drawing.Point(711, 650);
+            this.materialButton1.Location = new System.Drawing.Point(650, 650);
             this.materialButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.Primary = true;
@@ -240,7 +238,7 @@ namespace MaterialWinformsExample
             this.materialRaisedButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.materialRaisedButton1.Depth = 0;
             this.materialRaisedButton1.Elevation = 5;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(852, 650);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(791, 650);
             this.materialRaisedButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = false;
@@ -280,7 +278,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton2.Depth = 0;
             this.materialFlatButton2.IconImage = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
             this.materialFlatButton2.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
-            this.materialFlatButton2.Location = new System.Drawing.Point(498, 650);
+            this.materialFlatButton2.Location = new System.Drawing.Point(437, 647);
             this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialFlatButton2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialFlatButton2.Name = "materialFlatButton2";
@@ -705,7 +703,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer3.SideDrawer = this.SideDrawerList;
             this.materialSideDrawer3.SideDrawerFixiert = false;
             this.materialSideDrawer3.SideDrawerUnterActionBar = false;
-            this.materialSideDrawer3.Size = new System.Drawing.Size(0, 590);
+            this.materialSideDrawer3.Size = new System.Drawing.Size(0, 587);
             this.materialSideDrawer3.TabIndex = 29;
             this.materialSideDrawer3.onSideDrawerItemClicked += new MaterialWinforms.Controls.MaterialSideDrawer.SideDrawerEventHandler(this.materialSideDrawer3_onSideDrawerItemClicked);
             // 
@@ -731,16 +729,19 @@ namespace MaterialWinformsExample
             // 
             // materialTabControl1
             // 
+            this.materialTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.materialTabControl1.Controls.Add(this.materialTabPage1);
             this.materialTabControl1.Controls.Add(this.materialTabPage2);
             this.materialTabControl1.Controls.Add(this.materialTabPage3);
             this.materialTabControl1.Depth = 0;
-            this.materialTabControl1.Location = new System.Drawing.Point(222, 190);
+            this.materialTabControl1.Location = new System.Drawing.Point(3, 114);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
             this.materialTabControl1.SelectedIndex = 2;
-            this.materialTabControl1.Size = new System.Drawing.Size(809, 451);
+            this.materialTabControl1.Size = new System.Drawing.Size(977, 497);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
             // 
@@ -764,7 +765,7 @@ namespace MaterialWinformsExample
             this.materialTabPage1.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage1.Name = "materialTabPage1";
-            this.materialTabPage1.Size = new System.Drawing.Size(801, 425);
+            this.materialTabPage1.Size = new System.Drawing.Size(969, 471);
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
             // 
@@ -1158,7 +1159,7 @@ namespace MaterialWinformsExample
             this.materialTabPage2.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage2.Name = "materialTabPage2";
-            this.materialTabPage2.Size = new System.Drawing.Size(801, 425);
+            this.materialTabPage2.Size = new System.Drawing.Size(969, 471);
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
             // 
@@ -1213,47 +1214,14 @@ namespace MaterialWinformsExample
             // materialTabPage3
             // 
             this.materialTabPage3.Closable = false;
-            this.materialTabPage3.Controls.Add(this.materialPanel1);
+            this.materialTabPage3.Controls.Add(this.materialAvatarView1);
             this.materialTabPage3.Depth = 0;
             this.materialTabPage3.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage3.Name = "materialTabPage3";
-            this.materialTabPage3.Size = new System.Drawing.Size(801, 425);
+            this.materialTabPage3.Size = new System.Drawing.Size(969, 471);
             this.materialTabPage3.TabIndex = 2;
             this.materialTabPage3.Text = "materialTabPage3";
-            // 
-            // materialPanel1
-            // 
-            this.materialPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialPanel1.AutoScroll = true;
-            this.materialPanel1.Controls.Add(this.materialFlatButton4);
-            this.materialPanel1.Depth = 0;
-            this.materialPanel1.Location = new System.Drawing.Point(61, 43);
-            this.materialPanel1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialPanel1.Name = "materialPanel1";
-            this.materialPanel1.Size = new System.Drawing.Size(733, 363);
-            this.materialPanel1.TabIndex = 0;
-            // 
-            // materialFlatButton4
-            // 
-            this.materialFlatButton4.Accent = false;
-            this.materialFlatButton4.AutoSize = true;
-            this.materialFlatButton4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton4.Capitalized = true;
-            this.materialFlatButton4.Depth = 0;
-            this.materialFlatButton4.IconImage = null;
-            this.materialFlatButton4.Location = new System.Drawing.Point(37, 92);
-            this.materialFlatButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton4.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialFlatButton4.Name = "materialFlatButton4";
-            this.materialFlatButton4.Primary = false;
-            this.materialFlatButton4.Selected = false;
-            this.materialFlatButton4.Size = new System.Drawing.Size(172, 36);
-            this.materialFlatButton4.TabIndex = 3;
-            this.materialFlatButton4.Text = "materialFlatButton4";
-            this.materialFlatButton4.UseVisualStyleBackColor = true;
             // 
             // materialDivider2
             // 
@@ -1317,9 +1285,9 @@ namespace MaterialWinformsExample
             this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBar1.Name = "materialActionBar1";
             this.materialActionBar1.SearchBarFilterIcon = true;
-            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialActionBar1.ShadowBorder = graphicsPath9;
-            this.materialActionBar1.Size = new System.Drawing.Size(1054, 42);
+            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialActionBar1.ShadowBorder = graphicsPath10;
+            this.materialActionBar1.Size = new System.Drawing.Size(993, 42);
             this.materialActionBar1.TabIndex = 26;
             this.materialActionBar1.Text = "materialActionBar1";
             // 
@@ -1328,7 +1296,7 @@ namespace MaterialWinformsExample
             this.materialActionBarButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialActionBarButton1.Depth = 0;
             this.materialActionBarButton1.Image = global::MaterialWinformsExample.Properties.Resources.ic_action_action_search;
-            this.materialActionBarButton1.Location = new System.Drawing.Point(867, 0);
+            this.materialActionBarButton1.Location = new System.Drawing.Point(806, 0);
             this.materialActionBarButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialActionBarButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBarButton1.Name = "materialActionBarButton1";
@@ -1341,7 +1309,7 @@ namespace MaterialWinformsExample
             this.materialActionBarButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialActionBarButton2.Depth = 0;
             this.materialActionBarButton2.Image = global::MaterialWinformsExample.Properties.Resources.ic_launcher;
-            this.materialActionBarButton2.Location = new System.Drawing.Point(909, 0);
+            this.materialActionBarButton2.Location = new System.Drawing.Point(848, 0);
             this.materialActionBarButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialActionBarButton2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBarButton2.Name = "materialActionBarButton2";
@@ -1432,9 +1400,9 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.MaxTabWidht = 0;
             this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
-            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath10;
-            this.materialTabSelectorClosable1.Size = new System.Drawing.Size(1054, 35);
+            graphicsPath11.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath11;
+            this.materialTabSelectorClosable1.Size = new System.Drawing.Size(993, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
             this.materialTabSelectorClosable1.TabPadding = 24;
             this.materialTabSelectorClosable1.Text = "materialTabSelectorClosable1";
@@ -1449,39 +1417,31 @@ namespace MaterialWinformsExample
             this.materialDivider1.TabIndex = 33;
             this.materialDivider1.Text = "materialDivider1";
             // 
-            // materialProgressBar2
+            // materialScrollBar2
             // 
-            this.materialProgressBar2.Depth = 0;
-            this.materialProgressBar2.InvertedProgressBar = true;
-            this.materialProgressBar2.Location = new System.Drawing.Point(69, 141);
-            this.materialProgressBar2.Maximum = 100;
-            this.materialProgressBar2.Minimum = 0;
-            this.materialProgressBar2.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialProgressBar2.Name = "materialProgressBar2";
-            this.materialProgressBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.materialProgressBar2.Size = new System.Drawing.Size(5, 522);
-            this.materialProgressBar2.Step = 0;
-            this.materialProgressBar2.Style = MaterialWinforms.Controls.MaterialProgressBar.ProgressStyle.Determinate;
-            this.materialProgressBar2.TabIndex = 34;
-            this.materialProgressBar2.Text = "materialProgressBar2";
-            this.materialProgressBar2.Value = 30;
+            this.materialScrollBar2.Depth = 0;
+            this.materialScrollBar2.Location = new System.Drawing.Point(0, 0);
+            this.materialScrollBar2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialScrollBar2.Name = "materialScrollBar2";
+            this.materialScrollBar2.Orientation = MaterialWinforms.Controls.MaterialScrollOrientation.Vertical;
+            this.materialScrollBar2.Size = new System.Drawing.Size(10, 200);
+            this.materialScrollBar2.TabIndex = 34;
+            this.materialScrollBar2.Text = "materialScrollBar2";
             // 
-            // materialProgressBar3
+            // materialAvatarView1
             // 
-            this.materialProgressBar3.Depth = 0;
-            this.materialProgressBar3.InvertedProgressBar = false;
-            this.materialProgressBar3.Location = new System.Drawing.Point(173, 141);
-            this.materialProgressBar3.Maximum = 100;
-            this.materialProgressBar3.Minimum = 0;
-            this.materialProgressBar3.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialProgressBar3.Name = "materialProgressBar3";
-            this.materialProgressBar3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.materialProgressBar3.Size = new System.Drawing.Size(767, 5);
-            this.materialProgressBar3.Step = 0;
-            this.materialProgressBar3.Style = MaterialWinforms.Controls.MaterialProgressBar.ProgressStyle.Determinate;
-            this.materialProgressBar3.TabIndex = 35;
-            this.materialProgressBar3.Text = "materialProgressBar3";
-            this.materialProgressBar3.Value = 0;
+            this.materialAvatarView1.Avatar = global::MaterialWinformsExample.Properties.Resources.wallhaven_170258;
+            this.materialAvatarView1.AvatarLetter = null;
+            this.materialAvatarView1.Depth = 0;
+            this.materialAvatarView1.Elevation = 5;
+            this.materialAvatarView1.Location = new System.Drawing.Point(347, 156);
+            this.materialAvatarView1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialAvatarView1.Name = "materialAvatarView1";
+            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialAvatarView1.ShadowBorder = graphicsPath9;
+            this.materialAvatarView1.Size = new System.Drawing.Size(80, 80);
+            this.materialAvatarView1.TabIndex = 0;
+            this.materialAvatarView1.Text = "materialAvatarView1";
             // 
             // MainForm
             // 
@@ -1489,10 +1449,9 @@ namespace MaterialWinformsExample
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1054, 691);
+            this.ClientSize = new System.Drawing.Size(993, 688);
             this.Controls.Add(this.materialSideDrawer3);
-            this.Controls.Add(this.materialProgressBar3);
-            this.Controls.Add(this.materialProgressBar2);
+            this.Controls.Add(this.materialScrollBar2);
             this.Controls.Add(this.materialDivider1);
             this.Controls.Add(this.materialFlatButton3);
             this.Controls.Add(this.materialFlatButton2);
@@ -1518,8 +1477,6 @@ namespace MaterialWinformsExample
             this.materialCard1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
             this.materialTabPage3.ResumeLayout(false);
-            this.materialPanel1.ResumeLayout(false);
-            this.materialPanel1.PerformLayout();
             this.mcm_ComboBox1.ResumeLayout(false);
             this.materialActionBar1.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
@@ -1644,11 +1601,9 @@ namespace MaterialWinformsExample
         private ToolStripMenuItem rToolStripMenuItem;
         private ToolStripMenuItem bgToolStripMenuItem;
         private ToolStripMenuItem sfdToolStripMenuItem;
-        private MaterialProgressBar materialProgressBar2;
-        private MaterialProgressBar materialProgressBar3;
         private MaterialTabPage materialTabPage3;
-        private MaterialPanel materialPanel1;
         private MaterialDivider materialDivider2;
-        private MaterialFlatButton materialFlatButton4;
+        private MaterialScrollBar materialScrollBar2;
+        private MaterialAvatarView materialAvatarView1;
     }
 }

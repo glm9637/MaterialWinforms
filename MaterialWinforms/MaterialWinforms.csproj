@@ -69,6 +69,9 @@
     <Compile Include="Controls\MaterialActionBar.Designer.cs">
       <DependentUpon>MaterialActionBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MaterialAvatarView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialBreadCrumbToolbar.cs">
       <SubType>Component</SubType>
     </Compile>

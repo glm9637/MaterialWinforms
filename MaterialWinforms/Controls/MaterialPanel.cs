@@ -31,8 +31,24 @@ namespace MaterialWinforms.Controls
             set
             {
                 MainPanel.AutoScroll = value;
-                VerticalScrollbar.Visible = value;
-                HorizontalScrollbar.Visible = value;
+                VerticalScrollbar.Visible = MainPanel.VerticalScroll.Visible;
+                VerticalScrollbarAdded = VerticalScrollbar.Visible;
+                HorizontalScrollbar.Visible = MainPanel.HorizontalScroll.Visible;
+                HorizontalScrollbarAdded = HorizontalScrollbar.Visible;
+            }
+        }
+
+        public new bool AutoSize
+        {
+            get
+            {
+                return MainPanel.AutoSize;
+            }
+
+            set
+            {
+                MainPanel.AutoSize = value;
+                base.AutoSize = value;
             }
         }
 
@@ -41,6 +57,7 @@ namespace MaterialWinforms.Controls
         private MaterialDisplayingPanel MainPanel;
 
         private bool ignoreResize = true;
+        private bool ignoreMainPanelResize = false;
         public override Color BackColor { get { return SkinManager.GetCardsColor(); } }
 
         public new ControlCollection Controls
@@ -56,17 +73,21 @@ namespace MaterialWinforms.Controls
             DoubleBuffered = true;
             VerticalScrollbar = new MaterialScrollBar(MaterialScrollOrientation.Vertical);
             VerticalScrollbar.Scroll += Scrolled;
+            VerticalScrollbar.Visible = false;
+            VerticalScrollbarAdded = false;
+
             HorizontalScrollbar = new MaterialScrollBar(MaterialScrollOrientation.Horizontal);
             HorizontalScrollbar.Scroll += Scrolled;
+            HorizontalScrollbar.Visible = false;
+            HorizontalScrollbarAdded = false;
 
             MainPanel = new MaterialDisplayingPanel();
             MainPanel.Resize += MainPanel_Resize;
             MainPanel.Location = new Point(0, 0);
 
-
             Size = new Size(90, 90);
 
-            //base.Controls.Add(MainPanel);
+            base.Controls.Add(MainPanel);
             base.Controls.Add(VerticalScrollbar);
             base.Controls.Add(HorizontalScrollbar);
             MainPanel.ControlAdded += MaterialPanel_ControlsChanged;
@@ -94,7 +115,10 @@ namespace MaterialWinforms.Controls
 
         void MainPanel_Resize(object sender, EventArgs e)
         {
-            UpdateScrollbars();
+            if (!ignoreMainPanelResize)
+                UpdateScrollbars();
+            else
+                ignoreMainPanelResize = false;
         }
 
 
@@ -103,13 +127,10 @@ namespace MaterialWinforms.Controls
             VerticalScrollbar.Location = new Point(Width - VerticalScrollbar.Width, 0);
             VerticalScrollbar.Size = new Size(VerticalScrollbar.Width, Height - HorizontalScrollbar.Height);
             VerticalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right);
-            VerticalScrollbar.Visible = false;
-            VerticalScrollbarAdded = false;
             HorizontalScrollbar.Location = new Point(0, Height - HorizontalScrollbar.Height);
             HorizontalScrollbar.Size = new Size(Width - VerticalScrollbar.Width, HorizontalScrollbar.Height);
             HorizontalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right);
-            HorizontalScrollbar.Visible = false;
-            HorizontalScrollbarAdded = false;
+            
             base.OnResize(eventargs);
             UpdateScrollbars();
 
@@ -152,6 +173,16 @@ namespace MaterialWinforms.Controls
                 HorizontalScrollbarAdded = false;
                 HorizontalScrollbar.Visible = false;
             }
+            ignoreMainPanelResize = true;
+
+
+            Size MainPanelSize = new Size(Width - (VerticalScrollbarAdded ? VerticalScrollbar.Width : 0), Height - (HorizontalScrollbarAdded ? HorizontalScrollbar.Height : 0));
+
+            MainPanel.IgnoreResizing = true;
+            ignoreMainPanelResize = true;
+            MainPanel.Size = new Size(Width - (VerticalScrollbarAdded ? VerticalScrollbar.Width : 0), Height - (HorizontalScrollbarAdded ? HorizontalScrollbar.Height : 0));
+            MainPanel.IgnoreResizing = false;
+            ignoreMainPanelResize = false;
         }
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -172,6 +203,8 @@ namespace MaterialWinforms.Controls
         public override Color BackColor { get { return SkinManager.GetApplicationBackgroundColor(); } }
 
         public delegate void ScrollbarChanged(Orientation pScrollOrientation, Boolean pVisible);
+
+        public bool IgnoreResizing = false;
 
         public event ScrollbarChanged onScrollBarChanged;
         public MaterialDisplayingPanel()
@@ -204,7 +237,7 @@ namespace MaterialWinforms.Controls
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
-            if (onScrollBarChanged != null)
+            if (onScrollBarChanged != null && ! IgnoreResizing)
             {
                 onScrollBarChanged(Orientation.Horizontal, HorizontalScroll.Visible);
                 onScrollBarChanged(Orientation.Vertical, VerticalScroll.Visible);
@@ -213,7 +246,7 @@ namespace MaterialWinforms.Controls
             ShowScrollBar(this.Handle, (int)ScrollBarDirection.SB_VERT, false);
             base.WndProc(ref m);
         }
-
+        
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.Clear(BackColor);

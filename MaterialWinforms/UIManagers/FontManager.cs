@@ -31,6 +31,26 @@ public class FontManager
         Roboto_Regular9 = new Font(LoadFont(Resources.Roboto_Regular), 9f);      
     }
 
+    public  Font ScaleTextToRectangle(Graphics g,String Text, Rectangle R, Boolean UseRegular = true)
+    {
+        float fontSize =  1f;
+        FontFamily FontToUse = LoadFont(UseRegular?Resources.Roboto_Regular:Resources.Roboto_Medium);
+        
+        Font returnFont = new Font(FontToUse, fontSize);
+        SizeF CurrentTextSize = g.MeasureString(Text, returnFont);
+
+        while (CurrentTextSize.Width < R.Width && CurrentTextSize.Height < R.Height)
+        {
+            fontSize += 0.5f;
+            returnFont.Dispose();
+            returnFont = new Font(FontToUse, fontSize);
+            CurrentTextSize = g.MeasureString(Text, returnFont);
+        }
+
+
+        return returnFont;
+    }
+
     private PrivateFontCollection privateFontCollection = new PrivateFontCollection();
     
     [DllImport("gdi32.dll")]
