@@ -63,6 +63,9 @@
     <Compile Include="Controls\DropDownControl.designer.cs">
       <DependentUpon>DropDownControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HeadsUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialActionBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -201,6 +204,18 @@
     <Compile Include="Controls\TabControls\TabWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialTimeline.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MaterialTimeline.Designer.cs">
+      <DependentUpon>MaterialTimeline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimeLine\MaterialTimeLineEntry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimeLine\MaterialTimeLineEntry.Designer.cs">
+      <DependentUpon>MaterialTimeLineEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrawHelper.cs" />
     <Compile Include="IShadowedMaterialControl.cs" />
     <Compile Include="IMaterialControl.cs" />
@@ -218,6 +233,9 @@
     <Compile Include="UIManagers\FontManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\HeadsUp.resx">
+      <DependentUpon>HeadsUp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MaterialDialog.resx">
       <DependentUpon>MaterialDialog.cs</DependentUpon>
     </EmbeddedResource>

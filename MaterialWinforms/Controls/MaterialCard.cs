@@ -23,6 +23,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
+        public bool LargeTitle { get; set; }
 
         [Category("Appearance")]
         public string Title
@@ -79,7 +80,7 @@ namespace MaterialWinforms.Controls
             {
                 g.DrawString(
                _Text,
-               SkinManager.ROBOTO_MEDIUM_10,
+               LargeTitle?new FontManager().Roboto_Medium15: SkinManager.ROBOTO_MEDIUM_10,
                SkinManager.ColorScheme.PrimaryBrush,
                new Rectangle(ClientRectangle.X + 10, ClientRectangle.Y + 10, ClientRectangle.Width, ClientRectangle.Height),
                new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });

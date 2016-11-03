@@ -85,7 +85,7 @@ namespace MaterialWinforms.Controls
                 Width = Height;
             }
             TextRect = new Rectangle(Convert.ToInt32(Width * 0.05), Convert.ToInt32(Height * 0.05),Convert.ToInt32(Width * 0.95), Convert.ToInt32(Height * 0.95));
-            //Region = new Region(DrawHelper.CreateCircle(0, 0, Width / 2));
+            Region = new Region(DrawHelper.CreateCircle(0, 0, Width / 2));
             CalculateAvatarFont();
             if (ShadowBorder != null)
             {
@@ -94,7 +94,7 @@ namespace MaterialWinforms.Controls
             ShadowBorder = new GraphicsPath();
             ShadowBorder = DrawHelper.CreateCircle(Location.X,
                                     Location.Y,
-                                    ClientRectangle.Width / 2 );
+                                    ClientRectangle.Width / 2 -1);
             if (_AvatarScaled != null) { 
             _AvatarScaled.Dispose();
             _AvatarScaled = DrawHelper.ResizeImage(_Avater, Width, Height);
@@ -114,8 +114,6 @@ namespace MaterialWinforms.Controls
 
             base.OnPaint(e);
             Graphics g = e.Graphics;
-
-            g.Clear(Color.Transparent);
             g.InterpolationMode = InterpolationMode.HighQualityBilinear;
             g.CompositingQuality = CompositingQuality.HighQuality;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
@@ -124,10 +122,10 @@ namespace MaterialWinforms.Controls
            
             if (Avatar == null)
             {
-                /*g.FillPath(SkinManager.ColorScheme.PrimaryBrush, DrawHelper.CreateCircle(1, 1, Height / 2 - 1));
+                g.FillPath(SkinManager.ColorScheme.PrimaryBrush, DrawHelper.CreateCircle(1, 1, Height / 2 - 1));
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                 g.DrawString(AvatarLetter, AvatarFont, SkinManager.ACTION_BAR_TEXT_BRUSH(), TextRect, new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-                 */
+                 
             }
             else
             {

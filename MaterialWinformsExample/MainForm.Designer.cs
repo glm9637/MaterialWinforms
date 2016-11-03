@@ -41,9 +41,8 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath11 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -140,7 +139,7 @@ namespace MaterialWinformsExample
             this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
             this.materialDatePicker1 = new MaterialWinforms.Controls.MaterialDatePicker();
             this.materialTabPage3 = new MaterialWinforms.Controls.MaterialTabPage();
-            this.materialDivider2 = new MaterialWinforms.Controls.MaterialDivider();
+            this.materialPanel1 = new MaterialWinforms.Controls.MaterialPanel();
             this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -161,7 +160,7 @@ namespace MaterialWinformsExample
             this.materialDivider1 = new MaterialWinforms.Controls.MaterialDivider();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.materialScrollBar2 = new MaterialWinforms.Controls.MaterialScrollBar();
-            this.materialAvatarView1 = new MaterialWinforms.Controls.MaterialAvatarView();
+            this.materialTimeline2 = new MaterialWinforms.Controls.MaterialTimeline();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.materialTabPage1.SuspendLayout();
@@ -170,6 +169,7 @@ namespace MaterialWinformsExample
             this.materialCard1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
             this.materialTabPage3.SuspendLayout();
+            this.materialPanel1.SuspendLayout();
             this.mcm_ComboBox1.SuspendLayout();
             this.materialActionBar1.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
@@ -800,6 +800,7 @@ namespace MaterialWinformsExample
             this.materialCard3.Controls.Add(this.materialLabel2);
             this.materialCard3.Depth = 0;
             this.materialCard3.Elevation = 5;
+            this.materialCard3.LargeTitle = false;
             this.materialCard3.Location = new System.Drawing.Point(274, 347);
             this.materialCard3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard3.Name = "materialCard3";
@@ -963,6 +964,7 @@ namespace MaterialWinformsExample
             this.materialCard2.Controls.Add(this.materialCheckBox1);
             this.materialCard2.Depth = 0;
             this.materialCard2.Elevation = 10;
+            this.materialCard2.LargeTitle = false;
             this.materialCard2.Location = new System.Drawing.Point(361, 23);
             this.materialCard2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
@@ -1111,6 +1113,7 @@ namespace MaterialWinformsExample
             this.materialCard1.Controls.Add(this.materialSlider1);
             this.materialCard1.Depth = 0;
             this.materialCard1.Elevation = 10;
+            this.materialCard1.LargeTitle = false;
             this.materialCard1.Location = new System.Drawing.Point(12, 23);
             this.materialCard1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
@@ -1214,7 +1217,7 @@ namespace MaterialWinformsExample
             // materialTabPage3
             // 
             this.materialTabPage3.Closable = false;
-            this.materialTabPage3.Controls.Add(this.materialAvatarView1);
+            this.materialTabPage3.Controls.Add(this.materialPanel1);
             this.materialTabPage3.Depth = 0;
             this.materialTabPage3.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage3.MouseState = MaterialWinforms.MouseState.HOVER;
@@ -1223,15 +1226,17 @@ namespace MaterialWinformsExample
             this.materialTabPage3.TabIndex = 2;
             this.materialTabPage3.Text = "materialTabPage3";
             // 
-            // materialDivider2
+            // materialPanel1
             // 
-            this.materialDivider2.Depth = 0;
-            this.materialDivider2.Location = new System.Drawing.Point(307, 174);
-            this.materialDivider2.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialDivider2.Name = "materialDivider2";
-            this.materialDivider2.Size = new System.Drawing.Size(250, 1);
-            this.materialDivider2.TabIndex = 1;
-            this.materialDivider2.Text = "materialDivider2";
+            this.materialPanel1.AutoScroll = true;
+            this.materialPanel1.Controls.Add(this.materialTimeline2);
+            this.materialPanel1.Depth = 0;
+            this.materialPanel1.Location = new System.Drawing.Point(3, 8);
+            this.materialPanel1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialPanel1.Name = "materialPanel1";
+            this.materialPanel1.Size = new System.Drawing.Size(951, 445);
+            this.materialPanel1.TabIndex = 1;
+            this.materialPanel1.Text = "materialPanel1";
             // 
             // mcm_ComboBox1
             // 
@@ -1285,8 +1290,8 @@ namespace MaterialWinformsExample
             this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBar1.Name = "materialActionBar1";
             this.materialActionBar1.SearchBarFilterIcon = true;
-            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialActionBar1.ShadowBorder = graphicsPath10;
+            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialActionBar1.ShadowBorder = graphicsPath9;
             this.materialActionBar1.Size = new System.Drawing.Size(993, 42);
             this.materialActionBar1.TabIndex = 26;
             this.materialActionBar1.Text = "materialActionBar1";
@@ -1400,8 +1405,8 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.MaxTabWidht = 0;
             this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
-            graphicsPath11.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath11;
+            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath10;
             this.materialTabSelectorClosable1.Size = new System.Drawing.Size(993, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
             this.materialTabSelectorClosable1.TabPadding = 24;
@@ -1428,20 +1433,16 @@ namespace MaterialWinformsExample
             this.materialScrollBar2.TabIndex = 34;
             this.materialScrollBar2.Text = "materialScrollBar2";
             // 
-            // materialAvatarView1
+            // materialTimeline2
             // 
-            this.materialAvatarView1.Avatar = global::MaterialWinformsExample.Properties.Resources.wallhaven_170258;
-            this.materialAvatarView1.AvatarLetter = null;
-            this.materialAvatarView1.Depth = 0;
-            this.materialAvatarView1.Elevation = 5;
-            this.materialAvatarView1.Location = new System.Drawing.Point(347, 156);
-            this.materialAvatarView1.MouseState = MaterialWinforms.MouseState.HOVER;
-            this.materialAvatarView1.Name = "materialAvatarView1";
-            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialAvatarView1.ShadowBorder = graphicsPath9;
-            this.materialAvatarView1.Size = new System.Drawing.Size(80, 80);
-            this.materialAvatarView1.TabIndex = 0;
-            this.materialAvatarView1.Text = "materialAvatarView1";
+            this.materialTimeline2.AufsteigendSortieren = false;
+            this.materialTimeline2.Depth = 0;
+            this.materialTimeline2.Location = new System.Drawing.Point(6, 3);
+            this.materialTimeline2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTimeline2.Name = "materialTimeline2";
+            this.materialTimeline2.Size = new System.Drawing.Size(954, 508);
+            this.materialTimeline2.TabIndex = 3;
+            this.materialTimeline2.Text = "materialTimeline2";
             // 
             // MainForm
             // 
@@ -1477,6 +1478,7 @@ namespace MaterialWinformsExample
             this.materialCard1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
             this.materialTabPage3.ResumeLayout(false);
+            this.materialPanel1.ResumeLayout(false);
             this.mcm_ComboBox1.ResumeLayout(false);
             this.materialActionBar1.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
@@ -1602,8 +1604,8 @@ namespace MaterialWinformsExample
         private ToolStripMenuItem bgToolStripMenuItem;
         private ToolStripMenuItem sfdToolStripMenuItem;
         private MaterialTabPage materialTabPage3;
-        private MaterialDivider materialDivider2;
         private MaterialScrollBar materialScrollBar2;
-        private MaterialAvatarView materialAvatarView1;
+        private MaterialPanel materialPanel1;
+        private MaterialTimeline materialTimeline2;
     }
 }

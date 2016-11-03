@@ -96,6 +96,10 @@ namespace MaterialWinforms.Controls
             AutoScroll = true;
 
             ignoreResize = false;
+
+            MainPanel.BringToFront();
+            VerticalScrollbar.BringToFront();
+            HorizontalScrollbar.BringToFront();
         }
 
         void MainPanel_onScrollBarChanged(Orientation pScrollOrientation, bool pVisible)

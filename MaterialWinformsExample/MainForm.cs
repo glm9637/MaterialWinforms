@@ -33,7 +33,38 @@ namespace MaterialWinformsExample
             materialActionBar1.onSearched += materialActionBar1_onSearched;
             materialActionBar1.Invalidate();
 
+            materialTimeline2.onTimeLineEntryClicked += materialTimeline1_onTimeLineEntryClicked;
 
+            for (int i = 0; i < 5; i++)
+            {
+                MaterialTimeLineEntry objEntry = new MaterialTimeLineEntry
+                {
+                    UserName = "Melvin Fengelsfd",
+                    Title = "Title "+i,
+                    Time = DateTime.Now.AddDays(-i),
+                    Text = "TestText \r\nTefgsdfgsfdgsdfgsdfvklrenghiobönkqwbnroighfdnkbvgqrejbgvklndcvmbqöwreogkihsadkghfeöklt\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest"
+                };
+                materialTimeline2.Entrys.Add(objEntry);
+            }
+
+        }
+
+        void materialTimeline1_onTimeLineEntryClicked(MaterialTimeLineEntry sender, EventArgs e)
+        {
+            HeadsUp objTest = new HeadsUp();
+            objTest.Titel = sender.Title;
+            objTest.Text = sender.Text;
+            MaterialFlatButton DismissHeadsUp = new MaterialFlatButton();
+            DismissHeadsUp.Tag = objTest;
+            DismissHeadsUp.Text = "Dismiss";
+            DismissHeadsUp.Click += DismissHeadsUp_Click;
+            objTest.Buttons.Add(DismissHeadsUp);
+            objTest.Show();
+        }
+
+        void DismissHeadsUp_Click(object sender, EventArgs e)
+        {
+            ((HeadsUp)((MaterialFlatButton)sender).Tag).Close();
         }
 
         void materialActionBar1_onSearched(string pText)
