@@ -26,6 +26,25 @@ namespace MaterialWinforms.Controls
 
         public bool SelectOnClick { get; set; }
 
+        public delegate void HiddenOnStartChanged(bool newValue);
+        public event HiddenOnStartChanged onHiddenOnStartChanged;
+        private bool _HiddenOnStart;
+        public bool HiddenOnStart
+        {
+            get
+            {
+                return _HiddenOnStart;
+            }
+            set
+            {
+                _HiddenOnStart = value;
+                if (onHiddenOnStartChanged != null)
+                {
+                    onHiddenOnStartChanged(value);
+                }
+            }
+        }
+
         public bool _SideDrawerFixiert;
         public bool _SideDrawerUnterActionBar;
         public bool SideDrawerFixiert
@@ -65,7 +84,7 @@ namespace MaterialWinforms.Controls
             }
         }
 
-        public  void Redraw()
+        public void Redraw()
         {
             base.Invalidate();
             foreach (Control objItem in Controls)
@@ -99,10 +118,11 @@ namespace MaterialWinforms.Controls
             set
             {
                 _SideDrawer = value;
-                if (_SideDrawer != null) { 
-                _SideDrawer.ItemAdded += ItemCollectionChanged;
-                _SideDrawer.ItemRemoved += ItemCollectionChanged;
-                initSideDrawer();
+                if (_SideDrawer != null)
+                {
+                    _SideDrawer.ItemAdded += ItemCollectionChanged;
+                    _SideDrawer.ItemRemoved += ItemCollectionChanged;
+                    initSideDrawer();
                 }
             }
         }
@@ -140,7 +160,7 @@ namespace MaterialWinforms.Controls
             Dock = DockStyle.Left;
             AutoScroll = true;
             Elevation = 10;
-
+            HiddenOnStart = true;
             MinimumSize = new Size(0, MaximumSize.Height);
 
         }
@@ -167,7 +187,7 @@ namespace MaterialWinforms.Controls
             {
                 Elevation = 10;
             }
-          
+
             ShadowBorder.AddLine(new Point(Location.X + Width, Location.Y), new Point(Location.X + Width, Location.Y + Height));
 
         }

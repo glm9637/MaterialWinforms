@@ -24,6 +24,9 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
+
+    
+
         private MaterialSideDrawer _SideDrawer; 
         public MaterialSideDrawer SideDrawer
         {
@@ -33,14 +36,16 @@ namespace MaterialWinforms.Controls
             }
             set
             {
-                if (Controls.Contains(_SideDrawer))
-                {
-                    Controls.Remove(_SideDrawer);
-                }
-
                 _SideDrawer = value;
-                Controls.Add(_SideDrawer);
+                _SideDrawer.onHiddenOnStartChanged += _SideDrawer_onHiddenOnStartChanged;
+                _SideDrawer_onHiddenOnStartChanged(_SideDrawer.HiddenOnStart);
             }
+        }
+
+        void _SideDrawer_onHiddenOnStartChanged(bool newValue)
+        {
+            DrawerAnimationTimer.SetProgress(newValue?0:1);
+            Invalidate();
         }
 
         private MaterialActionBar _ActionBar;
@@ -244,7 +249,7 @@ namespace MaterialWinforms.Controls
         {
             if (_SideDrawer != null)
             {
-                _SideDrawer.BringToFront();
+              //  _SideDrawer.BringToFront();
             }
         }
 
@@ -253,7 +258,7 @@ namespace MaterialWinforms.Controls
         {
             if (_SideDrawer != null)
             {
-                _SideDrawer.BringToFront();
+              //  _SideDrawer.BringToFront();
             }
         }
 
