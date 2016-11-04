@@ -110,17 +110,17 @@ namespace MaterialWinforms.Controls
             Controls.Add(TimeLabel);
             Controls.Add(Content);
 
-            UserImage.Click += OnClick;
-            Content.Click += OnClick;
-            CardContent.Click += OnClick;
-            TimeLabel.Click += OnClick;
-            UserNameLabel.Click += OnClick;
+            UserImage.MouseClick += OnClick;
+            Content.MouseClick += OnClick;
+            CardContent.MouseClick += OnClick;
+            TimeLabel.MouseClick += OnClick;
+            UserNameLabel.MouseClick += OnClick;
             
         }
 
-        private void OnClick(object sender, EventArgs e)
+        private void OnClick(object sender, MouseEventArgs e)
         {
-            OnClick(e);
+            OnMouseClick(e);
         }
 
         public MaterialCard getContent()
