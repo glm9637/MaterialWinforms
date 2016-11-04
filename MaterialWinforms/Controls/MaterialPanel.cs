@@ -115,6 +115,17 @@ namespace MaterialWinforms.Controls
         void MaterialPanel_ControlsChanged(object sender, ControlEventArgs e)
         {
             UpdateScrollbars();
+            MainPanel.BringToFront();
+            VerticalScrollbar.BringToFront();
+            HorizontalScrollbar.BringToFront();
+        }
+
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            base.OnLayout(levent);
+            MainPanel.BringToFront();
+            VerticalScrollbar.BringToFront();
+            HorizontalScrollbar.BringToFront();
         }
 
         void MainPanel_Resize(object sender, EventArgs e)
@@ -214,6 +225,7 @@ namespace MaterialWinforms.Controls
         public MaterialDisplayingPanel()
         {
             DoubleBuffered = true;
+            Padding = new Padding(3, 3, 3, 3);
         }
 
 

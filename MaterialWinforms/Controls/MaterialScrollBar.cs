@@ -404,7 +404,7 @@ namespace MaterialWinforms.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            DrawScrollBar(e.Graphics, MaterialSkinManager.Instance.GetCardsColor(), MaterialSkinManager.Instance.ColorScheme.DarkPrimaryColor, MaterialSkinManager.Instance.ColorScheme.PrimaryColor);
+            DrawScrollBar(e.Graphics, MaterialSkinManager.Instance.GetCardsColor(), MaterialSkinManager.Instance.ColorScheme.PrimaryColor, MaterialSkinManager.Instance.ColorScheme.AccentColor);
         }
 
         private void DrawScrollBar(Graphics g, Color backColor, Color thumbColor, Color barColor)

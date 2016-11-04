@@ -64,7 +64,7 @@ namespace MaterialWinforms.Controls
         public MaterialAvatarView()
         {
             objFontManager = new FontManager();
-
+            DoubleBuffered = true;
             this.SetStyle(ControlStyles.Opaque, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, false);
 

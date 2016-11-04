@@ -712,12 +712,12 @@ namespace MaterialWinformsExample
             this.materialTabControl1.Controls.Add(this.materialTabPage3);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialTabControl1.Location = new System.Drawing.Point(0, 101);
+            this.materialTabControl1.Location = new System.Drawing.Point(210, 101);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
-            this.materialTabControl1.SelectedIndex = 1;
-            this.materialTabControl1.Size = new System.Drawing.Size(993, 587);
+            this.materialTabControl1.SelectedIndex = 2;
+            this.materialTabControl1.Size = new System.Drawing.Size(783, 587);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
             // 
@@ -732,7 +732,7 @@ namespace MaterialWinformsExample
             this.materialTabPage2.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage2.Name = "materialTabPage2";
-            this.materialTabPage2.Size = new System.Drawing.Size(785, 561);
+            this.materialTabPage2.Size = new System.Drawing.Size(775, 561);
             this.materialTabPage2.TabIndex = 1;
             this.materialTabPage2.Text = "materialTabPage2";
             // 
@@ -804,7 +804,7 @@ namespace MaterialWinformsExample
             this.materialTabPage1.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage1.Name = "materialTabPage1";
-            this.materialTabPage1.Size = new System.Drawing.Size(985, 561);
+            this.materialTabPage1.Size = new System.Drawing.Size(775, 561);
             this.materialTabPage1.TabIndex = 0;
             this.materialTabPage1.Text = "materialTabPage1";
             // 
@@ -1198,7 +1198,7 @@ namespace MaterialWinformsExample
             this.materialTabPage3.Location = new System.Drawing.Point(4, 22);
             this.materialTabPage3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabPage3.Name = "materialTabPage3";
-            this.materialTabPage3.Size = new System.Drawing.Size(785, 561);
+            this.materialTabPage3.Size = new System.Drawing.Size(775, 561);
             this.materialTabPage3.TabIndex = 2;
             this.materialTabPage3.Text = "materialTabPage3";
             // 
@@ -1207,10 +1207,11 @@ namespace MaterialWinformsExample
             this.materialPanel1.AutoScroll = true;
             this.materialPanel1.Controls.Add(this.materialTimeline2);
             this.materialPanel1.Depth = 0;
-            this.materialPanel1.Location = new System.Drawing.Point(3, 8);
+            this.materialPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.materialPanel1.Location = new System.Drawing.Point(0, 0);
             this.materialPanel1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialPanel1.Name = "materialPanel1";
-            this.materialPanel1.Size = new System.Drawing.Size(951, 445);
+            this.materialPanel1.Size = new System.Drawing.Size(775, 561);
             this.materialPanel1.TabIndex = 1;
             this.materialPanel1.Text = "materialPanel1";
             // 
@@ -1414,7 +1415,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer1.AutoScroll = true;
             this.materialSideDrawer1.Depth = 0;
             this.materialSideDrawer1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.materialSideDrawer1.Elevation = 0;
+            this.materialSideDrawer1.Elevation = 10;
             this.materialSideDrawer1.HiddenOnStart = false;
             this.materialSideDrawer1.HideSideDrawer = false;
             this.materialSideDrawer1.Location = new System.Drawing.Point(0, 101);
@@ -1427,7 +1428,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer1.SideDrawer = null;
             this.materialSideDrawer1.SideDrawerFixiert = false;
             this.materialSideDrawer1.SideDrawerUnterActionBar = false;
-            this.materialSideDrawer1.Size = new System.Drawing.Size(0, 587);
+            this.materialSideDrawer1.Size = new System.Drawing.Size(210, 587);
             this.materialSideDrawer1.TabIndex = 34;
             // 
             // MainForm

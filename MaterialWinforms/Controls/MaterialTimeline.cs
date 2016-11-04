@@ -21,7 +21,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public delegate void TimeLineEntryClicked(MaterialTimeLineEntry sender, EventArgs e);
+        public delegate void TimeLineEntryClicked(MaterialTimeLineEntry sender, MouseEventArgs e);
         public event TimeLineEntryClicked onTimeLineEntryClicked;
 
         private Boolean _AufsteigenSortieren;
@@ -51,7 +51,7 @@ namespace MaterialWinforms.Controls
             foreach (MaterialTimeLineEntry objEntry in Entrys)
             {
                 objEntry.SizeChanged -= EntrySizeChanged;
-                objEntry.Click -= objEntry_Click;
+                objEntry.MouseClick -= objEntry_Click;
             }
 
             List<MaterialTimeLineEntry> objSorted = Entrys.OrderByDescending(Entry => Entry, new TimeLineComparer(_AufsteigenSortieren)).ToList<MaterialTimeLineEntry>();
@@ -64,7 +64,7 @@ namespace MaterialWinforms.Controls
                 Controls.Add(objEntry);
                 Entrys.Add(objEntry);
                 objEntry.SizeChanged += EntrySizeChanged;
-                objEntry.Click += objEntry_Click;
+                objEntry.MouseClick += objEntry_Click;
                 h += objEntry.Height;
             }
 
@@ -73,7 +73,7 @@ namespace MaterialWinforms.Controls
             Height = h;
         }
 
-        void objEntry_Click(object sender, EventArgs e)
+        void objEntry_Click(object sender, MouseEventArgs e)
         {
             if(onTimeLineEntryClicked != null)
             {

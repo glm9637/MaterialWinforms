@@ -61,6 +61,7 @@ namespace MaterialWinforms.Controls
                 _Text = value;
                 CardContent.Text = _Text;
                 Content.Height = 80 + CardContent.Height;
+                Content.Width = CardContent.Width + 10;
                 Height = Content.Height + Content.Location.Y;
                 UserNameLabel.Location = new Point(10, CardContent.Bottom);
             }
@@ -73,7 +74,7 @@ namespace MaterialWinforms.Controls
             set
                 {
                     _Time = value;
-                    TimeLabel.Text = value.ToString("dd.MM.yyyy");
+                    TimeLabel.Text = value.ToString("dd.MM.yyyy")+ "\r\n" +value.ToString("HH:mm:ss");
                 }
         }
         private MaterialAvatarView UserImage;

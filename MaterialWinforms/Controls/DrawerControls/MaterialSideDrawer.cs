@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Drawing;
 
+using System.Runtime.InteropServices;
+
 namespace MaterialWinforms.Controls
 {
     public partial class MaterialSideDrawer : FlowLayoutPanel, IShadowedMaterialControl
@@ -349,6 +351,26 @@ namespace MaterialWinforms.Controls
             {
                 onSideDrawerItemClicked(sender, new SideDrawerEventArgs(strText, objTag));
             }
+        }
+
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
+
+        private enum ScrollBarDirection
+        {
+            SB_HORZ = 0,
+            SB_VERT = 1,
+            SB_CTL = 2,
+            SB_BOTH = 3
+        }
+
+
+        protected override void WndProc(ref System.Windows.Forms.Message m)
+        {
+            ShowScrollBar(this.Handle, (int)ScrollBarDirection.SB_HORZ, false);
+            base.WndProc(ref m);
         }
     }
 }
