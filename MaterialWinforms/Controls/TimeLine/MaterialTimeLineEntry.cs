@@ -168,7 +168,7 @@ namespace MaterialWinforms.Controls
             //Draw Title
             e.Graphics.DrawString(_Title, _FontManager.Roboto_Medium15, SkinManager.ColorScheme.PrimaryBrush, TitleRect, _StringFormat);
             //Draw Content
-            e.Graphics.DrawString(_Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, ContentRect, _StringFormat);
+            e.Graphics.DrawString(_Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, ContentRect, new StringFormat { LineAlignment = StringAlignment.Center });
             //Draw Name
             e.Graphics.DrawString(_UserName, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, NameRect, _StringFormat);
         }
