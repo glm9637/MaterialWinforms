@@ -42,7 +42,8 @@ namespace MaterialWinformsExample
                     UserName = "Melvin Fengelsfd",
                     Title = "Title Tahfjksdbgfquiwegjkqsgdfkjqwe"+i,
                     Time = DateTime.Now.AddDays(-i),
-                    Text = "Test Text"
+                    Text = "Test Text",
+                    UserInitialien = "MF"
                 };
                 materialTimeline2.Entrys.Add(objEntry);
             }
