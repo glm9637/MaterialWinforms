@@ -23,7 +23,7 @@ namespace MaterialWinforms.Controls
         public Color BackColor { get { return SkinManager.ColorScheme.PrimaryColor; } }
 
         private int HoveredXButtonIndex = -1;
-        public MaterialContextMenuStrip RightClickMenu { get; set; }
+        public ContextMenuStrip RightClickMenu { get; set; }
 
         private Point RightClickLocation;
 
@@ -121,20 +121,21 @@ namespace MaterialWinforms.Controls
         private void SetupRightClickMenu()
         {
             RightClickMenu = new MaterialContextMenuStrip();
-            ToolStripMenuItem CloseAllTabs = new ToolStripMenuItem();
-            ToolStripMenuItem TabPositionZurruecksetzten = new ToolStripMenuItem();
-            ToolStripMenuItem CloseAllExeptCurrent = new ToolStripMenuItem();
-            ToolStripMenuItem OpenInNewWindow = new ToolStripMenuItem();
+            RightClickMenu.AutoSize = true;
+            ToolStripMenuItem CloseAllTabs = new MaterialToolStripMenuItem();
+            ToolStripMenuItem TabPositionZurruecksetzten = new MaterialToolStripMenuItem();
+            ToolStripMenuItem CloseAllExeptCurrent = new MaterialToolStripMenuItem();
+            ToolStripMenuItem OpenInNewWindow = new MaterialToolStripMenuItem();
 
             CloseAllTabs.Text = "Alle Tabs schließen";
             CloseAllTabs.Click += CloseAllTabs_Click;
             RightClickMenu.Items.Add(CloseAllTabs);
 
-            CloseAllExeptCurrent.Text = "Alle Anderen Tabs Schließen";
+            CloseAllExeptCurrent.Text = "Alle anderen Tabs Schließen";
             CloseAllExeptCurrent.Click += CloseAllExeptCurrent_Click;
             RightClickMenu.Items.Add(CloseAllExeptCurrent);
 
-            TabPositionZurruecksetzten.Text = "Tab Positionen Zurrücksetzen";
+            TabPositionZurruecksetzten.Text = "Tab Positionen zurrücksetzen";
             TabPositionZurruecksetzten.Click += TabPositionZurruecksetzten_Click;
             RightClickMenu.Items.Add(TabPositionZurruecksetzten);
 

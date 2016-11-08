@@ -46,6 +46,8 @@ namespace MaterialWinforms.Controls
             {
                 _Title = value;
                 Content.Title = _Title;
+                Content.Width = Math.Max(Content.Width, (int)Content.TitleSize.Width);
+                Width = Math.Max(Width, (int)Content.TitleSize.Width);
             }
         }
 
@@ -64,6 +66,7 @@ namespace MaterialWinforms.Controls
                 Content.Width = CardContent.Width + 10;
                 Height = Content.Height + Content.Location.Y;
                 UserNameLabel.Location = new Point(10, CardContent.Bottom);
+                Width = Math.Max(Convert.ToInt32(Content.Right * 1.45),Width); 
             }
         }
 
@@ -85,6 +88,7 @@ namespace MaterialWinforms.Controls
 
         public MaterialTimeLineEntry()
         {
+            DoubleBuffered = true;
             StringGraphics = Graphics.FromImage(new Bitmap(10, 10));
             AutoSize = true;
             UserImage = new MaterialAvatarView();
@@ -136,9 +140,10 @@ namespace MaterialWinforms.Controls
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            Content.Width = Width - UserImage.Right-10;
             Content.Location = new Point(UserImage.Right + 5, 20);
+            Content.Width = Math.Max(Content.Width, (int)Content.TitleSize.Width);
             UserNameLabel.Location = new Point(10, CardContent.Bottom);
+            Width = Math.Max(Convert.ToInt32(Content.Right *1.45),Content.Location.X+ (int)Content.TitleSize.Width+50); 
 
         }
 

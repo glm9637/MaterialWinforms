@@ -27,7 +27,6 @@ namespace MaterialWinforms.Controls
         public MaterialContextMenuStrip()
         {
             Renderer = new MaterialToolStripRender();
-
             animationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
@@ -75,8 +74,7 @@ namespace MaterialWinforms.Controls
     {
         public MaterialToolStripMenuItem()
         {
-            AutoSize = false;
-            Size = new Size(120, 30);
+            Size = new Size(500, 30);
         }
 
         protected override ToolStripDropDown CreateDefaultDropDown()
@@ -106,7 +104,7 @@ namespace MaterialWinforms.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             var itemRect = GetItemRect(e.Item);
-            var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
+            var textRect = new Rectangle(0, itemRect.Y, itemRect.Width, itemRect.Height);
             g.DrawString(
                 e.Text,
                 SkinManager.ROBOTO_MEDIUM_10,

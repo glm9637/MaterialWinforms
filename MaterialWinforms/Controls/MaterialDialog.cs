@@ -294,15 +294,18 @@ namespace MaterialWinforms.Controls
             MaterialFlatButton btnAbort = new MaterialFlatButton();
             btnAbort.Text = "Abbrechen";
             btnAbort.Accent = true;
+            btnAbort.Tag = "Abort";
             btnAbort.Click += ButtonClick;
 
             MaterialFlatButton btnRetry = new MaterialFlatButton();
             btnRetry.Text = "Erneut versuchen";
             btnRetry.ForeColor = Color.DarkGray;
+            btnRetry.Tag = "Retry";
             btnRetry.Click += ButtonClick;
 
             MaterialFlatButton btnIgnore = new MaterialFlatButton();
             btnIgnore.Text = "Ignorieren";
+            btnIgnore.Tag = "Ignore";
             btnIgnore.ForeColor = Color.DarkGray;
             btnIgnore.Click += ButtonClick;
 
@@ -316,6 +319,7 @@ namespace MaterialWinforms.Controls
         {
             MaterialFlatButton btnOK = new MaterialFlatButton();
             btnOK.Text = "OK";
+            btnOK.Tag = "Ok";
             btnOK.Accent = true;
             btnOK.Click += ButtonClick;
 
@@ -326,11 +330,13 @@ namespace MaterialWinforms.Controls
         {
             MaterialFlatButton btnOK = new MaterialFlatButton();
             btnOK.Text = "OK";
+            btnOK.Tag = "Ok";
             btnOK.Accent = true;
             btnOK.Click += ButtonClick;
 
             MaterialFlatButton btnCancel = new MaterialFlatButton();
             btnCancel.Text = "Abbrechen";
+            btnCancel.Tag = "Cancel";
             btnCancel.ForeColor = Color.DarkGray;
             btnCancel.Click += ButtonClick;
 
@@ -343,11 +349,13 @@ namespace MaterialWinforms.Controls
         {
             MaterialFlatButton btnRetry = new MaterialFlatButton();
             btnRetry.Text = "Erneut versuchen";
+            btnRetry.Tag = "Retry";
             btnRetry.Accent = true;
             btnRetry.Click += ButtonClick;
 
             MaterialFlatButton btnCancel = new MaterialFlatButton();
             btnCancel.Text = "Abbrechen";
+            btnCancel.Tag = "Cancel";
             btnCancel.ForeColor = Color.DarkGray;
             btnCancel.Click += ButtonClick;
 
@@ -360,11 +368,13 @@ namespace MaterialWinforms.Controls
         {
             MaterialFlatButton btnYes = new MaterialFlatButton();
             btnYes.Text = "Ja";
+            btnYes.Tag = "Yes";
             btnYes.Accent = true;
             btnYes.Click += ButtonClick;
 
             MaterialFlatButton btnNo = new MaterialFlatButton();
             btnNo.Text = "Nein";
+            btnNo.Tag = "No";
             btnNo.ForeColor = Color.DarkGray;
             btnNo.Click += ButtonClick;
 
@@ -387,17 +397,23 @@ namespace MaterialWinforms.Controls
         private void InitYesNoCancelButtons()
         {
             MaterialFlatButton btnYes = new MaterialFlatButton();
-            btnYes.Text = "Yes";
+            btnYes.Text = "Ja";
+
+            btnYes.Tag = "Yes";
             btnYes.Accent = true;
             btnYes.Click += ButtonClick;
 
             MaterialFlatButton btnNo = new MaterialFlatButton();
-            btnNo.Text = "No";
+            btnNo.Text = "Nein";
+
+            btnNo.Tag = "No";
             btnNo.ForeColor = Color.DarkGray;
             btnNo.Click += ButtonClick;
 
             MaterialFlatButton btnCancel = new MaterialFlatButton();
-            btnCancel.Text = "Cancel";
+            btnCancel.Text = "Abbrechen";
+
+            btnCancel.Tag = "Cancel";
             btnCancel.ForeColor = Color.DarkGray;
             btnCancel.Click += ButtonClick;
 
@@ -411,7 +427,7 @@ namespace MaterialWinforms.Controls
         {
             Button btn = (Button)sender;
 
-            switch (btn.Text)
+            switch (btn.Tag.ToString())
             {
                 case "Abort":
                     _buttonResult = DialogResult.Abort;
@@ -425,7 +441,7 @@ namespace MaterialWinforms.Controls
                     _buttonResult = DialogResult.Ignore;
                     break;
 
-                case "OK":
+                case "Ok":
                     _buttonResult = DialogResult.OK;
                     break;
 

@@ -35,14 +35,14 @@ namespace MaterialWinformsExample
 
             materialTimeline2.onTimeLineEntryClicked += materialTimeline1_onTimeLineEntryClicked;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 MaterialTimeLineEntry objEntry = new MaterialTimeLineEntry
                 {
                     UserName = "Melvin Fengelsfd",
-                    Title = "Title "+i,
+                    Title = "Title Tahfjksdbgfquiwegjkqsgdfkjqwe"+i,
                     Time = DateTime.Now.AddDays(-i),
-                    Text = "TestText \r\nTefgsdfgsfdgsdfgsdfvklrenghiobönkqwbnroighfdnkbvgqrejbgvklndcvmbqöwreogkihsadkghfeöklt\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest\r\nTest"
+                    Text = "Test Text"
                 };
                 materialTimeline2.Entrys.Add(objEntry);
             }
@@ -166,6 +166,11 @@ namespace MaterialWinformsExample
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void materialFlatButton1_Click(object sender, EventArgs e)
+        {
+            MaterialDialog.Show(this, "test", "test", MaterialDialog.Buttons.OKCancel);
         }
 
 

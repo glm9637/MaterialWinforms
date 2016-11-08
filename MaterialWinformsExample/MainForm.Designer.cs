@@ -214,6 +214,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton1.TabIndex = 1;
             this.materialFlatButton1.Text = "Primary";
             this.materialFlatButton1.UseVisualStyleBackColor = true;
+            this.materialFlatButton1.Click += new System.EventHandler(this.materialFlatButton1_Click);
             // 
             // materialButton1
             // 

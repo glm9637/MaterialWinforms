@@ -23,7 +23,18 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public GraphicsPath ShadowBorder { get; set; }
 
-        public bool LargeTitle { get; set; }
+        private bool _LargeTitle;
+        public bool LargeTitle
+        {
+            get
+            {
+                return _LargeTitle;
+            }
+            set
+            {
+                _LargeTitle = value;
+            }
+        }
 
         [Category("Appearance")]
         public string Title
@@ -39,7 +50,7 @@ namespace MaterialWinforms.Controls
             }
         }
 
-
+        public SizeF TitleSize { get { return CreateGraphics().MeasureString(_Text, LargeTitle ? new FontManager().Roboto_Medium15 : SkinManager.ROBOTO_MEDIUM_10); } }
         public MaterialCard()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
@@ -82,7 +93,7 @@ namespace MaterialWinforms.Controls
                _Text,
                LargeTitle?new FontManager().Roboto_Medium15: SkinManager.ROBOTO_MEDIUM_10,
                SkinManager.ColorScheme.PrimaryBrush,
-               new Rectangle(ClientRectangle.X + 10, ClientRectangle.Y + 10, ClientRectangle.Width, ClientRectangle.Height),
+               new Rectangle(ClientRectangle.X + 10, ClientRectangle.Y + 10, ClientRectangle.Width, (int)TitleSize.Height),
                new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near });
             }
             g.ResetClip();
