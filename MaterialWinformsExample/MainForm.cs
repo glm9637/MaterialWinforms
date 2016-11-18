@@ -112,13 +112,7 @@ namespace MaterialWinformsExample
 
         private void materialFlatButton2_Click(object sender, EventArgs e)
         {
-            String strMessage;
-            strMessage = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.  Consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-            UserControl t = new UserControl();
-            MaterialColorPicker mcp = new MaterialColorPicker();
-            t.Size = mcp.Size;
-            t.Controls.Add(mcp);
-            MaterialDialog.Show(this, "Mit Titel", t);
+
         }
 
         private void materialSideDrawer3_onSideDrawerItemClicked(object sender, MaterialSideDrawer.SideDrawerEventArgs e)
@@ -174,8 +168,39 @@ namespace MaterialWinformsExample
             MaterialDialog.Show(this, "test", "test", MaterialDialog.Buttons.OKCancel);
         }
 
+        private void materialFlatButton4_Click(object sender, EventArgs e)
+        {
+            HeadsUp objTest = new HeadsUp();
+            objTest.Titel = "Title";
+            objTest.Text = "Description Text to show Something that happend";
+            MaterialFlatButton DismissHeadsUp = new MaterialFlatButton();
+            DismissHeadsUp.Tag = objTest;
+            DismissHeadsUp.Text = "Dismiss";
+            DismissHeadsUp.Click += DismissHeadsUp_Click;
+            objTest.Buttons.Add(DismissHeadsUp);
+            objTest.Show();
+        }
 
+        private void materialFlatButton6_Click(object sender, EventArgs e)
+        {
+            UserControl t = new UserControl();
+            MaterialColorPicker mcp = new MaterialColorPicker();
+            t.Size = mcp.Size;
+            t.Controls.Add(mcp);
+            MaterialDialog.Show(this, "Pick a Color", t,MaterialDialog.Buttons.OK);
+        }
 
+        private void materialFlatButton5_Click(object sender, EventArgs e)
+        {
+            MaterialDialog.Show(this, "Content", "Title", MaterialDialog.Buttons.OK, MaterialDialog.Icon.Shield);
+        }
 
+        private void ActionBarMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MaterialSettings objSettings = new MaterialSettings(this);
+            objSettings.ShowThemeSettings = true;
+            objSettings.Show();
+            e.Cancel = true;
+        }
     }
 }

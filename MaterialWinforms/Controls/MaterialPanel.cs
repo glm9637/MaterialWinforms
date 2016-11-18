@@ -68,8 +68,9 @@ namespace MaterialWinforms.Controls
             }
         }
 
-        public MaterialPanel()
+        public MaterialPanel() : base()
         {
+            
             DoubleBuffered = true;
             VerticalScrollbar = new MaterialScrollBar(MaterialScrollOrientation.Vertical);
             VerticalScrollbar.Scroll += Scrolled;
@@ -96,10 +97,17 @@ namespace MaterialWinforms.Controls
             AutoScroll = true;
 
             ignoreResize = false;
+        }
 
-            MainPanel.BringToFront();
+        protected override void OnControlAdded(ControlEventArgs e)
+        {
+            base.OnControlAdded(e);
+
+
             VerticalScrollbar.BringToFront();
             HorizontalScrollbar.BringToFront();
+            
+            MainPanel.BringToFront();
         }
 
         void MainPanel_onScrollBarChanged(Orientation pScrollOrientation, bool pVisible)
@@ -228,6 +236,14 @@ namespace MaterialWinforms.Controls
             Padding = new Padding(3, 3, 3, 3);
         }
 
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+            foreach (Control objControl in Controls)
+            {
+                objControl.BringToFront();
+            }
+        }
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]

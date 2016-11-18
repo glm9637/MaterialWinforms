@@ -120,14 +120,55 @@
   <metadata name="SideDrawerList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="materialBreadCrumbToolbar1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEdNYXRlcmlhbFdpbmZvcm1zLCBWZXJzaW9uPTEuMC4wLjAsIEN1
+        bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAwDAAAAUVN5c3RlbS5EcmF3aW5nLCBWZXJz
+        aW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEz
+        YQUBAAAAKE1hdGVyaWFsV2luZm9ybXMuQ29udHJvbHMuQnJlYWRDcnVtYkl0ZW0DAAAACEl0ZW1SZWN0
+        FTxUZXh0PmtfX0JhY2tpbmdGaWVsZBQ8VGFnPmtfX0JhY2tpbmdGaWVsZAQBAhhTeXN0ZW0uRHJhd2lu
+        Zy5SZWN0YW5nbGUDAAAAAgAAAAX8////GFN5c3RlbS5EcmF3aW5nLlJlY3RhbmdsZQQAAAABeAF5BXdp
+        ZHRoBmhlaWdodAAAAAAICAgIAwAAAAoAAAD4////TAAAAAEAAAAGBQAAAAhTY2hyaXR0MQoL
+</value>
+  </data>
+  <data name="materialBreadCrumbToolbar1.Items1" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEdNYXRlcmlhbFdpbmZvcm1zLCBWZXJzaW9uPTEuMC4wLjAsIEN1
+        bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAwDAAAAUVN5c3RlbS5EcmF3aW5nLCBWZXJz
+        aW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEz
+        YQUBAAAAKE1hdGVyaWFsV2luZm9ybXMuQ29udHJvbHMuQnJlYWRDcnVtYkl0ZW0DAAAACEl0ZW1SZWN0
+        FTxUZXh0PmtfX0JhY2tpbmdGaWVsZBQ8VGFnPmtfX0JhY2tpbmdGaWVsZAQBAhhTeXN0ZW0uRHJhd2lu
+        Zy5SZWN0YW5nbGUDAAAAAgAAAAX8////GFN5c3RlbS5EcmF3aW5nLlJlY3RhbmdsZQQAAAABeAF5BXdp
+        ZHRoBmhlaWdodAAAAAAICAgIAwAAAFYAAAD4////TAAAAAEAAAAGBQAAAAhTY2hyaXR0MgoL
+</value>
+  </data>
+  <data name="materialBreadCrumbToolbar1.Items2" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEdNYXRlcmlhbFdpbmZvcm1zLCBWZXJzaW9uPTEuMC4wLjAsIEN1
+        bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAwDAAAAUVN5c3RlbS5EcmF3aW5nLCBWZXJz
+        aW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEz
+        YQUBAAAAKE1hdGVyaWFsV2luZm9ybXMuQ29udHJvbHMuQnJlYWRDcnVtYkl0ZW0DAAAACEl0ZW1SZWN0
+        FTxUZXh0PmtfX0JhY2tpbmdGaWVsZBQ8VGFnPmtfX0JhY2tpbmdGaWVsZAQBAhhTeXN0ZW0uRHJhd2lu
+        Zy5SZWN0YW5nbGUDAAAAAgAAAAX8////GFN5c3RlbS5EcmF3aW5nLlJlY3RhbmdsZQQAAAABeAF5BXdp
+        ZHRoBmhlaWdodAAAAAAICAgIAwAAAKIAAAD4////TAAAAAEAAAAGBQAAAAhTY2hyaXR0MwoL
+</value>
+  </data>
+  <data name="materialBreadCrumbToolbar1.Items3" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEdNYXRlcmlhbFdpbmZvcm1zLCBWZXJzaW9uPTEuMC4wLjAsIEN1
+        bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAwDAAAAUVN5c3RlbS5EcmF3aW5nLCBWZXJz
+        aW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAzZjVmN2YxMWQ1MGEz
+        YQUBAAAAKE1hdGVyaWFsV2luZm9ybXMuQ29udHJvbHMuQnJlYWRDcnVtYkl0ZW0DAAAACEl0ZW1SZWN0
+        FTxUZXh0PmtfX0JhY2tpbmdGaWVsZBQ8VGFnPmtfX0JhY2tpbmdGaWVsZAQBAhhTeXN0ZW0uRHJhd2lu
+        Zy5SZWN0YW5nbGUDAAAAAgAAAAX8////GFN5c3RlbS5EcmF3aW5nLlJlY3RhbmdsZQQAAAABeAF5BXdp
+        ZHRoBmhlaWdodAAAAAAICAgIAwAAAO4AAAD4////PgAAAAEAAAAGBQAAAAhTY2hyaXR0NAoL
+</value>
+  </data>
   <metadata name="mcm_ComboBox1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>285, 17</value>
   </metadata>
   <metadata name="ActionBarMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>149, 17</value>
-  </metadata>
-  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>435, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>84</value>

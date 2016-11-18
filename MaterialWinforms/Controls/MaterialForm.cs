@@ -25,9 +25,11 @@ namespace MaterialWinforms.Controls
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
 
-    
 
-        private MaterialSideDrawer _SideDrawer; 
+        private FormWindowState mLastState;
+
+
+        private MaterialSideDrawer _SideDrawer;
         public MaterialSideDrawer SideDrawer
         {
             get
@@ -44,7 +46,7 @@ namespace MaterialWinforms.Controls
 
         void _SideDrawer_onHiddenOnStartChanged(bool newValue)
         {
-            DrawerAnimationTimer.SetProgress(newValue?0:1);
+            DrawerAnimationTimer.SetProgress(newValue ? 0 : 1);
             Invalidate();
         }
 
@@ -64,8 +66,8 @@ namespace MaterialWinforms.Controls
 
         void _ActionBar_onSideDrawerButtonClicked()
         {
-            
-            DrawerAnimationTimer.StartNewAnimation(DrawerAnimationTimer.GetProgress()==0?AnimationDirection.In:AnimationDirection.Out);
+
+            DrawerAnimationTimer.StartNewAnimation(DrawerAnimationTimer.GetProgress() == 0 ? AnimationDirection.In : AnimationDirection.Out);
         }
 
 
@@ -87,20 +89,6 @@ namespace MaterialWinforms.Controls
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern bool GetMonitorInfo(HandleRef hmonitor, [In, Out] MONITORINFOEX info);
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-
-
-        private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
-
-        private enum ScrollBarDirection
-        {
-            SB_HORZ = 0,
-            SB_VERT = 1,
-            SB_CTL = 2,
-            SB_BOTH = 3
-        }
-
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
         public const int WM_MOUSEMOVE = 0x0200;
@@ -108,6 +96,7 @@ namespace MaterialWinforms.Controls
         public const int WM_LBUTTONUP = 0x0202;
         public const int WM_LBUTTONDBLCLK = 0x0203;
         public const int WM_RBUTTONDOWN = 0x0204;
+        public const int WM_NCCALCSIZE = 0x83;
         private const int HTBOTTOMLEFT = 16;
         private const int HTBOTTOMRIGHT = 17;
         private const int HTLEFT = 10;
@@ -128,6 +117,16 @@ namespace MaterialWinforms.Controls
         private const int WMSZ_BOTTOM = 6;
         private const int WMSZ_BOTTOMLEFT = 7;
         private const int WMSZ_BOTTOMRIGHT = 8;
+
+        private const int AW_VER_POSITIVE = 0x00000004;
+        private const int AW_VER_NEGATIVE = 0x00000008;
+        private const int AW_SLIDE = 0x00040000;
+        private const int AW_HIDE = 0x00010000;
+        private const int AW_ACTIVAE = 0x00020000;
+        private const int AW_BLEND = 0x00080000;
+        private const int AW_CENTER = 0x00000010;
+        private const int AW_HOR_POSITIVE = 0x00000001;
+        private const int AW_HOR_NEGATIVE = 0x00000002;
 
         private readonly Dictionary<int, int> resizingLocationsToCmd = new Dictionary<int, int>
         {
@@ -152,6 +151,10 @@ namespace MaterialWinforms.Controls
         private const int WS_SYSMENU = 0x00080000;
 
         private const int MONITOR_DEFAULTTONEAREST = 2;
+
+        private const int SC_MINIMIZE = 0xF020;
+        private const int SC_MAXIMIZE = 0xF030;
+        private const int SC_RESTORE = 0xf120;
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         public class MONITORINFOEX
@@ -220,7 +223,7 @@ namespace MaterialWinforms.Controls
         private bool headerMouseDown;
         private Animations.AnimationManager DrawerAnimationTimer;
 
-     
+
 
         public MaterialForm()
         {
@@ -233,7 +236,7 @@ namespace MaterialWinforms.Controls
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
             MouseMessageFilter.MouseMove += OnGlobalMouseMove;
-            DrawerAnimationTimer =new Animations.AnimationManager()            
+            DrawerAnimationTimer = new Animations.AnimationManager()
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.EaseOut
@@ -249,7 +252,7 @@ namespace MaterialWinforms.Controls
         {
             if (_SideDrawer != null)
             {
-              //  _SideDrawer.BringToFront();
+                //  _SideDrawer.BringToFront();
             }
         }
 
@@ -258,13 +261,29 @@ namespace MaterialWinforms.Controls
         {
             if (_SideDrawer != null)
             {
-              //  _SideDrawer.BringToFront();
+                //  _SideDrawer.BringToFront();
             }
         }
 
 
         protected override void WndProc(ref Message m)
         {
+            if (m.Msg == WM_SYSCOMMAND)
+            {
+                int command = m.WParam.ToInt32() & 0xfff0;
+                if (command == SC_MINIMIZE)
+                {
+                    AnimateWindow(Handle, 300, AW_HIDE | AW_SLIDE | AW_VER_POSITIVE);
+                }
+                else if (command == SC_RESTORE)
+                {
+
+                }
+                else if (command == SC_MAXIMIZE)
+                {
+
+                }
+            }
             base.WndProc(ref m);
             if (DesignMode || IsDisposed) return;
 
@@ -345,10 +364,6 @@ namespace MaterialWinforms.Controls
             else if (m.Msg == WM_LBUTTONUP)
             {
                 headerMouseDown = false;
-            }
-            if (!DesignMode)
-            {
-
             }
         }
 
@@ -481,7 +496,10 @@ namespace MaterialWinforms.Controls
                     buttonState = ButtonState.MinOver;
 
                     if (oldState == ButtonState.MinDown)
+                    {
+                        AnimateWindow(Handle, 300, AW_HIDE | AW_SLIDE | AW_VER_POSITIVE);
                         WindowState = FormWindowState.Minimized;
+                    }
                 }
                 else if (MaximizeBox && ControlBox && maxButtonBounds.Contains(e.Location))
                 {
@@ -504,6 +522,8 @@ namespace MaterialWinforms.Controls
 
             if (oldState != buttonState) Invalidate();
         }
+
+
 
         private void MaximizeWindow(bool maximize)
         {
@@ -587,15 +607,16 @@ namespace MaterialWinforms.Controls
             g.Clear(SkinManager.GetApplicationBackgroundColor());
             g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, statusBarBounds);
 
-            if (_ActionBar == null) { 
-            //Draw border
-            using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
+            if (_ActionBar == null)
             {
-                g.DrawLine(borderPen, new Point(0, statusBarBounds.Bottom), new Point(0, Height - 2));
-                g.DrawLine(borderPen, new Point(Width - 1, statusBarBounds.Bottom), new Point(Width - 1, Height - 2));
-                g.DrawLine(borderPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
+                //Draw border
+                using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
+                {
+                    g.DrawLine(borderPen, new Point(0, statusBarBounds.Bottom), new Point(0, Height - 2));
+                    g.DrawLine(borderPen, new Point(Width - 1, statusBarBounds.Bottom), new Point(Width - 1, Height - 2));
+                    g.DrawLine(borderPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
+                }
             }
-        }
 
             // Determine whether or not we even should be drawing the buttons.
             bool showMin = MinimizeBox && ControlBox;
@@ -673,27 +694,27 @@ namespace MaterialWinforms.Controls
             }
 
             //Form title
-            if(_ActionBar== null)
-            g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING , 0, Width, STATUS_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
+            if (_ActionBar == null)
+                g.DrawString(Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, new Rectangle(SkinManager.FORM_PADDING, 0, Width, STATUS_BAR_HEIGHT), new StringFormat { LineAlignment = StringAlignment.Center });
 
             if (_SideDrawer != null)
             {
                 if (!_SideDrawer.SideDrawerFixiert)
                 {
-    
+
                     _SideDrawer.Width = (int)(_SideDrawer.MaximumSize.Width * DrawerAnimationTimer.GetProgress());
                     if (_ActionBar != null)
                     {
                         _ActionBar.setDrawerAnimationProgress((int)(DrawerAnimationTimer.GetProgress() * 100));
                     }
-                    
+
                 }
 
             }
 
             //Schatten Zeichnen
             GraphicsPath ActionBarShadow = new GraphicsPath();
-            ActionBarShadow.AddLine(new Point(0, STATUS_BAR_HEIGHT ), new Point(Width, STATUS_BAR_HEIGHT ));
+            ActionBarShadow.AddLine(new Point(0, STATUS_BAR_HEIGHT), new Point(Width, STATUS_BAR_HEIGHT));
             DrawHelper.drawShadow(g, ActionBarShadow, 10, SkinManager.GetApplicationBackgroundColor());
 
             foreach (Control objChild in Controls)
@@ -703,7 +724,7 @@ namespace MaterialWinforms.Controls
                     IShadowedMaterialControl objCurrent = (IShadowedMaterialControl)objChild;
                     DrawHelper.drawShadow(g, objCurrent.ShadowBorder, objCurrent.Elevation, SkinManager.GetApplicationBackgroundColor());
                 }
-            
+
             }
         }
 
@@ -713,12 +734,15 @@ namespace MaterialWinforms.Controls
             // 
             // MaterialForm
             // 
+            mLastState = this.WindowState;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "MaterialForm";
             this.ResumeLayout(false);
 
         }
 
+        [DllImport("user32.dll")]
+        static extern bool AnimateWindow(IntPtr hwnd, int dwTime, int dwFlags);
 
     }
 

@@ -19,7 +19,7 @@ namespace MaterialWinforms.Controls
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public Color BackColor { get { return SkinManager.GetCardsColor(); } set { } }
+        public new Color BackColor { get { return SkinManager.GetCardsColor(); } set { } }
 
         private RectangleF TopDayRect;
         private RectangleF TopDateRect;

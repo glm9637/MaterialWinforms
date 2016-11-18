@@ -94,6 +94,7 @@ namespace MaterialWinforms.Controls
         private int TabOffset = 0;
         private int oldXLocation = -1;
         private int TabLength = 0;
+        private int HoveredTab = -1;
 
         struct TabRectangle
         {
@@ -162,7 +163,6 @@ namespace MaterialWinforms.Controls
         protected override void OnLayout(LayoutEventArgs levent)
         {
             base.OnLayout(levent);
-            //  SetupRightClickMenu();
         }
 
         void CloseAllExeptCurrent_Click(object sender, EventArgs e)
@@ -273,6 +273,11 @@ namespace MaterialWinforms.Controls
                     g.FillEllipse(hoverBrush, tabRects[currentTabIndex].XButtonRect);
                 }
 
+                if (currentTabIndex == HoveredTab)
+                {
+                    g.FillRectangle(hoverBrush, tabRects[currentTabIndex].TabRect);
+                }
+
                 g.DrawString(
                     tabPage.Text.ToUpper(),
                     SkinManager.ROBOTO_MEDIUM_10,
@@ -298,31 +303,39 @@ namespace MaterialWinforms.Controls
                     textBrush.Dispose();
 
                 }
-            }
 
-            if (tabRects.Count >= baseTabControl.SelectedIndex)
+
+            }
+            try
             {
-                //Animate tab indicator
-                int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
-                if (previousSelectedTabIndex > BaseTabControl.TabCount - 1) //Last tab was active and got closed
+                if (tabRects.Count >= baseTabControl.SelectedIndex)
                 {
-                    previousSelectedTabIndex = BaseTabControl.TabCount - 1;
+                    //Animate tab indicator
+                    int previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1 ? baseTabControl.SelectedIndex : previousSelectedTabIndex;
+                    if (previousSelectedTabIndex > BaseTabControl.TabCount - 1) //Last tab was active and got closed
+                    {
+                        previousSelectedTabIndex = BaseTabControl.TabCount - 1;
+                    }
+                    if (baseTabControl.SelectedIndex < 0)
+                    {
+                        return;
+                    }
+
+                    Rectangle previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne].TabRect;
+                    Rectangle activeTabPageRect = tabRects[baseTabControl.SelectedIndex].TabRect;
+
+                    int y = activeTabPageRect.Bottom - 2;
+                    int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress) + offset;
+                    int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
+
+                    g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
                 }
-                if (previousSelectedTabIndex < 0 || baseTabControl.SelectedIndex < 0)
-                {
-                    return;
-                }
-
-                Rectangle previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne].TabRect;
-                Rectangle activeTabPageRect = tabRects[baseTabControl.SelectedIndex].TabRect;
-
-                int y = activeTabPageRect.Bottom - 2;
-                int x = previousActiveTabRect.X + (int)((activeTabPageRect.X - previousActiveTabRect.X) * animationProgress) + offset;
-                int width = previousActiveTabRect.Width + (int)((activeTabPageRect.Width - previousActiveTabRect.Width) * animationProgress);
-
-                g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, width, TAB_INDICATOR_HEIGHT);
             }
-
+            catch (Exception ex)
+            {
+                String str = ex.StackTrace;
+                str = ex.Message;
+            }
         }
 
 
@@ -357,6 +370,8 @@ namespace MaterialWinforms.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            bool HoveredTabSet = false;
+            bool HoveredXButtonSet = false;
             try
             {
                 base.OnMouseMove(e);
@@ -405,17 +420,47 @@ namespace MaterialWinforms.Controls
                     }
                     for (int i = 0; i < baseTabControl.TabCount; i++)
                     {
-                        if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
+                        if (tabRects[i].TabRect.Contains(e.Location))
                         {
-                            if (tabRects[i].XButtonRect.Contains(e.Location))
+                            if (HoveredTab != i)
                             {
-                                HoveredXButtonIndex = i;
+                                HoveredTab = i;
                                 Refresh();
-                                return;
+                            }
+                            HoveredTabSet = true;
+                            if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
+                            {
+
+                                if (tabRects[i].XButtonRect.Contains(e.Location))
+                                {
+                                    if (HoveredXButtonIndex != i)
+                                    {
+                                        HoveredXButtonIndex = i;
+                                        Refresh();
+                                    }
+                                    HoveredXButtonSet = true;
+                                }
                             }
                         }
+
                     }
-                    HoveredXButtonIndex = -1;
+
+                    bool refresh = false;
+                    if (HoveredTab != -1 && !HoveredTabSet)
+                    {
+                        HoveredTab = -1;
+                        refresh = true;
+                    }
+                    if (HoveredXButtonIndex != -1 && !HoveredXButtonSet)
+                    {
+                        HoveredXButtonIndex = -1;
+                        refresh = true;
+                    }
+
+                    if (refresh)
+                    {
+                        Refresh();
+                    }
                     return;
                 }
             }
@@ -423,6 +468,18 @@ namespace MaterialWinforms.Controls
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            
+            if (!ClientRectangle.Contains(PointToClient(Cursor.Position)))
+            {
+                HoveredXButtonIndex = -1;
+                HoveredTab = -1;
+
+                Refresh();
             }
         }
 
