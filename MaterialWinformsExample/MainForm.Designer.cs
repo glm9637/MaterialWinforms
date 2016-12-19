@@ -41,6 +41,23 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Knoten0");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Knoten3");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Knoten2", new System.Windows.Forms.TreeNode[] {
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Knoten1", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Knoten5", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Knoten6");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Knoten0", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Knoten1");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Knoten2");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Knoten3");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Knoten4");
             System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
@@ -145,6 +162,8 @@ namespace MaterialWinformsExample
             this.materialFlatButton6 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton5 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton4 = new MaterialWinforms.Controls.MaterialFlatButton();
+            this.mtp_Tree = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialTreeControl1 = new MaterialWinforms.Controls.MaterialTreeControl();
             this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -169,6 +188,7 @@ namespace MaterialWinformsExample
             this.materialTabPage3.SuspendLayout();
             this.materialPanel1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
+            this.mtp_Tree.SuspendLayout();
             this.mcm_ComboBox1.SuspendLayout();
             this.materialActionBar1.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
@@ -712,13 +732,14 @@ namespace MaterialWinformsExample
             this.materialTabControl1.Controls.Add(this.materialTabPage1);
             this.materialTabControl1.Controls.Add(this.materialTabPage3);
             this.materialTabControl1.Controls.Add(this.materialTabPage2);
+            this.materialTabControl1.Controls.Add(this.mtp_Tree);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialTabControl1.Location = new System.Drawing.Point(210, 107);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
-            this.materialTabControl1.SelectedIndex = 3;
+            this.materialTabControl1.SelectedIndex = 4;
             this.materialTabControl1.Size = new System.Drawing.Size(783, 581);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
@@ -1314,6 +1335,57 @@ namespace MaterialWinformsExample
             this.materialFlatButton4.UseVisualStyleBackColor = true;
             this.materialFlatButton4.Click += new System.EventHandler(this.materialFlatButton4_Click);
             // 
+            // mtp_Tree
+            // 
+            this.mtp_Tree.Closable = false;
+            this.mtp_Tree.Controls.Add(this.materialTreeControl1);
+            this.mtp_Tree.Depth = 0;
+            this.mtp_Tree.Location = new System.Drawing.Point(4, 22);
+            this.mtp_Tree.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.mtp_Tree.Name = "mtp_Tree";
+            this.mtp_Tree.Size = new System.Drawing.Size(775, 555);
+            this.mtp_Tree.TabIndex = 4;
+            this.mtp_Tree.Text = "TreeControl";
+            // 
+            // materialTreeControl1
+            // 
+            this.materialTreeControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.materialTreeControl1.Depth = 0;
+            this.materialTreeControl1.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawAll;
+            this.materialTreeControl1.Location = new System.Drawing.Point(13, 4);
+            this.materialTreeControl1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTreeControl1.Name = "materialTreeControl1";
+            treeNode1.Name = "Knoten0";
+            treeNode1.Text = "Knoten0";
+            treeNode2.Name = "Knoten3";
+            treeNode2.Text = "Knoten3";
+            treeNode3.Name = "Knoten2";
+            treeNode3.Text = "Knoten2";
+            treeNode4.Name = "Knoten1";
+            treeNode4.Text = "Knoten1";
+            treeNode5.Name = "Knoten5";
+            treeNode5.Text = "Knoten5";
+            treeNode6.Name = "Knoten6";
+            treeNode6.Text = "Knoten6";
+            treeNode7.Name = "Knoten0";
+            treeNode7.Text = "Knoten0";
+            treeNode8.Name = "Knoten1";
+            treeNode8.Text = "Knoten1";
+            treeNode9.Name = "Knoten2";
+            treeNode9.Text = "Knoten2";
+            treeNode10.Name = "Knoten3";
+            treeNode10.Text = "Knoten3";
+            treeNode11.Name = "Knoten4";
+            treeNode11.Text = "Knoten4";
+            this.materialTreeControl1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10,
+            treeNode11});
+            this.materialTreeControl1.Size = new System.Drawing.Size(296, 548);
+            this.materialTreeControl1.TabIndex = 0;
+            // 
             // mcm_ComboBox1
             // 
             this.mcm_ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
@@ -1507,6 +1579,7 @@ namespace MaterialWinformsExample
             this.materialPanel1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
             this.materialTabPage2.PerformLayout();
+            this.mtp_Tree.ResumeLayout(false);
             this.mcm_ComboBox1.ResumeLayout(false);
             this.materialActionBar1.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
@@ -1631,5 +1704,7 @@ namespace MaterialWinformsExample
         private MaterialFlatButton materialFlatButton5;
         private MaterialFlatButton materialFlatButton4;
         private ToolStripMenuItem toolStripMenuItem1;
+        private MaterialTabPage mtp_Tree;
+        private MaterialTreeControl materialTreeControl1;
     }
 }

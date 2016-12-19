@@ -270,12 +270,12 @@ namespace MaterialWinforms.Controls
 
                 if (currentTabIndex == HoveredXButtonIndex)
                 {
-                    g.FillEllipse(hoverBrush, tabRects[currentTabIndex].XButtonRect);
+                    g.FillEllipse(hoverBrush, tabRects[currentTabIndex].XButtonRect.X+offset,tabRects[currentTabIndex].XButtonRect.Y,tabRects[currentTabIndex].XButtonRect.Width,tabRects[currentTabIndex].XButtonRect.Height);
                 }
 
                 if (currentTabIndex == HoveredTab)
                 {
-                    g.FillRectangle(hoverBrush, tabRects[currentTabIndex].TabRect);
+                    g.FillRectangle(hoverBrush, tabRects[currentTabIndex].TabRect.X + offset, tabRects[currentTabIndex].TabRect.Y, tabRects[currentTabIndex].TabRect.Width, tabRects[currentTabIndex].TabRect.Height);
                 }
 
                 g.DrawString(
