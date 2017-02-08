@@ -165,6 +165,9 @@
     <Compile Include="Controls\MaterialSingleLineTextField.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialTreeControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
