@@ -64,7 +64,7 @@ namespace MaterialWinforms.Controls
             }
         }
 
-        void _ActionBar_onSideDrawerButtonClicked()
+        public virtual void _ActionBar_onSideDrawerButtonClicked()
         {
 
             DrawerAnimationTimer.StartNewAnimation(DrawerAnimationTimer.GetProgress() == 0 ? AnimationDirection.In : AnimationDirection.Out);

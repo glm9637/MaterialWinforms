@@ -366,6 +366,11 @@ namespace MaterialWinforms
             this.Name = Name;
         }
 
+        public ColorSchemePreset()
+        {
+
+        }
+
 
     }
 }

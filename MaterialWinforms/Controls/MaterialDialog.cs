@@ -36,6 +36,7 @@ namespace MaterialWinforms.Controls
             this.Width = 400;
             this.SkinManager.ColorScheme = pColor.ColorScheme;
             this.SkinManager.Theme = pColor.Theme;
+            TopMost = true;
             _FontManager = new FontManager();
          
 
@@ -49,17 +50,29 @@ namespace MaterialWinforms.Controls
             lbl_Title.ForeColor = SkinManager.ColorScheme.AccentColor;
         }
 
-        public static void Show(MaterialForm pForm,string message)
+        protected override void OnLoad(EventArgs e)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
+            base.OnLoad(e);
+            this.Visible = true;
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            
+            base.OnClosing(e);
+        }
+
+        public static void Show(string message)
+        {
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             _msgBox.lbl_Message.Text = message;
             _msgBox.ShowDialog();
             MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
         }
 
-        public static DialogResult Show(MaterialForm pForm, string title,UserControl pContent)
+        public static DialogResult Show( string title,UserControl pContent)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             pContent.Location = new Point(0, 0);
             _msgBox.pnl_Message.Controls.Add(pContent);
             _msgBox.Width = pContent.Width;
@@ -73,18 +86,18 @@ namespace MaterialWinforms.Controls
             return _buttonResult;
         }
 
-        public static void Show(MaterialForm pForm, string message, string title)
+        public static void Show(string message, string title)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
-            _msgBox.SkinManager.ColorScheme = pForm.SkinManager.ColorScheme;
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
+            _msgBox.SkinManager.ColorScheme = MaterialSkinManager.Instance.ColorScheme;
             _msgBox.lbl_Message.Text = message;
             _msgBox.lbl_Title.Text = title;
             _msgBox.ShowDialog();
         }
 
-        public static DialogResult Show(MaterialForm pForm, string message, string title, Buttons buttons)
+        public static DialogResult Show(string message, string title, Buttons buttons)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             _msgBox.lbl_Message.Text = message;
             _msgBox.lbl_Title.Text = title;
 
@@ -95,9 +108,9 @@ namespace MaterialWinforms.Controls
             return _buttonResult;
         }
 
-        public static DialogResult Show(MaterialForm pForm, string title, UserControl pContent, Buttons buttons)
+        public static DialogResult Show(string title,UserControl pContent, Buttons buttons)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             pContent.Location = new Point(0, 0);
             _msgBox.pnl_Message.Controls.Add(pContent);
             _msgBox.Width = pContent.Width;
@@ -110,25 +123,93 @@ namespace MaterialWinforms.Controls
 
             MaterialDialog.InitButtons(buttons);
             _msgBox.ShowDialog();
+
             return _buttonResult;
         }
 
-        public static DialogResult Show(MaterialForm pForm, string message, string title, Buttons buttons, Icon icon)
+        public static DialogResult Show(string title, UserControl pContent, Buttons buttons, Icon icon)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
+            pContent.Location = new Point(0, 0);
+            _msgBox.pnl_Message.Controls.Add(pContent);
+            _msgBox.Width = pContent.Width;
+            _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
+            _msgBox.Height = _msgBox.pnl_Footer.Height + 5 + pContent.Height;
+            _msgBox.lbl_Title.Text = title;
+            _msgBox.pnl_Message.Size = pContent.Size;
+            _msgBox.pnl_Top.Size = new Size(pContent.Size.Width, pContent.Size.Height + _msgBox.lbl_Title.Height);
+            _msgBox.Size = new Size(pContent.Width, _msgBox.pnl_Top.Height + _msgBox.pnl_Footer.Height);
+
+            MaterialDialog.InitButtons(buttons);
+            MaterialDialog.InitIcon(icon);
+            _msgBox.ShowDialog();
+            return _buttonResult;
+        }
+
+        public static DialogResult Show(string title, UserControl pContent, Buttons buttons, Icon icon, AnimateStyle style)
+        {
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
+            pContent.Location = new Point(0, 0);
+            _msgBox.pnl_Message.Controls.Add(pContent);
+            _msgBox.Width = pContent.Width;
+            _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
+            _msgBox.Height = _msgBox.pnl_Footer.Height + 5 + pContent.Height;
+            _msgBox.lbl_Title.Text = title;
+            _msgBox.pnl_Message.Size = pContent.Size;
+            _msgBox.pnl_Top.Size = new Size(pContent.Size.Width, pContent.Size.Height + _msgBox.lbl_Title.Height);
+            _msgBox.Size = new Size(pContent.Width, _msgBox.pnl_Top.Height + _msgBox.pnl_Footer.Height);
+
+            MaterialDialog.InitButtons(buttons);
+            MaterialDialog.InitIcon(icon);
+
+
+            _timer = new Timer();
+            Size formSize = _msgBox.Size;
+
+            switch (style)
+            {
+                case MaterialDialog.AnimateStyle.SlideDown:
+                    _msgBox.Size = new Size(formSize.Width, 0);
+                    _timer.Interval = 1;
+                    _timer.Tag = new AnimateMsgBox(formSize, style);
+                    break;
+
+                case MaterialDialog.AnimateStyle.FadeIn:
+                    _msgBox.Size = formSize;
+                    _msgBox.Opacity = 0;
+                    _timer.Interval = 20;
+                    _timer.Tag = new AnimateMsgBox(formSize, style);
+                    break;
+
+                case MaterialDialog.AnimateStyle.ZoomIn:
+                    _msgBox.Size = new Size(formSize.Width + 100, formSize.Height + 100);
+                    _timer.Tag = new AnimateMsgBox(formSize, style);
+                    _timer.Interval = 1;
+                    break;
+            }
+
+            _timer.Tick += timer_Tick;
+            _timer.Start();
+
+
+            _msgBox.ShowDialog();
+            return _buttonResult;
+        }
+        public static DialogResult Show(string message, string title, Buttons buttons, Icon icon)
+        {
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             _msgBox.lbl_Message.Text = message;
             _msgBox.lbl_Title.Text = title;
 
             MaterialDialog.InitButtons(buttons);
             MaterialDialog.InitIcon(icon);
             _msgBox.ShowDialog();
-            MessageBeep(0);
             return _buttonResult;
         }
 
-        public static DialogResult Show(MaterialForm pForm, string message, string title, Buttons buttons, Icon icon, AnimateStyle style)
+        public static DialogResult Show(string message, string title, Buttons buttons, Icon icon, AnimateStyle style)
         {
-            _msgBox = new MaterialDialog(pForm.SkinManager);
+            _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             _msgBox.lbl_Message.Text = message;
             _msgBox.lbl_Title.Text = title;
             _msgBox.Height = 0;
@@ -165,7 +246,6 @@ namespace MaterialWinforms.Controls
             _timer.Start();
 
             _msgBox.ShowDialog();
-            MessageBeep(0);
             return _buttonResult;
         }
 
@@ -426,7 +506,6 @@ namespace MaterialWinforms.Controls
         private static void ButtonClick(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-
             switch (btn.Tag.ToString())
             {
                 case "Abort":
@@ -584,6 +663,7 @@ namespace MaterialWinforms.Controls
         {
 
         }
+
 
     }
 

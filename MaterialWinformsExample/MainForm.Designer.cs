@@ -44,6 +44,7 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath11 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -142,6 +143,9 @@ namespace MaterialWinformsExample
             this.materialPanel1 = new MaterialWinforms.Controls.MaterialPanel();
             this.materialTimeline2 = new MaterialWinforms.Controls.MaterialTimeline();
             this.materialTabPage2 = new MaterialWinforms.Controls.MaterialTabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.materialPanel2 = new MaterialWinforms.Controls.MaterialPanel();
+            this.materialTabSelector1 = new MaterialWinforms.Controls.MaterialTabSelector();
             this.materialFlatButton6 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton5 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton4 = new MaterialWinforms.Controls.MaterialFlatButton();
@@ -169,6 +173,10 @@ namespace MaterialWinformsExample
             this.materialTabPage3.SuspendLayout();
             this.materialPanel1.SuspendLayout();
             this.materialTabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.materialPanel2.SuspendLayout();
             this.mcm_ComboBox1.SuspendLayout();
             this.materialActionBar1.SuspendLayout();
             this.ActionBarMenu.SuspendLayout();
@@ -1243,6 +1251,7 @@ namespace MaterialWinformsExample
             // materialTabPage2
             // 
             this.materialTabPage2.Closable = false;
+            this.materialTabPage2.Controls.Add(this.splitContainer1);
             this.materialTabPage2.Controls.Add(this.materialFlatButton6);
             this.materialTabPage2.Controls.Add(this.materialFlatButton5);
             this.materialTabPage2.Controls.Add(this.materialFlatButton4);
@@ -1253,6 +1262,52 @@ namespace MaterialWinformsExample
             this.materialTabPage2.Size = new System.Drawing.Size(775, 555);
             this.materialTabPage2.TabIndex = 3;
             this.materialTabPage2.Text = "Dialogs and windows";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 151);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.materialPanel2);
+            this.splitContainer1.Size = new System.Drawing.Size(775, 404);
+            this.splitContainer1.SplitterDistance = 254;
+            this.splitContainer1.TabIndex = 3;
+            // 
+            // materialPanel2
+            // 
+            this.materialPanel2.AutoScroll = true;
+            this.materialPanel2.Controls.Add(this.materialTabSelector1);
+            this.materialPanel2.Depth = 0;
+            this.materialPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.materialPanel2.Location = new System.Drawing.Point(0, 0);
+            this.materialPanel2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialPanel2.Name = "materialPanel2";
+            this.materialPanel2.Size = new System.Drawing.Size(775, 146);
+            this.materialPanel2.TabIndex = 0;
+            this.materialPanel2.Text = "materialPanel2";
+            // 
+            // materialTabSelector1
+            // 
+            this.materialTabSelector1.BaseTabControl = null;
+            this.materialTabSelector1.CenterTabs = false;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialTabSelector1.Elevation = 10;
+            this.materialTabSelector1.Location = new System.Drawing.Point(0, 0);
+            this.materialTabSelector1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.materialTabSelector1.MaxTabWidht = -1;
+            this.materialTabSelector1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            graphicsPath8.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelector1.ShadowBorder = graphicsPath8;
+            this.materialTabSelector1.Size = new System.Drawing.Size(775, 35);
+            this.materialTabSelector1.TabIndex = 3;
+            this.materialTabSelector1.TabPadding = 24;
+            this.materialTabSelector1.Text = "materialTabSelector1";
             // 
             // materialFlatButton6
             // 
@@ -1366,8 +1421,8 @@ namespace MaterialWinformsExample
             this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBar1.Name = "materialActionBar1";
             this.materialActionBar1.SearchBarFilterIcon = true;
-            graphicsPath8.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialActionBar1.ShadowBorder = graphicsPath8;
+            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialActionBar1.ShadowBorder = graphicsPath9;
             this.materialActionBar1.Size = new System.Drawing.Size(993, 42);
             this.materialActionBar1.TabIndex = 26;
             // 
@@ -1426,8 +1481,8 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.MaxTabWidht = 0;
             this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
-            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath9;
+            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath10;
             this.materialTabSelectorClosable1.Size = new System.Drawing.Size(993, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
             this.materialTabSelectorClosable1.TabPadding = 24;
@@ -1446,8 +1501,8 @@ namespace MaterialWinformsExample
             this.materialSideDrawer1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSideDrawer1.Name = "materialSideDrawer1";
             this.materialSideDrawer1.SelectOnClick = false;
-            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialSideDrawer1.ShadowBorder = graphicsPath10;
+            graphicsPath11.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialSideDrawer1.ShadowBorder = graphicsPath11;
             this.materialSideDrawer1.SideDrawer = this.SideDrawerList;
             this.materialSideDrawer1.SideDrawerFixiert = false;
             this.materialSideDrawer1.SideDrawerUnterActionBar = false;
@@ -1507,6 +1562,10 @@ namespace MaterialWinformsExample
             this.materialPanel1.ResumeLayout(false);
             this.materialTabPage2.ResumeLayout(false);
             this.materialTabPage2.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.materialPanel2.ResumeLayout(false);
             this.mcm_ComboBox1.ResumeLayout(false);
             this.materialActionBar1.ResumeLayout(false);
             this.ActionBarMenu.ResumeLayout(false);
@@ -1631,5 +1690,8 @@ namespace MaterialWinformsExample
         private MaterialFlatButton materialFlatButton5;
         private MaterialFlatButton materialFlatButton4;
         private ToolStripMenuItem toolStripMenuItem1;
+        private SplitContainer splitContainer1;
+        private MaterialPanel materialPanel2;
+        private MaterialTabSelector materialTabSelector1;
     }
 }

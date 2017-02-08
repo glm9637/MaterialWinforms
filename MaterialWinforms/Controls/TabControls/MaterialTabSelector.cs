@@ -271,11 +271,10 @@ namespace MaterialWinforms.Controls
                 if (currentTabIndex == HoveredXButtonIndex)
                 {
                     g.FillEllipse(hoverBrush, tabRects[currentTabIndex].XButtonRect);
-                }
-
+                }else
                 if (currentTabIndex == HoveredTab)
                 {
-                    g.FillRectangle(hoverBrush, tabRects[currentTabIndex].TabRect);
+                    g.FillRectangle(hoverBrush,new Rectangle(tabRects[currentTabIndex].TabRect.X + offset, tabRects[currentTabIndex].TabRect.Y, tabRects[currentTabIndex].TabRect.Width, tabRects[currentTabIndex].TabRect.Height));
                 }
 
                 g.DrawString(
@@ -418,7 +417,7 @@ namespace MaterialWinforms.Controls
 
                         return;
                     }
-                    for (int i = 0; i < baseTabControl.TabCount; i++)
+                    for (int i = 0; i < tabRects.Count; i++)
                     {
                         if (tabRects[i].TabRect.Contains(e.Location))
                         {

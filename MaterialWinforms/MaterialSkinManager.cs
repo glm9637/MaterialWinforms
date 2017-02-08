@@ -22,6 +22,8 @@ namespace MaterialWinforms
         public delegate void ThemeChanged();
         public event ThemeChanged onThemeChanged;
 
+        public ColorSchemePresetCollection ColorSchemes;
+
         //Theme
         private Themes theme;
         public Themes Theme
@@ -293,6 +295,7 @@ namespace MaterialWinforms
             ROBOTO_MEDIUM_11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
 			Theme = Themes.DARK;
             ColorScheme = new ColorScheme(Primary.Indigo500, Primary.Indigo700, Primary.Indigo100, Accent.Pink200, TextShade.WHITE);
+            ColorSchemes = new ColorSchemePresetCollection();
         }
 
         public static MaterialSkinManager Instance

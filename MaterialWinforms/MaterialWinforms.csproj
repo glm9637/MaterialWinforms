@@ -117,6 +117,9 @@
     <Compile Include="Controls\MaterialFloatingActionButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MaterialFlowLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MaterialPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -173,6 +176,12 @@
     </Compile>
     <Compile Include="Controls\Settings\BackGroundDim.Designer.cs">
       <DependentUpon>BackGroundDim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings\SchemeCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Settings\SchemeCreator.Designer.cs">
+      <DependentUpon>SchemeCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Settings\ColorOverlay.cs">
       <SubType>Form</SubType>
@@ -244,6 +253,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Settings\BackGroundDim.resx">
       <DependentUpon>BackGroundDim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Settings\SchemeCreator.resx">
+      <DependentUpon>SchemeCreator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Settings\ColorOverlay.resx">
       <DependentUpon>ColorOverlay.cs</DependentUpon>

@@ -97,7 +97,7 @@ namespace MaterialWinforms.Controls
             Controls.Add(ButtonPanel);
             TitelLabel.Location = new Point(20, 10);
             TextLabel.Location = new Point(20, TitelLabel.Bottom + 5);
-            
+            TextLabel.AutoSize = true;
             TextLabel.Resize += TextLabel_Resize;
             TextLabel.MaximumSize = new Size(Width, Convert.ToInt32(Screen.PrimaryScreen.Bounds.Height * 0.2));
             Controls.Add(TitelLabel);

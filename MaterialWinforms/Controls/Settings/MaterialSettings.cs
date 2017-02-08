@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
 
 namespace MaterialWinforms.Controls.Settings
 {
@@ -58,7 +59,7 @@ namespace MaterialWinforms.Controls.Settings
             _BaseForm.Activated += _BaseForm_GotFocus;
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
-            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm);
+            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm,this);
             objSettings.Dock = DockStyle.Fill;
             _ThemeSettingsToolStripItem.Tag = objSettings;
         }
@@ -211,6 +212,82 @@ namespace MaterialWinforms.Controls.Settings
 
             pnl_SettingsView.Controls.Clear();
             pnl_SettingsView.Controls.Add((UserControl)e.getTag());
+        }
+
+        public Bitmap CreateImage()
+        {
+            Bitmap bmp = new Bitmap(_BaseForm.Width,_BaseForm.Height);
+            _BaseForm.DrawToBitmap(bmp,new Rectangle(0,0,_BaseForm.Width,_BaseForm.Height));
+            Bitmap DimmerBitmap = new Bitmap(_BaseForm.Width, _BaseForm.Height);
+            objDimmer.DrawToBitmap(DimmerBitmap, new Rectangle(0, 0, _BaseForm.Width, _BaseForm.Height));
+            Graphics.FromImage(bmp).DrawImageUnscaled(ChangeImageOpacity(DimmerBitmap, objDimmer.Opacity),0,0);
+            DrawToBitmap(bmp, new Rectangle(Location.X - _BaseForm.Location.X, Location.Y - _BaseForm.Location.Y, Width, Height));
+
+            return bmp;
+        }
+
+        private const int bytesPerPixel = 4;
+
+        /// <summary>
+        /// Change the opacity of an image
+        /// </summary>
+        /// <param name="originalImage">The original image</param>
+        /// <param name="opacity">Opacity, where 1.0 is no opacity, 0.0 is full transparency</param>
+        /// <returns>The changed image</returns>
+        private Bitmap ChangeImageOpacity(Bitmap originalImage, double opacity)
+        {
+            if ((originalImage.PixelFormat & PixelFormat.Indexed) == PixelFormat.Indexed)
+            {
+                // Cannot modify an image with indexed colors
+                return originalImage;
+            }
+
+            Bitmap bmp = (Bitmap)originalImage.Clone();
+
+            // Specify a pixel format.
+            PixelFormat pxf = PixelFormat.Format32bppArgb;
+
+            // Lock the bitmap's bits.
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadWrite, pxf);
+
+            // Get the address of the first line.
+            IntPtr ptr = bmpData.Scan0;
+
+            // Declare an array to hold the bytes of the bitmap.
+            // This code is specific to a bitmap with 32 bits per pixels 
+            // (32 bits = 4 bytes, 3 for RGB and 1 byte for alpha).
+            int numBytes = bmp.Width * bmp.Height * bytesPerPixel;
+            byte[] argbValues = new byte[numBytes];
+
+            // Copy the ARGB values into the array.
+            System.Runtime.InteropServices.Marshal.Copy(ptr, argbValues, 0, numBytes);
+
+            // Manipulate the bitmap, such as changing the
+            // RGB values for all pixels in the the bitmap.
+            for (int counter = 0; counter < argbValues.Length; counter += bytesPerPixel)
+            {
+                // argbValues is in format BGRA (Blue, Green, Red, Alpha)
+
+                // If 100% transparent, skip pixel
+                if (argbValues[counter + bytesPerPixel - 1] == 0)
+                    continue;
+
+                int pos = 0;
+                pos++; // B value
+                pos++; // G value
+                pos++; // R value
+
+                argbValues[counter + pos] = (byte)(argbValues[counter + pos] * opacity);
+            }
+
+            // Copy the ARGB values back to the bitmap
+            System.Runtime.InteropServices.Marshal.Copy(argbValues, 0, ptr, numBytes);
+
+            // Unlock the bits.
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }
 
     }

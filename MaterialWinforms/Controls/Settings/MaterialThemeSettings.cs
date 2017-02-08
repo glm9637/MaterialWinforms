@@ -13,21 +13,29 @@ namespace MaterialWinforms.Controls.Settings
     public partial class MaterialThemeSettings : MaterialUserControl
     {
         private MaterialForm _BaseForm;
+        private MaterialSettings _Parent;
         private bool Ignore;
         private ColorSchemePresetCollection Presets;
-        public MaterialThemeSettings(MaterialForm pBaseForm)
+        public MaterialThemeSettings(MaterialForm pBaseForm, MaterialSettings pSettings)
         {
             InitializeComponent();
+            _Parent = pSettings;
             _BaseForm = pBaseForm;
             tgl_Theme.Checked = SkinManager.Theme == MaterialSkinManager.Themes.DARK;
             Ignore = tgl_Theme.Checked;
-            Presets = new ColorSchemePresetCollection();
-            foreach (ColorSchemePreset objPrest in Presets.List())
+            foreach (ColorSchemePreset objPrest in SkinManager.ColorSchemes.List())
             {
                 ThemePreview objPreview = new ThemePreview(objPrest);
                 objPreview.Click += objPreview_Click;
                 flowLayoutPanel1.Controls.Add(objPreview);
             }
+            Bitmap bmp = new Bitmap(materialFloatingActionButton1.Width, materialFloatingActionButton1.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            Pen p = new Pen(Brushes.White, 6);
+            g.DrawLine(p, new Point(0, bmp.Height / 2), new Point(bmp.Width, bmp.Height / 2));
+            g.DrawLine(p, new Point(bmp.Width / 2, 0), new Point(bmp.Width / 2, bmp.Height));
+
+            materialFloatingActionButton1.Icon = bmp;
         }
 
         void objPreview_Click(object sender, EventArgs e)
@@ -36,7 +44,7 @@ namespace MaterialWinforms.Controls.Settings
 
             Point OverlayOrigin = new Point();
             OverlayOrigin = Cursor.Position;
-            ColorOverlay objOverlay = new ColorOverlay(OverlayOrigin,objPreview.getColorSchemePreset(), _BaseForm);
+            ColorOverlay objOverlay = new ColorOverlay(OverlayOrigin,objPreview.getColorSchemePreset(), _BaseForm,_Parent);
             objOverlay.FormClosed += objOverlay_FormClosed;
             objOverlay.Show();
 
@@ -58,9 +66,31 @@ namespace MaterialWinforms.Controls.Settings
             Point OverlayOrigin = new Point();
             OverlayOrigin.X = tgl_Theme.Checked ? tgl_Theme.Right - tgl_Theme.Height / 2 : tgl_Theme.Left + tgl_Theme.Height / 2;
             OverlayOrigin.Y = tgl_Theme.Location.Y + tgl_Theme.Height / 3;
-            ColorOverlay objOverlay = new ColorOverlay(PointToScreen(OverlayOrigin), (tgl_Theme.Checked ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT), _BaseForm);
+            ColorOverlay objOverlay = new ColorOverlay(PointToScreen(OverlayOrigin), (tgl_Theme.Checked ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT), _BaseForm,_Parent);
             objOverlay.FormClosed += objOverlay_FormClosed;
             objOverlay.Show();
+        }
+
+        private void materialFloatingActionButton1_Click(object sender, EventArgs e)
+        {
+            Point OverlayOrigin = new Point();
+            OverlayOrigin = Cursor.Position;
+            SchemeCreator objScheme = new SchemeCreator(OverlayOrigin, _BaseForm);
+            objScheme.FormClosed += newColorScheme;
+            objScheme.Show();
+        }
+
+        private void newColorScheme(object sender, FormClosedEventArgs e)
+        
+        {
+           
+            flowLayoutPanel1.Controls.Clear();
+            foreach (ColorSchemePreset objPrest in SkinManager.ColorSchemes.List())
+            {
+                ThemePreview objPreview = new ThemePreview(objPrest);
+                objPreview.Click += objPreview_Click;
+                flowLayoutPanel1.Controls.Add(objPreview);
+            }
         }
     }
 

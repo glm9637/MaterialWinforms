@@ -236,15 +236,6 @@ namespace MaterialWinforms.Controls
             Padding = new Padding(3, 3, 3, 3);
         }
 
-        protected override void OnLayout(LayoutEventArgs e)
-        {
-            base.OnLayout(e);
-            foreach (Control objControl in Controls)
-            {
-                objControl.BringToFront();
-            }
-        }
-
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);

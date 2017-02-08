@@ -13,12 +13,10 @@ namespace MaterialWinformsExample
     public partial class MainForm : MaterialWinforms.Controls.MaterialForm
     {
         private readonly MaterialSkinManager MaterialWinformsManager;
-        private ColorSchemePresetCollection objSchemes;
         public MainForm()
         {
             InitializeComponent();
 
-            objSchemes = new ColorSchemePresetCollection();
 
 
             // Initialize MaterialWinformsManager
@@ -104,7 +102,7 @@ namespace MaterialWinformsExample
             colorSchemeIndex++;
             if (colorSchemeIndex > 2) colorSchemeIndex = 0;
 
-            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get(colorSchemeIndex));
+            MaterialWinformsManager.LoadColorSchemeFromPreset(SkinManager.ColorSchemes.get(colorSchemeIndex));
 
 
         }
@@ -128,17 +126,17 @@ namespace MaterialWinformsExample
 
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get("Indigo Pink"));
+            MaterialWinformsManager.LoadColorSchemeFromPreset(SkinManager.ColorSchemes.get("Indigo Pink"));
         }
 
         private void greenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get(1));
+            MaterialWinformsManager.LoadColorSchemeFromPreset(SkinManager.ColorSchemes.get(1));
         }
 
         private void standardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MaterialWinformsManager.LoadColorSchemeFromPreset(objSchemes.get(2));
+            MaterialWinformsManager.LoadColorSchemeFromPreset(SkinManager.ColorSchemes.get(2));
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -165,7 +163,7 @@ namespace MaterialWinformsExample
 
         private void materialFlatButton1_Click(object sender, EventArgs e)
         {
-            MaterialDialog.Show(this, "test", "test", MaterialDialog.Buttons.OKCancel);
+            MaterialDialog.Show("test", "test", MaterialDialog.Buttons.OKCancel);
         }
 
         private void materialFlatButton4_Click(object sender, EventArgs e)
@@ -187,12 +185,12 @@ namespace MaterialWinformsExample
             MaterialColorPicker mcp = new MaterialColorPicker();
             t.Size = mcp.Size;
             t.Controls.Add(mcp);
-            MaterialDialog.Show(this, "Pick a Color", t,MaterialDialog.Buttons.OK);
+            MaterialDialog.Show("Pick a Color",t,MaterialDialog.Buttons.OK);
         }
 
         private void materialFlatButton5_Click(object sender, EventArgs e)
         {
-            MaterialDialog.Show(this, "Content", "Title", MaterialDialog.Buttons.OK, MaterialDialog.Icon.Shield);
+            MaterialDialog.Show("Content", "Title", MaterialDialog.Buttons.OK, MaterialDialog.Icon.Shield);
         }
 
         private void ActionBarMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)

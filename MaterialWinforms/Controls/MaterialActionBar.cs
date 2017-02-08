@@ -40,6 +40,7 @@ namespace MaterialWinforms.Controls
         public event FilterButtonClicked onFilterButtonClicked;
         public delegate void Searched(String pText);
         public event Searched onSearched;
+        public Boolean DrawBackArrow;
 
         private bool _IntegratedSearchBar;
         public bool IntegratedSearchBar
@@ -98,6 +99,7 @@ namespace MaterialWinforms.Controls
         public const int ACTION_BAR_HEIGHT = 42;
         public MaterialActionBar()
         {
+            DrawBackArrow = false;
             _ActionBarButtons = new ActionBarButtonCollection();
             _ActionBarButtons.onCollectionChanged += _ActionBarButtons_onCollectionChanged;
             Elevation = 10;
@@ -180,6 +182,9 @@ namespace MaterialWinforms.Controls
         {
             base.OnParentChanged(e);
             Dock = DockStyle.Top;
+            DrawBackArrow = ((MaterialForm)Parent).SideDrawer != null;
+            if(DrawBackArrow)
+                DrawBackArrow = ((MaterialForm)Parent).SideDrawer.SideDrawerFixiert;
             Refresh();
         }
 
@@ -451,15 +456,14 @@ namespace MaterialWinforms.Controls
 
 
                 MaterialForm objParent = (MaterialForm)Parent;
-                if (objParent.SideDrawer != null)
+                if (DrawBackArrow)
                 {
 
-                    if (buttonState == ButtonState.DrawerOver && !objParent.SideDrawer.SideDrawerFixiert)
+                    if (buttonState == ButtonState.DrawerOver)
                     {
                         g.FillEllipse(hoverBrush, drawerButtonBounds);
                     }
-                    if (!objParent.SideDrawer.SideDrawerFixiert)
-                    {
+                  
                         DrawerIcon = true;
                         using (var DrawerButtonPen = new Pen(SkinManager.ACTION_BAR_TEXT(), 2))
                         {
@@ -482,7 +486,7 @@ namespace MaterialWinforms.Controls
                               drawerButtonBounds.X + (int)(drawerButtonBounds.Width * (0.8 - (0.6 * DrawerAnimationProgress / 100))),
                               drawerButtonBounds.Y + (int)(drawerButtonBounds.Height * (0.36 + (0.45 * Math.Abs(DrawerAnimationProgress - 66) / 100))));
                         }
-                    }
+                    
                 }
 
                 //Form title
@@ -1667,8 +1671,6 @@ namespace MaterialWinforms.Controls
                 {
                     base.PasswordChar = UseSystemPasswordChar ? useSystemPasswordChar : passwordChar;
                 }
-
-
 
                 public BaseTextBox()
                 {

@@ -1,18 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace MaterialWinforms
 {
     public class ColorSchemePresetCollection
     {
         private List<ColorSchemePreset> objSchemes;
+        private List<ColorSchemePreset> UserSchemes;
+        private String FilePath;
 
         public ColorSchemePresetCollection()
         {
+            FilePath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "UserSchemes.xml");
             objSchemes = new List<ColorSchemePreset>();
             AddBaseSchemes();
+            LoadUserSchemes();
+        }
+
+        private void LoadUserSchemes()
+        {
+            UserSchemes = new List<ColorSchemePreset>();
+            if (File.Exists(FilePath))
+            {
+                XmlSerializer objSerializer = new XmlSerializer(typeof(List<ColorSchemePreset>));
+                using (StreamReader objReader = new StreamReader(FilePath))
+                {
+                    UserSchemes =  (List<ColorSchemePreset>) objSerializer.Deserialize(objReader);
+                }
+
+            }
+
+            objSchemes.AddRange(UserSchemes);
         }
 
         private void AddBaseSchemes()
@@ -120,7 +144,10 @@ namespace MaterialWinforms
 
         public int add(ColorSchemePreset ColorSchemePreset)
         {
+
             objSchemes.Add(ColorSchemePreset);
+            UserSchemes.Add(ColorSchemePreset);
+            SaveUserSchemes();
             return objSchemes.Count - 1;
         }
 
@@ -128,6 +155,21 @@ namespace MaterialWinforms
         {
             return objSchemes;
         }
-        
+
+        private void SaveUserSchemes()
+        {
+            XmlSerializer objSerializer = new XmlSerializer(typeof(List<ColorSchemePreset>));
+            using (var sww = new StringWriter())
+            {
+                using (XmlWriter writer = XmlWriter.Create(sww))
+                {
+                    objSerializer.Serialize(writer, UserSchemes);
+                    String xml = sww.ToString(); // Your XML
+                    File.WriteAllText(FilePath, xml);
+                }
+
+            }
+        }
+
     }
 }

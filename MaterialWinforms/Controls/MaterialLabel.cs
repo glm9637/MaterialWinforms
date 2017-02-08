@@ -10,7 +10,7 @@ namespace MaterialWinforms.Controls
         public int Depth { get; set; }
         [Browsable(false)]
         public MaterialSkinManager SkinManager { get { return MaterialSkinManager.Instance; } }
-        public Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IMaterialControl).IsAssignableFrom(Parent.GetType())?((IMaterialControl)Parent).BackColor:Parent.BackColor; } }
+        public override Color BackColor { get { return Parent == null ? SkinManager.GetApplicationBackgroundColor() : typeof(IMaterialControl).IsAssignableFrom(Parent.GetType())?((IMaterialControl)Parent).BackColor:Parent.BackColor; } }
         [Browsable(false)]
         public MouseState MouseState { get; set; }
 

@@ -19,24 +19,24 @@ namespace MaterialWinforms.Controls.Settings
         private MaterialSkinManager.Themes _ThemeToApply;
         private ColorSchemePreset _ColorSchemeToApply;
         private Brush FillBrush;
-        private Brush BackBrush;
-        private bool close = false;
         private MaterialForm _BaseForm;
         private bool applyTheme;
-        public ColorOverlay(Point Origin,MaterialSkinManager.Themes Theme,MaterialForm BaseFormToOverlay)
+        private Bitmap Original;
+        private Bitmap Final;
+        private MaterialSettings _SettingsDialog;
+        private Boolean _StyleWurdeGesetzt = false;
+        private Pen _ColorSchemePen;
+
+        public ColorOverlay(Point Origin, MaterialSkinManager.Themes Theme, MaterialForm BaseFormToOverlay, MaterialSettings pSettingsDialog)
         {
+
+            _SettingsDialog = pSettingsDialog;
+            _BaseForm = BaseFormToOverlay;
+            _ThemeToApply = Theme;
+            _Origin = Origin;
             applyTheme = true;
-            BackBrush = Brushes.Magenta;
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             InitializeComponent();
-            //set the backcolor and transparencykey on same color.
-            this.BackColor = Color.Magenta;
-            this.TransparencyKey = Color.Magenta;
-            _ThemeToApply = Theme;
-            FillBrush = new SolidBrush(_ThemeToApply == MaterialSkinManager.Themes.DARK ? Color.FromArgb(255, 51, 51, 51) : Color.White);
-            _Origin = Origin;
-            _BaseForm = BaseFormToOverlay;
             objAnimationManager = new AnimationManager()
             {
                 Increment = 0.015,
@@ -45,23 +45,26 @@ namespace MaterialWinforms.Controls.Settings
             DoubleBuffered = true;
             objAnimationManager.OnAnimationProgress += sender => Invalidate();
             objAnimationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
-            Visible = false;
+            
         }
 
-        public ColorOverlay(Point Origin, ColorSchemePreset Theme, MaterialForm BaseFormToOverlay)
+        private void GenerateOriginalBitmap()
         {
-            applyTheme = false;
-            BackBrush = Brushes.Magenta;
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            InitializeComponent();
-            //set the backcolor and transparencykey on same color.
-            this.BackColor = Color.Magenta;
-            this.TransparencyKey = Color.Magenta;
+            Original = _SettingsDialog.CreateImage();
+        }
+
+        public ColorOverlay(Point Origin, ColorSchemePreset Theme, MaterialForm BaseFormToOverlay, MaterialSettings pSettingsDialog)
+        {
+
+            _SettingsDialog = pSettingsDialog;
             _ColorSchemeToApply = Theme;
-            FillBrush = new SolidBrush(((int)_ColorSchemeToApply.PrimaryColor).ToColor());
             _Origin = Origin;
             _BaseForm = BaseFormToOverlay;
+            GenerateOriginalBitmap();
+            BackgroundImage = Original;
+            applyTheme = false;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            InitializeComponent();
             objAnimationManager = new AnimationManager()
             {
                 Increment = 0.015,
@@ -70,80 +73,85 @@ namespace MaterialWinforms.Controls.Settings
             DoubleBuffered = true;
             objAnimationManager.OnAnimationProgress += sender => Invalidate();
             objAnimationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
-            Visible = false;
+            _ColorSchemePen = new Pen(new SolidBrush(((int)_ColorSchemeToApply.PrimaryColor).ToColor()), 25);
+
         }
 
         private void objAnimationManager_OnAnimationFinished(object sender)
         {
-            if (close)
-            {
-                this.Close();
-            }
-            else
-            {
-                close = true;
-                if (applyTheme) { 
-                MaterialSkinManager.Instance.Theme = _ThemeToApply;
-                }
-                else
-                {
-                    MaterialSkinManager.Instance.LoadColorSchemeFromPreset(_ColorSchemeToApply);
-                }
-                objAnimationManager.AnimationType = AnimationType.EaseOut;
-                objAnimationManager.SetProgress(0);
-                Brush tmpBrush = FillBrush;
-                FillBrush = BackBrush;
-                BackBrush = tmpBrush;
-                objAnimationManager.StartNewAnimation(AnimationDirection.In);
-            }
+            Close();
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            if (!Visible && objAnimationManager.GetProgress() >0)
+            base.OnPaintBackground(e);
+            if(Final == null)
             {
-                Visible = true;
-            }
-            e.Graphics.FillRectangle(BackBrush, e.ClipRectangle);
-
-            e.Graphics.FillEllipse(FillBrush, CalculateCurrentRect());
+                if(!_StyleWurdeGesetzt)
+                {
+                    if(applyTheme)
+                    {
+                        MaterialSkinManager.Instance.Theme = _ThemeToApply;
+                    }
+                    else
+                    {
+                        MaterialSkinManager.Instance.LoadColorSchemeFromPreset(_ColorSchemeToApply);
+                    }
+                    _StyleWurdeGesetzt = true;
+                    return;
                 }
+                else
+                {
+                    Final = _SettingsDialog.CreateImage();
+                    FillBrush = new TextureBrush(Final);
+                }
+                
+            }
+            Rectangle CurrentRect = CalculateCurrentRect();
+            e.Graphics.FillEllipse(FillBrush,CurrentRect);
+
+            if(!applyTheme)
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                e.Graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
+            }
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             this.Location = _BaseForm.Location;
             this.Size = _BaseForm.Size;
+
+            GenerateOriginalBitmap();
+            BackgroundImage = Original;
+            TopMost = true;
+
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
             objAnimationManager.SetProgress(0);
             _Origin = PointToClient(_Origin); ;
             objAnimationManager.StartNewAnimation(AnimationDirection.In);
         }
 
-        private void ChangeRevealSize()
-        {
-            if(Controls.Count>0)
-            { 
-            Rectangle objRect = CalculateCurrentRect();
-            Controls[0].Location = objRect.Location;
-            Controls[0].Region = new Region(DrawHelper.CreateCircle(objRect.X, objRect.Y, objRect.Width / 2));
-            }
-        }
-
-
         private Rectangle CalculateCurrentRect()
         {
-            Rectangle objResult= new Rectangle();
+            Rectangle objResult = new Rectangle();
 
             double xEdge = (Width / 2 >= _Origin.X ? Width : 0);
             double YEdge = (Height / 2 >= _Origin.Y ? Height : 0);
 
 
-            double radiusMax = Math.Sqrt(Math.Pow(_Origin.X-xEdge, 2) + Math.Pow(_Origin.Y-YEdge, 2));
+            double radiusMax = Math.Sqrt(Math.Pow(_Origin.X - xEdge, 2) + Math.Pow(_Origin.Y - YEdge, 2));
             radiusMax *= 2;
             double radius = radiusMax * objAnimationManager.GetProgress();
-            double top = _Origin.Y- (radius / 2);
+            double top = _Origin.Y - (radius / 2);
             double Left = _Origin.X - (radius / 2);
 
-            objResult.Location = new Point((int)Left,(int)top);
+            objResult.Location = new Point((int)Left, (int)top);
             objResult.Size = new Size((int)radius, (int)radius);
 
             return objResult;
