@@ -84,6 +84,17 @@ namespace MaterialWinforms.Controls.Settings
 
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e .KeyCode == Keys.Escape)
+            {
+                _BaseForm.Activate();
+                objAnimationManager.StartNewAnimation(AnimationDirection.Out);
+            }
+
+            base.OnKeyDown(e);
+        }
+
         void SchemeCreator_MouseUp(object sender, MouseEventArgs e)
         {
             if (PrimaryRect.Contains(e.Location))

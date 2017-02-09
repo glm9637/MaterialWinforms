@@ -233,6 +233,7 @@ namespace MaterialWinforms.Controls
         public MaterialFlowLayoutDisplayingPanel()
         {
             DoubleBuffered = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             Padding = new Padding(3, 3, 3, 3);
         }
 

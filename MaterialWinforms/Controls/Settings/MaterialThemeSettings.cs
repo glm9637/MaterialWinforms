@@ -109,6 +109,9 @@ namespace MaterialWinforms.Controls.Settings
         public ThemePreview(ColorSchemePreset SchemeToPreview)
         {
             PreviewPreset = SchemeToPreview;
+
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             Size = new Size(200, 110);
             TopDark = new Rectangle(0, 0, 200, 20);
             TopDefault = new Rectangle(0, TopDark.Bottom, 200,60);
