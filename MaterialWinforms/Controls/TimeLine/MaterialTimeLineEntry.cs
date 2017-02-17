@@ -18,6 +18,7 @@ namespace MaterialWinforms.Controls
 
         private Rectangle NameRect;
         private String _UserName;
+        private String _AdditionalInfo;
 
         public String UserName
         {
@@ -46,7 +47,7 @@ namespace MaterialWinforms.Controls
             set
             {
                 _User = value;
-                _UserScaled = DrawHelper.ResizeImage(_UserScaled, AvatarRect.Size.Width, AvatarRect.Size.Height);
+                _UserScaled = DrawHelper.ResizeImage(value, AvatarRect.Size.Width-1, AvatarRect.Size.Height-1);
             }
         }
 
@@ -93,6 +94,16 @@ namespace MaterialWinforms.Controls
                 }
         }
 
+        private Rectangle AdditionalInfoRectangle;
+        public String AdditionalInfo
+        {
+            get { return _AdditionalInfo; }
+            set
+            {
+                _AdditionalInfo = value;
+            }
+        }
+
         private Rectangle AvatarRect;
         private Rectangle CardRectangle;
         private GraphicsPath CardShadow;
@@ -110,6 +121,7 @@ namespace MaterialWinforms.Controls
             TitleRect = new Rectangle(CardRectangle.X + 10, CardRectangle.Y + 10, 30, 30);
             ContentRect = new Rectangle(TitleRect.X, TitleRect.Bottom + 5, TitleRect.Width, TitleRect.Height);
             NameRect = new Rectangle(ContentRect.X, ContentRect.Bottom + 5, TitleRect.Width, TitleRect.Height);
+            AdditionalInfoRectangle = new Rectangle(TimeRectangle.Left, TimeRectangle.Bottom+5, TimeRectangle.Width, TimeRectangle.Height);
    
         }
 
@@ -146,8 +158,15 @@ namespace MaterialWinforms.Controls
             }
             else
             {
-                using (Brush brush = new TextureBrush(_UserScaled))
+                using (TextureBrush brush = new TextureBrush(_UserScaled))
                 {
+                    brush.WrapMode = WrapMode.Clamp;
+                    Point xDislpayCenterRelativ = new Point(AvatarRect.Width / 2, AvatarRect.Height / 2);
+                    Point xImageCenterRelativ = new Point(_UserScaled.Width / 2, _UserScaled.Height / 2);
+                    Point xOffSetRelativ = new Point(xDislpayCenterRelativ.X - xImageCenterRelativ.X, xDislpayCenterRelativ.Y - xImageCenterRelativ.Y);
+
+                    Point xAbsolutePixel = xOffSetRelativ + new Size(AvatarRect.Location);
+                    brush.TranslateTransform(xAbsolutePixel.X, xAbsolutePixel.Y);
                     e.Graphics.FillEllipse(brush, AvatarRect);
                 }
             }
@@ -171,6 +190,8 @@ namespace MaterialWinforms.Controls
             e.Graphics.DrawString(_Text, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, ContentRect, new StringFormat { LineAlignment = StringAlignment.Center });
             //Draw Name
             e.Graphics.DrawString(_UserName, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, NameRect, _StringFormat);
+
+            e.Graphics.DrawString(_AdditionalInfo, SkinManager.ROBOTO_REGULAR_11, SkinManager.ColorScheme.TextBrush, AdditionalInfoRectangle, _StringFormat);
         }
 
     

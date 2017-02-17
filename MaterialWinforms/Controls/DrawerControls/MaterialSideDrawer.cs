@@ -288,6 +288,14 @@ namespace MaterialWinforms.Controls
             }
         }
 
+        public void SelectItem(int pPosition)
+        {
+            if(Controls[pPosition].GetType() == typeof(MaterialFlatButton))
+            {
+                DrawerItemClicked((MaterialFlatButton)Controls[pPosition],EventArgs.Empty);
+            }
+        }
+
         private void ItemCollectionChanged(object sender, EventArgs e)
         {
             initSideDrawer();

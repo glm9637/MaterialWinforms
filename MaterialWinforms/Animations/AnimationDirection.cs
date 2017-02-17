@@ -1,6 +1,6 @@
 ﻿namespace MaterialWinforms.Animations
 {
-    enum AnimationDirection
+    public enum AnimationDirection
     {
         In, //In. Stops if finished.
         Out, //Out. Stops if finished.

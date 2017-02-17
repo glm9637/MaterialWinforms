@@ -8,12 +8,13 @@ using System.Drawing;
 
 using System.Runtime.InteropServices;
 using System.Windows.Forms.Design;
+using System.Drawing.Drawing2D;
 
 namespace MaterialWinforms.Controls
 {
 
     [Designer(typeof(ParentControlDesigner))]
-    public class MaterialFlowLayoutPanel : Control, IMaterialControl
+    public class MaterialFlowLayoutPanel : Control, IShadowedMaterialControl
     {
         [Browsable(false)]
         public int Depth { get; set; }
@@ -153,7 +154,8 @@ namespace MaterialWinforms.Controls
             HorizontalScrollbar.Location = new Point(0, Height - HorizontalScrollbar.Height);
             HorizontalScrollbar.Size = new Size(Width - VerticalScrollbar.Width, HorizontalScrollbar.Height);
             HorizontalScrollbar.Anchor = ((AnchorStyles)AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right);
-            
+            ShadowBorder = new GraphicsPath();
+            ShadowBorder.AddRectangle(new Rectangle(Location,Size));
             base.OnResize(eventargs);
             UpdateScrollbars();
 
@@ -212,6 +214,14 @@ namespace MaterialWinforms.Controls
             e.Graphics.Clear(BackColor);
 
         }
+
+
+
+        [Browsable(false)]
+        public GraphicsPath ShadowBorder { get; set; }
+
+        public int Elevation { get; set; }
+
     }
 
 

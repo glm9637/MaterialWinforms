@@ -515,6 +515,19 @@ namespace MaterialWinforms.Controls
                     {
                         if (tabRects[i].XButtonRect.Contains(e.Location))
                         {
+                            if(baseTabControl.TabCount > 1 && i == BaseTabControl.TabIndex)
+                            {
+                                if(i==0)
+                                {
+                                    baseTabControl.SelectTab(1);
+                                }
+                                else
+                                {
+                                    baseTabControl.SelectTab(0);
+                                }
+                                Application.DoEvents();
+
+                            }
                             baseTabControl.TabPages.RemoveAt(i);
                             previousSelectedTabIndex = -1;
                             UpdateTabRects();

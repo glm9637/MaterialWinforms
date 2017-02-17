@@ -298,7 +298,7 @@ namespace MaterialWinforms.Controls
                    
                 }
             }
-            else if (drawerButtonBounds.Contains(e.Location) && onSideDrawerButtonClicked != null)
+            else if (drawerButtonBounds.Contains(e.Location) && onSideDrawerButtonClicked != null && DrawBackArrow)
             {
                 buttonState = ButtonState.DrawerDown;
                 onSideDrawerButtonClicked();

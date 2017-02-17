@@ -53,6 +53,7 @@ namespace MaterialWinforms.Controls.Settings
             BackBrush = Brushes.Magenta;
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            CurrentHoveredPath = new GraphicsPath();
             //set the backcolor and transparencykey on same color.
             this.BackColor = Color.Magenta;
             this.TransparencyKey = Color.Magenta;

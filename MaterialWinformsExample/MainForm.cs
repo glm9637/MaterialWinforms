@@ -41,7 +41,9 @@ namespace MaterialWinformsExample
                     Title = "Title Tahfjksdbgfquiwegjkqsgdfkjqwe"+i,
                     Time = DateTime.Now.AddDays(-i),
                     Text = "Test Text",
-                    UserInitialien = "MF"
+                    UserInitialien = "MF",
+                    User = Properties.Resources.wallhaven_170258,
+                    AdditionalInfo = "#123123123"
                 };
                 materialTimeline2.Entrys.Add(objEntry);
             }

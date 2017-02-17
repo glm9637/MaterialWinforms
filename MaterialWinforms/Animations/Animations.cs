@@ -2,7 +2,7 @@
 
 namespace MaterialWinforms.Animations
 {
-    enum AnimationType
+    public enum AnimationType
     {
         Linear,
         EaseInOut,

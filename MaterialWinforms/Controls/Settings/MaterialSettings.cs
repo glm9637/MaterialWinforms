@@ -45,7 +45,7 @@ namespace MaterialWinforms.Controls.Settings
 
         public MaterialSettings(MaterialForm Parent)
         {
-            
+
             StartPosition = FormStartPosition.Manual;
             objDimmer = new BackGroundDim(Parent);
             _BaseForm = Parent;
@@ -59,7 +59,7 @@ namespace MaterialWinforms.Controls.Settings
             _BaseForm.Activated += _BaseForm_GotFocus;
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
-            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm,this);
+            MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm, this);
             objSettings.Dock = DockStyle.Fill;
             _ThemeSettingsToolStripItem.Tag = objSettings;
         }
@@ -73,8 +73,8 @@ namespace MaterialWinforms.Controls.Settings
 
         private void CalculateStart()
         {
-            Location = new Point(Convert.ToInt32(_BaseForm.Location.X+ _BaseForm.Width *0.1), Convert.ToInt32(_BaseForm.Location.Y +_BaseForm.Height* 0.1));
-            Size = new Size( Convert.ToInt32(_BaseForm.Width * 0.8),Convert.ToInt32(_BaseForm.Height * 0.8));
+            Location = new Point(Convert.ToInt32(_BaseForm.Location.X + _BaseForm.Width * 0.1), Convert.ToInt32(_BaseForm.Location.Y + _BaseForm.Height * 0.1));
+            Size = new Size(Convert.ToInt32(_BaseForm.Width * 0.8), Convert.ToInt32(_BaseForm.Height * 0.8));
             MaximumSize = Size;
             MinimumSize = Size;
         }
@@ -84,10 +84,19 @@ namespace MaterialWinforms.Controls.Settings
         {
             CalculateStart();
             objDimmer.Show();
+
+            if (SettingsDrawerItems.Items.Count > 0)
+            {
+                SettingsDrawer.SelectItem(0);
+            }
             base.OnLoad(e);
 
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+        }
 
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -125,13 +134,14 @@ namespace MaterialWinforms.Controls.Settings
             }
         }
 
-        public void AddPage(string Name,UserControl Content)
+        public void AddPage(string Name, UserControl Content)
         {
             MaterialToolStripMenuItem objNeuesItem = new MaterialToolStripMenuItem();
             objNeuesItem.Text = Name;
             objNeuesItem.Name = Name;
             objNeuesItem.Tag = Content;
             objNeuesItem.Click += OpenPage;
+            objNeuesItem.PerformClick();
             SettingsDrawerItems.Items.Add(objNeuesItem);
 
         }
@@ -182,8 +192,8 @@ namespace MaterialWinforms.Controls.Settings
             // 
             // pnl_SettingsView
             // 
-            this.pnl_SettingsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnl_SettingsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_SettingsView.Depth = 0;
             this.pnl_SettingsView.Location = new System.Drawing.Point(218, 33);
@@ -216,11 +226,11 @@ namespace MaterialWinforms.Controls.Settings
 
         public Bitmap CreateImage()
         {
-            Bitmap bmp = new Bitmap(_BaseForm.Width,_BaseForm.Height);
-            _BaseForm.DrawToBitmap(bmp,new Rectangle(0,0,_BaseForm.Width,_BaseForm.Height));
+            Bitmap bmp = new Bitmap(_BaseForm.Width, _BaseForm.Height);
+            _BaseForm.DrawToBitmap(bmp, new Rectangle(0, 0, _BaseForm.Width, _BaseForm.Height));
             Bitmap DimmerBitmap = new Bitmap(_BaseForm.Width, _BaseForm.Height);
             objDimmer.DrawToBitmap(DimmerBitmap, new Rectangle(0, 0, _BaseForm.Width, _BaseForm.Height));
-            Graphics.FromImage(bmp).DrawImageUnscaled(ChangeImageOpacity(DimmerBitmap, objDimmer.Opacity),0,0);
+            Graphics.FromImage(bmp).DrawImageUnscaled(ChangeImageOpacity(DimmerBitmap, objDimmer.Opacity), 0, 0);
             DrawToBitmap(bmp, new Rectangle(Location.X - _BaseForm.Location.X, Location.Y - _BaseForm.Location.Y, Width, Height));
 
             return bmp;
