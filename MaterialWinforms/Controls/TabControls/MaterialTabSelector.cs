@@ -85,6 +85,7 @@ namespace MaterialWinforms.Controls
         private int previousSelectedTabIndex;
         private Point animationSource;
         private readonly AnimationManager animationManager;
+        private readonly AnimationManager HoverAnimationManager;
 
         private List<TabRectangle> tabRects;
         private int TAB_HEADER_PADDING = 24;
@@ -113,6 +114,12 @@ namespace MaterialWinforms.Controls
                 Increment = 0.04
             };
             animationManager.OnAnimationProgress += sender => Invalidate();
+            HoverAnimationManager = new AnimationManager
+            {
+                AnimationType = AnimationType.EaseOut,
+                Increment = 0.04
+            };
+            HoverAnimationManager.OnAnimationProgress += sender => Refresh();
             ShadowBorder = new GraphicsPath();
             Elevation = 10;
             ShadowBorder.AddLine(new Point(Location.X, Location.Y + Height), new Point(Location.X + Width, Location.Y + Height));
@@ -226,7 +233,6 @@ namespace MaterialWinforms.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
@@ -265,7 +271,7 @@ namespace MaterialWinforms.Controls
             {
                 int currentTabIndex = baseTabControl.TabPages.IndexOf(tabPage);
                 Brush textBrush = new SolidBrush(Color.FromArgb(CalculateTextAlpha(currentTabIndex, animationProgress), SkinManager.ColorScheme.TextColor));
-                var hoverBrush = SkinManager.GetFlatButtonHoverBackgroundBrush();
+                var hoverBrush = new SolidBrush(Color.FromArgb((int)(SkinManager.GetFlatButtonHoverBackgroundColor().A*HoverAnimationManager.GetProgress()),SkinManager.GetFlatButtonHoverBackgroundColor()));
                 Pen closePen = new Pen(textBrush, 2);
 
                 if (currentTabIndex == HoveredXButtonIndex)
@@ -424,7 +430,8 @@ namespace MaterialWinforms.Controls
                             if (HoveredTab != i)
                             {
                                 HoveredTab = i;
-                                Refresh();
+                                HoverAnimationManager.SetProgress(0);
+                                HoverAnimationManager.StartNewAnimation(AnimationDirection.In);
                             }
                             HoveredTabSet = true;
                             if (((MaterialTabPage)BaseTabControl.TabPages[i]).Closable)
@@ -435,7 +442,8 @@ namespace MaterialWinforms.Controls
                                     if (HoveredXButtonIndex != i)
                                     {
                                         HoveredXButtonIndex = i;
-                                        Refresh();
+                                        HoverAnimationManager.SetProgress(0);
+                                        HoverAnimationManager.StartNewAnimation(AnimationDirection.In);
                                     }
                                     HoveredXButtonSet = true;
                                 }
@@ -515,7 +523,7 @@ namespace MaterialWinforms.Controls
                     {
                         if (tabRects[i].XButtonRect.Contains(e.Location))
                         {
-                            if(baseTabControl.TabCount > 1 && i == BaseTabControl.TabIndex)
+                            if(baseTabControl.TabCount > 1 && i == BaseTabControl.SelectedIndex)
                             {
                                 if(i==0)
                                 {
@@ -523,7 +531,7 @@ namespace MaterialWinforms.Controls
                                 }
                                 else
                                 {
-                                    baseTabControl.SelectTab(0);
+                                    baseTabControl.SelectTab(i-1);
                                 }
                                 Application.DoEvents();
 

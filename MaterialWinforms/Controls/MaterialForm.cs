@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MaterialWinforms.Animations;
+using System.Threading;
 
 namespace MaterialWinforms.Controls
 {
@@ -222,8 +223,8 @@ namespace MaterialWinforms.Controls
         private Point previousLocation;
         private bool headerMouseDown;
         private Animations.AnimationManager DrawerAnimationTimer;
-
-
+        private Point LastLocation;
+        private FormWindowState LastState;
 
         public MaterialForm()
         {
@@ -243,26 +244,7 @@ namespace MaterialWinforms.Controls
             };
 
             DrawerAnimationTimer.OnAnimationProgress += sender => Invalidate();
-            this.ControlAdded += MaterialForm_ControlAdded;
 
-            Layout += MaterialForm_Layout;
-        }
-
-        void MaterialForm_Layout(object sender, LayoutEventArgs e)
-        {
-            if (_SideDrawer != null)
-            {
-                //  _SideDrawer.BringToFront();
-            }
-        }
-
-
-        private void MaterialForm_ControlAdded(object sender, ControlEventArgs e)
-        {
-            if (_SideDrawer != null)
-            {
-                //  _SideDrawer.BringToFront();
-            }
         }
 
 
@@ -273,18 +255,16 @@ namespace MaterialWinforms.Controls
                 int command = m.WParam.ToInt32() & 0xfff0;
                 if (command == SC_MINIMIZE)
                 {
-                    AnimateWindow(Handle, 300, AW_HIDE | AW_SLIDE | AW_VER_POSITIVE);
+                    HideForm();
                 }
                 else if (command == SC_RESTORE)
                 {
-
-                }
-                else if (command == SC_MAXIMIZE)
-                {
-
+                     RestoreForm();
                 }
             }
+
             base.WndProc(ref m);
+
             if (DesignMode || IsDisposed) return;
 
             if (m.Msg == WM_LBUTTONDBLCLK)
@@ -364,6 +344,49 @@ namespace MaterialWinforms.Controls
             else if (m.Msg == WM_LBUTTONUP)
             {
                 headerMouseDown = false;
+            }
+
+        }
+
+        private void HideForm()
+        {
+            if(WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
+            LastLocation = Location;
+            LastState = WindowState;
+            int Diff;
+            int max = 100;
+            Diff = Screen.FromHandle(Handle).Bounds.Height - Location.Y + 35;
+            Double Final = Math.Sqrt(Diff);
+            Final /= max;
+            for (int i = 0; i < max; i++)
+            {
+                Location = new Point(LastLocation.X, (int)(LastLocation.Y + Math.Pow(Final * i, 2)));
+                Application.DoEvents();
+                Thread.Sleep(4);
+            }
+
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void RestoreForm()
+        {
+            if(WindowState!= FormWindowState.Minimized)
+            {
+                return;
+            }
+            WindowState = LastState;
+            int Diff;
+            int max = 100;
+            Diff = Location.Y-LastLocation.Y;
+            Double Final = Math.Sqrt(Diff);
+            Final /= max;
+            for (int i = max; i > 0; i--)
+            {
+                Location = new Point(LastLocation.X, (int)(LastLocation.Y + Math.Pow(Final * i, 2)));
+                Application.DoEvents();
             }
         }
 
@@ -497,7 +520,8 @@ namespace MaterialWinforms.Controls
 
                     if (oldState == ButtonState.MinDown)
                     {
-                        AnimateWindow(Handle, 300, AW_HIDE | AW_SLIDE | AW_VER_POSITIVE);
+                        HideForm();
+                        //AnimateWindow(Handle, 300, AW_HIDE | AW_SLIDE | AW_VER_POSITIVE);
                         WindowState = FormWindowState.Minimized;
                     }
                 }
@@ -522,8 +546,6 @@ namespace MaterialWinforms.Controls
 
             if (oldState != buttonState) Invalidate();
         }
-
-
 
         private void MaximizeWindow(bool maximize)
         {
@@ -596,8 +618,6 @@ namespace MaterialWinforms.Controls
             maxButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - 2 * STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
             xButtonBounds = new Rectangle((Width - SkinManager.FORM_PADDING / 2) - STATUS_BAR_BUTTON_WIDTH, 0, STATUS_BAR_BUTTON_WIDTH, STATUS_BAR_HEIGHT);
         }
-
-
 
         protected override void OnPaint(PaintEventArgs e)
         {

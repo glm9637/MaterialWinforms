@@ -34,7 +34,6 @@ namespace MaterialWinforms.Controls.Settings
             Pen p = new Pen(Brushes.White, 6);
             g.DrawLine(p, new Point(0, bmp.Height / 2), new Point(bmp.Width, bmp.Height / 2));
             g.DrawLine(p, new Point(bmp.Width / 2, 0), new Point(bmp.Width / 2, bmp.Height));
-
             materialFloatingActionButton1.Icon = bmp;
         }
 

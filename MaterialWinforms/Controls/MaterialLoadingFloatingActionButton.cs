@@ -230,13 +230,6 @@ namespace MaterialWinforms.Controls
             return Convert.ToInt32(res);
         }
 
-        protected override void OnMouseUp(MouseEventArgs mevent)
-        {
-            base.OnMouseUp(mevent);
-
-            animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
-        }
-
         protected override void OnPaint(PaintEventArgs pevent)
         {
             int ShadowDepth = 5;
@@ -345,7 +338,7 @@ namespace MaterialWinforms.Controls
                 hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
                 Invalidate();
             };
-            MouseDown += (sender, args) =>
+           MouseDown += (sender, args) =>
             {
                 if (args.Button == MouseButtons.Left)
                 {

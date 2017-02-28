@@ -16,9 +16,11 @@ namespace MaterialWinforms.Controls.Settings
 
         private Size finalSize;
         private Point finalLocation;
+        private Form _FormToDim;
 
         public BackGroundDim(MaterialForm FormToDim)
         {
+            _FormToDim = FormToDim;
             InitializeComponent();
             SkinManager.AddFormToManage(this);
             StartPosition = FormStartPosition.Manual;
@@ -28,9 +30,17 @@ namespace MaterialWinforms.Controls.Settings
             BackColor = FormToDim.SkinManager.GetApplicationBackgroundColor();
             Opacity = 0.80;
             SetStyle(ControlStyles.StandardDoubleClick, false);
-            Enabled = false;
+            //Enabled = false;
             finalLocation = FormToDim.Location; ;
-            finalSize = FormToDim.Size; ;
+            finalSize = FormToDim.Size;
+            
+            FormToDim.LocationChanged += FormToDim_LocationChanged;
+        }
+
+        void FormToDim_LocationChanged(object sender, EventArgs e)
+        {
+            Location = ((Form)sender).Location;
+            Application.DoEvents();
         }
 
 
@@ -50,14 +60,14 @@ namespace MaterialWinforms.Controls.Settings
         protected override void OnResize(EventArgs e)
         {
             WindowState = FormWindowState.Normal;
-            Size = finalSize;
-            Location = finalLocation;
+            Size = _FormToDim.Size;
+            Location = _FormToDim.Location;
         }
 
 
         protected override void OnLocationChanged(EventArgs e)
         {
-            Location = finalLocation;
+            Location = _FormToDim.Location;
         }
 
         private const int WM_MOUSEACTIVATE = 0x0021, MA_NOACTIVATE = 0x0003;

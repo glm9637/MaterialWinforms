@@ -50,18 +50,26 @@ namespace MaterialWinforms.Controls.Settings
             objDimmer = new BackGroundDim(Parent);
             _BaseForm = Parent;
             SkinManager.AddFormToManage(this);
-
+            MinimizeBox = false;
+            MaximizeBox = false;
+           
 
             InitializeComponent();
 
 
             _BaseForm.GotFocus += _BaseForm_GotFocus;
             _BaseForm.Activated += _BaseForm_GotFocus;
+            _BaseForm.LocationChanged += _BaseForm_LocationChanged;
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
             MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm, this);
             objSettings.Dock = DockStyle.Fill;
             _ThemeSettingsToolStripItem.Tag = objSettings;
+        }
+
+        void _BaseForm_LocationChanged(object sender, EventArgs e)
+        {
+            CalculateStart();
         }
 
 
@@ -155,7 +163,7 @@ namespace MaterialWinforms.Controls.Settings
 
         private void InitializeComponent()
         {
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath1 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
             this.SettingsDrawer = new MaterialWinforms.Controls.MaterialSideDrawer();
             this.SettingsDrawerItems = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.pnl_SettingsView = new MaterialWinforms.Controls.MaterialPanel();
@@ -167,14 +175,15 @@ namespace MaterialWinforms.Controls.Settings
             this.SettingsDrawer.Depth = 0;
             this.SettingsDrawer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SettingsDrawer.Elevation = 10;
+            this.SettingsDrawer.HiddenOnStart = true;
             this.SettingsDrawer.HideSideDrawer = false;
             this.SettingsDrawer.Location = new System.Drawing.Point(0, 24);
             this.SettingsDrawer.MaximumSize = new System.Drawing.Size(210, 10000);
             this.SettingsDrawer.MouseState = MaterialWinforms.MouseState.HOVER;
             this.SettingsDrawer.Name = "SettingsDrawer";
             this.SettingsDrawer.SelectOnClick = true;
-            graphicsPath1.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.SettingsDrawer.ShadowBorder = graphicsPath1;
+            graphicsPath2.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.SettingsDrawer.ShadowBorder = graphicsPath2;
             this.SettingsDrawer.SideDrawer = this.SettingsDrawerItems;
             this.SettingsDrawer.SideDrawerFixiert = true;
             this.SettingsDrawer.SideDrawerUnterActionBar = false;
@@ -192,9 +201,10 @@ namespace MaterialWinforms.Controls.Settings
             // 
             // pnl_SettingsView
             // 
-            this.pnl_SettingsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pnl_SettingsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnl_SettingsView.AutoScroll = true;
             this.pnl_SettingsView.Depth = 0;
             this.pnl_SettingsView.Location = new System.Drawing.Point(218, 33);
             this.pnl_SettingsView.MouseState = MaterialWinforms.MouseState.HOVER;
@@ -211,6 +221,7 @@ namespace MaterialWinforms.Controls.Settings
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SideDrawer = this.SettingsDrawer;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.ResumeLayout(false);

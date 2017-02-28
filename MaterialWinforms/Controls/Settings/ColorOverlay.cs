@@ -45,7 +45,6 @@ namespace MaterialWinforms.Controls.Settings
             DoubleBuffered = true;
             objAnimationManager.OnAnimationProgress += sender => Invalidate();
             objAnimationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
-            
         }
 
         private void GenerateOriginalBitmap()
@@ -74,7 +73,6 @@ namespace MaterialWinforms.Controls.Settings
             objAnimationManager.OnAnimationProgress += sender => Invalidate();
             objAnimationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
             _ColorSchemePen = new Pen(new SolidBrush(((int)_ColorSchemeToApply.PrimaryColor).ToColor()), 25);
-
         }
 
         private void objAnimationManager_OnAnimationFinished(object sender)
@@ -85,6 +83,7 @@ namespace MaterialWinforms.Controls.Settings
         protected override void OnPaintBackground(PaintEventArgs e)
         {
             base.OnPaintBackground(e);
+            Opacity = 1;
             if(Final == null)
             {
                 if(!_StyleWurdeGesetzt)
@@ -107,6 +106,7 @@ namespace MaterialWinforms.Controls.Settings
                 }
                 
             }
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Rectangle CurrentRect = CalculateCurrentRect();
             e.Graphics.FillEllipse(FillBrush,CurrentRect);
 
@@ -119,6 +119,7 @@ namespace MaterialWinforms.Controls.Settings
 
         protected override void OnLoad(EventArgs e)
         {
+            Opacity = 0;
             base.OnLoad(e);
             this.Location = _BaseForm.Location;
             this.Size = _BaseForm.Size;
@@ -126,7 +127,6 @@ namespace MaterialWinforms.Controls.Settings
             GenerateOriginalBitmap();
             BackgroundImage = Original;
             TopMost = true;
-
         }
 
         protected override void OnShown(EventArgs e)
