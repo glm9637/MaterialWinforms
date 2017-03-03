@@ -13,10 +13,11 @@ namespace MaterialWinformsExample
     public partial class MainForm : MaterialWinforms.Controls.MaterialForm
     {
         private readonly MaterialSkinManager MaterialWinformsManager;
+        private MaterialSettings _Settings;
         public MainForm()
         {
             InitializeComponent();
-
+            InitSettings();
 
 
             // Initialize MaterialWinformsManager
@@ -48,6 +49,20 @@ namespace MaterialWinformsExample
                 materialTimeline2.Entrys.Add(objEntry);
             }
 
+        }
+
+        private void InitSettings()
+        {
+            _Settings = new MaterialSettings(this);
+            _Settings.ShowThemeSettings = true;
+            _Settings.FormClosing += SaveSettings;
+        }
+
+        private void SaveSettings(object sender, FormClosingEventArgs e)
+        {
+
+            e.Cancel = true;
+            _Settings.Hide();
         }
 
         void materialTimeline1_onTimeLineEntryClicked(MaterialTimeLineEntry sender, EventArgs e)
@@ -197,9 +212,7 @@ namespace MaterialWinformsExample
 
         private void ActionBarMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MaterialSettings objSettings = new MaterialSettings(this);
-            objSettings.ShowThemeSettings = true;
-            objSettings.Show();
+            _Settings.Show();
             e.Cancel = true;
         }
     }

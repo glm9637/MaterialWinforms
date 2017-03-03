@@ -76,13 +76,18 @@ namespace MaterialWinforms.Controls.Settings
             _PrimaryLight = Primary.Indigo100;
             _Accent = Accent.Pink200;
             _Text = TextShade.WHITE;
-
+            BaseFormToOverlay.LocationChanged += BaseFormToOverlay_LocationChanged;
             initColorHints();
             Size = _BaseForm.Size;
             Location = _BaseForm.Location;
 
             MouseUp += SchemeCreator_MouseUp;
 
+        }
+
+        private void BaseFormToOverlay_LocationChanged(object sender, EventArgs e)
+        {
+            Location = _BaseForm.Location;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

@@ -19,6 +19,7 @@ namespace MaterialWinforms.Controls.Settings
         private MaterialContextMenuStrip SettingsDrawerItems;
         private MaterialForm _BaseForm;
         private BackGroundDim objDimmer;
+        private Boolean _IgnoreActivate;
 
         public Boolean ShowThemeSettings
         {
@@ -45,21 +46,20 @@ namespace MaterialWinforms.Controls.Settings
 
         public MaterialSettings(MaterialForm Parent)
         {
-
+            _IgnoreActivate = false;
             StartPosition = FormStartPosition.Manual;
-            objDimmer = new BackGroundDim(Parent);
+
+            Opacity = 0;
             _BaseForm = Parent;
             SkinManager.AddFormToManage(this);
             MinimizeBox = false;
             MaximizeBox = false;
-           
+
 
             InitializeComponent();
 
 
-            _BaseForm.GotFocus += _BaseForm_GotFocus;
-            _BaseForm.Activated += _BaseForm_GotFocus;
-            _BaseForm.LocationChanged += _BaseForm_LocationChanged;
+           
             _ThemeSettingsToolStripItem = new MaterialToolStripMenuItem();
             _ThemeSettingsToolStripItem.Text = "Theme";
             MaterialThemeSettings objSettings = new MaterialThemeSettings(_BaseForm, this);
@@ -91,7 +91,6 @@ namespace MaterialWinforms.Controls.Settings
         protected override void OnLoad(EventArgs e)
         {
             CalculateStart();
-            objDimmer.Show();
 
             if (SettingsDrawerItems.Items.Count > 0)
             {
@@ -104,12 +103,41 @@ namespace MaterialWinforms.Controls.Settings
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            if (!_IgnoreActivate)
+            {
+                _BaseForm.GotFocus += _BaseForm_GotFocus;
+                _BaseForm.Activated += _BaseForm_GotFocus;
+                _BaseForm.LocationChanged += _BaseForm_LocationChanged;
+                objDimmer = new BackGroundDim(_BaseForm);
+                objDimmer.Show();
+                while (!objDimmer.IsVisible)
+                {
+                    Application.DoEvents();
+                }
+                TopMost = true;
+                BringToFront();
+                TopMost = false;
+                Opacity = 1;
+                _IgnoreActivate = true;
+            }
+            
+        }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
+            Hide();
+            Opacity = 0;
             objDimmer.Close();
+            _IgnoreActivate = false;
+            _BaseForm.GotFocus -= _BaseForm_GotFocus;
+            _BaseForm.Activated -= _BaseForm_GotFocus;
+            _BaseForm.LocationChanged -= _BaseForm_LocationChanged;
             base.OnClosing(e);
         }
 
@@ -201,8 +229,8 @@ namespace MaterialWinforms.Controls.Settings
             // 
             // pnl_SettingsView
             // 
-            this.pnl_SettingsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnl_SettingsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnl_SettingsView.AutoScroll = true;
             this.pnl_SettingsView.Depth = 0;

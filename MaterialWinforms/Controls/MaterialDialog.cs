@@ -22,7 +22,7 @@ namespace MaterialWinforms.Controls
         private Panel pnl_Footer;
         private Panel pnl_Message;
         private static Timer _timer;
-        
+
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern bool MessageBeep(uint type);
@@ -38,11 +38,10 @@ namespace MaterialWinforms.Controls
             this.SkinManager.Theme = pColor.Theme;
             TopMost = true;
             _FontManager = new FontManager();
-         
 
             InitializeComponent();
 
-            
+
 
             _flpButtons.FlowDirection = FlowDirection.RightToLeft;
             _flpButtons.Dock = DockStyle.Fill;
@@ -58,7 +57,7 @@ namespace MaterialWinforms.Controls
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            
+
             base.OnClosing(e);
         }
 
@@ -70,14 +69,14 @@ namespace MaterialWinforms.Controls
             MaterialDialog.InitButtons(MaterialDialog.Buttons.OK);
         }
 
-        public static DialogResult Show( string title,UserControl pContent)
+        public static DialogResult Show(string title, UserControl pContent)
         {
             _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             pContent.Location = new Point(0, 0);
             _msgBox.pnl_Message.Controls.Add(pContent);
             _msgBox.Width = pContent.Width;
             _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
-            _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
+            _msgBox.Height = _msgBox.pnl_Footer.Height + 5 + pContent.Height;
             _msgBox.lbl_Title.Text = title;
             _msgBox.pnl_Message.Size = pContent.Size;
             _msgBox.pnl_Top.Size = new Size(pContent.Size.Width, pContent.Size.Height + _msgBox.lbl_Title.Height);
@@ -108,18 +107,18 @@ namespace MaterialWinforms.Controls
             return _buttonResult;
         }
 
-        public static DialogResult Show(string title,UserControl pContent, Buttons buttons)
+        public static DialogResult Show(string title, UserControl pContent, Buttons buttons)
         {
             _msgBox = new MaterialDialog(MaterialSkinManager.Instance);
             pContent.Location = new Point(0, 0);
             _msgBox.pnl_Message.Controls.Add(pContent);
             _msgBox.Width = pContent.Width;
             _msgBox.pnl_Message.Location = new Point(0, _msgBox.pnl_Message.Location.Y);
-            _msgBox.Height = _msgBox.pnl_Footer.Height +5 + pContent.Height;
+            _msgBox.Height = _msgBox.pnl_Footer.Height + 5 + pContent.Height;
             _msgBox.lbl_Title.Text = title;
             _msgBox.pnl_Message.Size = pContent.Size;
             _msgBox.pnl_Top.Size = new Size(pContent.Size.Width, pContent.Size.Height + _msgBox.lbl_Title.Height);
-            _msgBox.Size = new Size(pContent.Width,_msgBox.pnl_Top.Height+_msgBox.pnl_Footer.Height);
+            _msgBox.Size = new Size(pContent.Width, _msgBox.pnl_Top.Height + _msgBox.pnl_Footer.Height);
 
             MaterialDialog.InitButtons(buttons);
             _msgBox.ShowDialog();
@@ -254,7 +253,8 @@ namespace MaterialWinforms.Controls
             Timer timer = (Timer)sender;
             AnimateMsgBox animate = (AnimateMsgBox)timer.Tag;
 
-            switch(animate.Style){
+            switch (animate.Style)
+            {
                 case MaterialDialog.AnimateStyle.SlideDown:
                     if (_msgBox.Height < animate.FormSize.Height)
                     {
@@ -282,7 +282,7 @@ namespace MaterialWinforms.Controls
                     break;
 
                 case MaterialDialog.AnimateStyle.ZoomIn:
-                    if (_msgBox.Width > animate.FormSize.Width )
+                    if (_msgBox.Width > animate.FormSize.Width)
                     {
                         _msgBox.Width -= 17;
                         _msgBox.Invalidate();
@@ -340,7 +340,7 @@ namespace MaterialWinforms.Controls
             switch (icon)
             {
                 case MaterialDialog.Icon.Application:
-                    _msgBox.lbl_Title.ForeColor= ((int)Accent.Green200).ToColor();
+                    _msgBox.lbl_Title.ForeColor = ((int)Accent.Green200).ToColor();
                     break;
 
                 case MaterialDialog.Icon.Exclamation:
@@ -392,7 +392,7 @@ namespace MaterialWinforms.Controls
             this._buttonCollection.Add(btnIgnore);
             this._buttonCollection.Add(btnAbort);
             this._buttonCollection.Add(btnRetry);
-            
+
         }
 
         private void InitOKButton()
@@ -422,7 +422,7 @@ namespace MaterialWinforms.Controls
 
             this._buttonCollection.Add(btnOK);
             this._buttonCollection.Add(btnCancel);
-           
+
         }
 
         private void InitRetryCancelButtons()
@@ -441,7 +441,7 @@ namespace MaterialWinforms.Controls
 
             this._buttonCollection.Add(btnRetry);
             this._buttonCollection.Add(btnCancel);
-            
+
         }
 
         private void InitYesNoButtons()
@@ -460,7 +460,7 @@ namespace MaterialWinforms.Controls
 
             this._buttonCollection.Add(btnYes);
             this._buttonCollection.Add(btnNo);
-            
+
         }
 
         protected override CreateParams CreateParams
@@ -500,7 +500,7 @@ namespace MaterialWinforms.Controls
             this._buttonCollection.Add(btnYes);
             this._buttonCollection.Add(btnNo);
             this._buttonCollection.Add(btnCancel);
-           
+
         }
 
         private static void ButtonClick(object sender, EventArgs e)
@@ -543,15 +543,15 @@ namespace MaterialWinforms.Controls
 
         public enum Buttons
         {
-            AbortRetryIgnore=1,
-            OK=2,
-            OKCancel=3,
-            RetryCancel=4,
-            YesNo=5,
-            YesNoCancel=6
+            AbortRetryIgnore = 1,
+            OK = 2,
+            OKCancel = 3,
+            RetryCancel = 4,
+            YesNo = 5,
+            YesNoCancel = 6
         }
 
-        public enum Icon 
+        public enum Icon
         {
             Application = 1,
             Exclamation = 2,
@@ -565,9 +565,9 @@ namespace MaterialWinforms.Controls
 
         public enum AnimateStyle
         {
-            SlideDown=1,
-            FadeIn= 2, 
-            ZoomIn =3
+            SlideDown = 1,
+            FadeIn = 2,
+            ZoomIn = 3
         }
 
         private void InitializeComponent()
@@ -591,6 +591,7 @@ namespace MaterialWinforms.Controls
             this.pnl_Top.Padding = new System.Windows.Forms.Padding(10);
             this.pnl_Top.Size = new System.Drawing.Size(350, 250);
             this.pnl_Top.TabIndex = 1;
+            this.pnl_Top.MouseDown += lbl_Title_MouseDown;
             // 
             // pnl_Message
             // 
@@ -630,6 +631,7 @@ namespace MaterialWinforms.Controls
             this.lbl_Title.Size = new System.Drawing.Size(115, 20);
             this.lbl_Title.TabIndex = 0;
             this.lbl_Title.Text = "materialLabel1";
+            this.lbl_Title.MouseDown += lbl_Title_MouseDown;
             // 
             // pnl_Footer
             // 
@@ -638,6 +640,7 @@ namespace MaterialWinforms.Controls
             this.pnl_Footer.Name = "pnl_Footer";
             this.pnl_Footer.Size = new System.Drawing.Size(350, 50);
             this.pnl_Footer.TabIndex = 2;
+            this.pnl_Footer.MouseDown += lbl_Title_MouseDown;
             // 
             // MaterialDialog
             // 
@@ -651,7 +654,15 @@ namespace MaterialWinforms.Controls
             this.pnl_Message.ResumeLayout(false);
             this.pnl_Message.PerformLayout();
             this.ResumeLayout(false);
+            this.MouseDown += lbl_Title_MouseDown;
 
+        }
+
+
+        void lbl_Title_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
         }
 
         protected override void OnPaint(PaintEventArgs e)

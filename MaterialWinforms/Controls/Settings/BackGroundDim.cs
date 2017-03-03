@@ -13,6 +13,7 @@ namespace MaterialWinforms.Controls.Settings
     {
 
         public new bool CanFocus { get { return false; } }
+        public bool IsVisible = false;
 
         private Size finalSize;
         private Point finalLocation;
@@ -28,12 +29,13 @@ namespace MaterialWinforms.Controls.Settings
             MinimumSize = Size;
             Location = FormToDim.Location;
             BackColor = FormToDim.SkinManager.GetApplicationBackgroundColor();
-            Opacity = 0.80;
+            Opacity = 0;
+
             SetStyle(ControlStyles.StandardDoubleClick, false);
             //Enabled = false;
             finalLocation = FormToDim.Location; ;
             finalSize = FormToDim.Size;
-            
+
             FormToDim.LocationChanged += FormToDim_LocationChanged;
         }
 
@@ -80,6 +82,32 @@ namespace MaterialWinforms.Controls.Settings
                 return;
             }
             base.WndProc(ref m);
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            for (int i = 0; i < 40; i++)
+            {
+                Opacity = Opacity + 0.02;
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(1);
+            }
+            IsVisible = true;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            for (int i = 0; i < 40; i++)
+            {
+                Opacity = Opacity - 0.02;
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(1);
+            }
+            IsVisible = false;
         }
     }
 }

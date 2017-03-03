@@ -25,7 +25,7 @@ namespace MaterialWinforms.Controls
         public MouseState MouseState { get; set; }
         public new FormBorderStyle FormBorderStyle { get { return base.FormBorderStyle; } set { base.FormBorderStyle = value; } }
         public bool Sizable { get; set; }
-
+        private bool _StateChanging;
 
         private FormWindowState mLastState;
 
@@ -228,6 +228,7 @@ namespace MaterialWinforms.Controls
 
         public MaterialForm()
         {
+            _StateChanging = false;
             FormBorderStyle = FormBorderStyle.None;
             Sizable = true;
             DoubleBuffered = true;
@@ -255,15 +256,38 @@ namespace MaterialWinforms.Controls
                 int command = m.WParam.ToInt32() & 0xfff0;
                 if (command == SC_MINIMIZE)
                 {
-                    HideForm();
+                    if (!_StateChanging)
+                    {
+                        _StateChanging = true;
+                        HideForm();
+                        base.WndProc(ref m);
+                        _StateChanging = false;
+                    }
                 }
                 else if (command == SC_RESTORE)
                 {
-                     RestoreForm();
+                    if (!_StateChanging)
+                    {
+                        Location = new Point(Location.X, Screen.FromHandle(Handle).Bounds.Height + 35);
+                        base.WndProc(ref m);
+                        Location = new Point(Location.X, Screen.FromHandle(Handle).Bounds.Height + 35);
+                        WindowState = FormWindowState.Minimized;
+                        _StateChanging = true;
+                        RestoreForm();
+                        _StateChanging = false;
+                    }
+                }
+                else
+                {
+
+                    base.WndProc(ref m);
                 }
             }
+            else
+            {
 
-            base.WndProc(ref m);
+                base.WndProc(ref m);
+            }
 
             if (DesignMode || IsDisposed) return;
 
@@ -350,10 +374,16 @@ namespace MaterialWinforms.Controls
 
         private void HideForm()
         {
-            if(WindowState == FormWindowState.Minimized)
+            if (WindowState == FormWindowState.Minimized)
             {
                 return;
             }
+            if (Location.Y > Screen.FromHandle(Handle).Bounds.Height)
+            {
+                WindowState = FormWindowState.Minimized;
+                return;
+            }
+
             LastLocation = Location;
             LastState = WindowState;
             int Diff;
@@ -365,28 +395,32 @@ namespace MaterialWinforms.Controls
             {
                 Location = new Point(LastLocation.X, (int)(LastLocation.Y + Math.Pow(Final * i, 2)));
                 Application.DoEvents();
-                Thread.Sleep(4);
             }
 
             WindowState = FormWindowState.Minimized;
+            Location = LastLocation;
         }
 
         private void RestoreForm()
         {
-            if(WindowState!= FormWindowState.Minimized)
+            if (WindowState != FormWindowState.Minimized)
             {
                 return;
             }
+
+            Application.DoEvents();
+            
             WindowState = LastState;
             int Diff;
             int max = 100;
-            Diff = Location.Y-LastLocation.Y;
+            Diff = Location.Y - LastLocation.Y;
             Double Final = Math.Sqrt(Diff);
             Final /= max;
             for (int i = max; i > 0; i--)
             {
                 Location = new Point(LastLocation.X, (int)(LastLocation.Y + Math.Pow(Final * i, 2)));
                 Application.DoEvents();
+                Thread.Sleep(1);
             }
         }
 
