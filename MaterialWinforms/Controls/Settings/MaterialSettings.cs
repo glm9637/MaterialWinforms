@@ -82,9 +82,10 @@ namespace MaterialWinforms.Controls.Settings
         private void CalculateStart()
         {
             Location = new Point(Convert.ToInt32(_BaseForm.Location.X + _BaseForm.Width * 0.1), Convert.ToInt32(_BaseForm.Location.Y + _BaseForm.Height * 0.1));
-            Size = new Size(Convert.ToInt32(_BaseForm.Width * 0.8), Convert.ToInt32(_BaseForm.Height * 0.8));
-            MaximumSize = Size;
-            MinimumSize = Size;
+            Size objNewSize = new Size(Convert.ToInt32(_BaseForm.Width * 0.8), Convert.ToInt32(_BaseForm.Height * 0.8));
+            MaximumSize = objNewSize;
+            MinimumSize = objNewSize;
+            Size = objNewSize;
         }
 
 
@@ -111,6 +112,7 @@ namespace MaterialWinforms.Controls.Settings
             base.OnActivated(e);
             if (!_IgnoreActivate)
             {
+                CalculateStart();
                 _BaseForm.GotFocus += _BaseForm_GotFocus;
                 _BaseForm.Activated += _BaseForm_GotFocus;
                 _BaseForm.LocationChanged += _BaseForm_LocationChanged;

@@ -386,19 +386,28 @@ namespace MaterialWinforms.Controls
 
             LastLocation = Location;
             LastState = WindowState;
-            int Diff;
-            int max = 100;
-            Diff = Screen.FromHandle(Handle).Bounds.Height - Location.Y + 35;
-            Double Final = Math.Sqrt(Diff);
-            Final /= max;
-            for (int i = 0; i < max; i++)
+
+
+
+            Double Duration = 0.5;
+            Application.DoEvents();
+            DateTime objTimeFin = DateTime.Now.AddSeconds(Duration);
+            Point CurrentLocation = Location;
+            Double Diff = Screen.FromHandle(Handle).Bounds.Height - Location.Y + 35;
+
+            while (DateTime.Now < objTimeFin)
             {
-                Location = new Point(LastLocation.X, (int)(LastLocation.Y + Math.Pow(Final * i, 2)));
+                DateTime Curr = DateTime.Now;
+                double Progress = ((Duration * 1000) - Math.Abs((objTimeFin - Curr).TotalMilliseconds)) / (Duration * 1000);
+                Location = new Point(LastLocation.X, (int)(CurrentLocation.Y + Diff * Progress));
                 Application.DoEvents();
             }
 
+
             WindowState = FormWindowState.Minimized;
             Location = LastLocation;
+
+
         }
 
         private void RestoreForm()
@@ -407,21 +416,27 @@ namespace MaterialWinforms.Controls
             {
                 return;
             }
-
-            Application.DoEvents();
-            
+            Double Duration = 0.5;
             WindowState = LastState;
-            int Diff;
-            int max = 100;
-            Diff = Location.Y - LastLocation.Y;
-            Double Final = Math.Sqrt(Diff);
-            Final /= max;
-            for (int i = max; i > 0; i--)
+            Location =new Point(LastLocation.X,Screen.FromHandle(Handle).Bounds.Height - LastLocation.Y + 35);
+            BringToFront();
+            TopMost = true;
+            Application.DoEvents();
+            DateTime objTimeFin = DateTime.Now.AddSeconds(Duration);
+            Point CurrentLocation = Location;
+            Double Diff = Math.Abs(LastLocation.Y- CurrentLocation.Y);
+
+            while(DateTime.Now < objTimeFin)
             {
-                Location = new Point(LastLocation.X, (int)(LastLocation.Y + Math.Pow(Final * i, 2)));
+                DateTime Curr = DateTime.Now;
+                double Progress =((Duration * 1000)- Math.Abs((objTimeFin - Curr).TotalMilliseconds)) / (Duration * 1000);
+                Location = new Point(LastLocation.X, (int)(CurrentLocation.Y - Diff * Progress));
                 Application.DoEvents();
-                Thread.Sleep(1);
             }
+            Location = LastLocation;
+            TopMost = false;
+            BringToFront();
+            Application.DoEvents();
         }
 
         protected override CreateParams CreateParams

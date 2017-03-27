@@ -36,19 +36,18 @@ public class FontManager
         float fontSize =  1f;
         FontFamily FontToUse = LoadFont(UseRegular?Resources.Roboto_Regular:Resources.Roboto_Medium);
         
-        Font returnFont = new Font(FontToUse, fontSize);
-        SizeF CurrentTextSize = g.MeasureString(Text, returnFont);
+        Font tmpFont = new Font(FontToUse, fontSize);
+        SizeF CurrentTextSize = g.MeasureString(Text, tmpFont);
 
         while (CurrentTextSize.Width < R.Width && CurrentTextSize.Height < R.Height)
         {
             fontSize += 0.5f;
-            returnFont.Dispose();
-            returnFont = new Font(FontToUse, fontSize);
-            CurrentTextSize = g.MeasureString(Text, returnFont);
+            tmpFont.Dispose();
+            tmpFont = new Font(FontToUse, fontSize);
+            CurrentTextSize = g.MeasureString(Text, tmpFont);
         }
 
-
-        return returnFont;
+        return new Font(FontToUse, fontSize-0.5f);;
     }
 
     private PrivateFontCollection privateFontCollection = new PrivateFontCollection();

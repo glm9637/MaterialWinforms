@@ -84,7 +84,7 @@ namespace MaterialWinforms.Controls
             {
                 Width = Height;
             }
-            TextRect = new Rectangle(Convert.ToInt32(Width * 0.05), Convert.ToInt32(Height * 0.05),Convert.ToInt32(Width * 0.95), Convert.ToInt32(Height * 0.95));
+            TextRect = new Rectangle(Convert.ToInt32(Width * 0.05), Convert.ToInt32(Height * 0.05),Convert.ToInt32(Width * 0.9), Convert.ToInt32(Height * 0.9));
             Region = new Region(DrawHelper.CreateCircle(0, 0, Width / 2));
             CalculateAvatarFont();
             if (ShadowBorder != null)

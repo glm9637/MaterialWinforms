@@ -14,6 +14,7 @@ namespace MaterialWinformsExample
     {
         private readonly MaterialSkinManager MaterialWinformsManager;
         private MaterialSettings _Settings;
+        private bool isProgressAnimation = false;
         public MainForm()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace MaterialWinformsExample
             // Add dummy data to the listview
             seedListView();
 
-            materialLoadingFloatingActionButton1.startProgressAnimation();
+           // materialLoadingFloatingActionButton1.startProgressAnimation();
 
             materialActionBar1.onSearched += materialActionBar1_onSearched;
             materialActionBar1.Invalidate();
@@ -212,8 +213,23 @@ namespace MaterialWinformsExample
 
         private void ActionBarMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
             _Settings.Show();
             e.Cancel = true;
+        }
+
+        private void materialLoadingFloatingActionButton1_Click(object sender, EventArgs e)
+        {
+            if(isProgressAnimation)
+            {
+                materialLoadingFloatingActionButton1.ProgressFinished();
+
+            }else
+            {
+                materialLoadingFloatingActionButton1.resetProgressAnimation();
+                materialLoadingFloatingActionButton1.startProgressAnimation();
+            }
+            
         }
     }
 }

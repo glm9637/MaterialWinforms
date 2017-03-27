@@ -36,11 +36,12 @@ namespace MaterialWinformsExample
             System.Drawing.Drawing2D.GraphicsPath graphicsPath1 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath2 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath3 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Drawing.Drawing2D.GraphicsPath graphicsPath4 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath6 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath7 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Knoten0");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Knoten1");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Knoten3");
@@ -65,9 +66,10 @@ namespace MaterialWinformsExample
             treeNode12,
             treeNode13});
             System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Knoten2");
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath8 = new System.Drawing.Drawing2D.GraphicsPath();
-            System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath10 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath11 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath12 = new System.Drawing.Drawing2D.GraphicsPath();
+            System.Drawing.Drawing2D.GraphicsPath graphicsPath9 = new System.Drawing.Drawing2D.GraphicsPath();
             this.materialFlatButton3 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton1 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialButton1 = new MaterialWinforms.Controls.MaterialRaisedButton();
@@ -133,6 +135,7 @@ namespace MaterialWinformsExample
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.materialTabControl1 = new MaterialWinforms.Controls.MaterialTabControl();
             this.mtp_Picker = new MaterialWinforms.Controls.MaterialTabPage();
+            this.materialAvatarView1 = new MaterialWinforms.Controls.MaterialAvatarView();
             this.materialDropDownColorPicker1 = new MaterialWinforms.Controls.MaterialDropDownColorPicker();
             this.materialDropDownDatePicker1 = new MaterialWinforms.Controls.MaterialDropDownDatePicker();
             this.materialColorPicker1 = new MaterialWinforms.Controls.MaterialColorPicker();
@@ -171,6 +174,7 @@ namespace MaterialWinformsExample
             this.materialFlatButton6 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton5 = new MaterialWinforms.Controls.MaterialFlatButton();
             this.materialFlatButton4 = new MaterialWinforms.Controls.MaterialFlatButton();
+            this.materialTabPage5 = new MaterialWinforms.Controls.MaterialTabPage();
             this.mcm_ComboBox1 = new MaterialWinforms.Controls.MaterialContextMenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.test2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,6 +189,7 @@ namespace MaterialWinformsExample
             this.materialSideDrawer1 = new MaterialWinforms.Controls.MaterialSideDrawer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.materialRaisedButton2 = new MaterialWinforms.Controls.MaterialRaisedButton();
             this.SideDrawerList.SuspendLayout();
             this.materialTabControl1.SuspendLayout();
             this.mtp_Picker.SuspendLayout();
@@ -738,13 +743,14 @@ namespace MaterialWinformsExample
             this.materialTabControl1.Controls.Add(this.materialTabPage1);
             this.materialTabControl1.Controls.Add(this.materialTabPage3);
             this.materialTabControl1.Controls.Add(this.materialTabPage2);
+            this.materialTabControl1.Controls.Add(this.materialTabPage5);
             this.materialTabControl1.Depth = 0;
             this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialTabControl1.Location = new System.Drawing.Point(210, 107);
             this.materialTabControl1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.Padding = new System.Drawing.Point(15, 3);
-            this.materialTabControl1.SelectedIndex = 0;
+            this.materialTabControl1.SelectedIndex = 1;
             this.materialTabControl1.Size = new System.Drawing.Size(783, 581);
             this.materialTabControl1.TabIndex = 24;
             this.materialTabControl1.TabsAreClosable = true;
@@ -752,6 +758,7 @@ namespace MaterialWinformsExample
             // mtp_Picker
             // 
             this.mtp_Picker.Closable = true;
+            this.mtp_Picker.Controls.Add(this.materialAvatarView1);
             this.mtp_Picker.Controls.Add(this.materialDropDownColorPicker1);
             this.mtp_Picker.Controls.Add(this.materialDropDownDatePicker1);
             this.mtp_Picker.Controls.Add(this.materialColorPicker1);
@@ -767,6 +774,21 @@ namespace MaterialWinformsExample
             this.mtp_Picker.Size = new System.Drawing.Size(775, 555);
             this.mtp_Picker.TabIndex = 1;
             this.mtp_Picker.Text = "Pickers";
+            // 
+            // materialAvatarView1
+            // 
+            this.materialAvatarView1.Avatar = null;
+            this.materialAvatarView1.AvatarLetter = "MF";
+            this.materialAvatarView1.Depth = 0;
+            this.materialAvatarView1.Elevation = 5;
+            this.materialAvatarView1.Location = new System.Drawing.Point(498, 169);
+            this.materialAvatarView1.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialAvatarView1.Name = "materialAvatarView1";
+            graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialAvatarView1.ShadowBorder = graphicsPath4;
+            this.materialAvatarView1.Size = new System.Drawing.Size(277, 277);
+            this.materialAvatarView1.TabIndex = 34;
+            this.materialAvatarView1.Text = "materialAvatarView1";
             // 
             // materialDropDownColorPicker1
             // 
@@ -797,7 +819,7 @@ namespace MaterialWinformsExample
             // materialColorPicker1
             // 
             this.materialColorPicker1.Depth = 0;
-            this.materialColorPicker1.Location = new System.Drawing.Point(31, 13);
+            this.materialColorPicker1.Location = new System.Drawing.Point(12, 3);
             this.materialColorPicker1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialColorPicker1.Name = "materialColorPicker1";
             this.materialColorPicker1.Size = new System.Drawing.Size(250, 425);
@@ -819,7 +841,7 @@ namespace MaterialWinformsExample
             // 
             this.materialDatePicker1.Date = new System.DateTime(2016, 7, 25, 14, 22, 14, 457);
             this.materialDatePicker1.Depth = 0;
-            this.materialDatePicker1.Location = new System.Drawing.Point(287, 13);
+            this.materialDatePicker1.Location = new System.Drawing.Point(268, 3);
             this.materialDatePicker1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialDatePicker1.Name = "materialDatePicker1";
             this.materialDatePicker1.Size = new System.Drawing.Size(250, 425);
@@ -892,8 +914,8 @@ namespace MaterialWinformsExample
             this.materialCard3.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard3.Name = "materialCard3";
             this.materialCard3.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath4.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard3.ShadowBorder = graphicsPath4;
+            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard3.ShadowBorder = graphicsPath5;
             this.materialCard3.Size = new System.Drawing.Size(259, 54);
             this.materialCard3.TabIndex = 46;
             this.materialCard3.Title = null;
@@ -974,12 +996,13 @@ namespace MaterialWinformsExample
             this.materialLoadingFloatingActionButton1.Location = new System.Drawing.Point(38, 379);
             this.materialLoadingFloatingActionButton1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialLoadingFloatingActionButton1.Name = "materialLoadingFloatingActionButton1";
-            graphicsPath5.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialLoadingFloatingActionButton1.ShadowBorder = graphicsPath5;
+            graphicsPath6.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialLoadingFloatingActionButton1.ShadowBorder = graphicsPath6;
             this.materialLoadingFloatingActionButton1.Size = new System.Drawing.Size(48, 48);
             this.materialLoadingFloatingActionButton1.TabIndex = 41;
             this.materialLoadingFloatingActionButton1.Text = "materialLoadingFloatingActionButton1";
             this.materialLoadingFloatingActionButton1.UseVisualStyleBackColor = false;
+            this.materialLoadingFloatingActionButton1.Click += new System.EventHandler(this.materialLoadingFloatingActionButton1_Click);
             // 
             // materialLabel1
             // 
@@ -1048,8 +1071,8 @@ namespace MaterialWinformsExample
             this.materialCard2.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
             this.materialCard2.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath6.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard2.ShadowBorder = graphicsPath6;
+            graphicsPath7.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard2.ShadowBorder = graphicsPath7;
             this.materialCard2.Size = new System.Drawing.Size(349, 161);
             this.materialCard2.TabIndex = 37;
             this.materialCard2.Title = "Toggle";
@@ -1197,8 +1220,8 @@ namespace MaterialWinformsExample
             this.materialCard1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
-            graphicsPath7.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialCard1.ShadowBorder = graphicsPath7;
+            graphicsPath8.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialCard1.ShadowBorder = graphicsPath8;
             this.materialCard1.Size = new System.Drawing.Size(315, 161);
             this.materialCard1.TabIndex = 36;
             this.materialCard1.Title = "Slider";
@@ -1269,6 +1292,7 @@ namespace MaterialWinformsExample
             // materialTabPage2
             // 
             this.materialTabPage2.Closable = true;
+            this.materialTabPage2.Controls.Add(this.materialRaisedButton2);
             this.materialTabPage2.Controls.Add(this.treeView1);
             this.materialTabPage2.Controls.Add(this.materialTreeControl1);
             this.materialTabPage2.Controls.Add(this.materialFlatButton6);
@@ -1401,6 +1425,17 @@ namespace MaterialWinformsExample
             this.materialFlatButton4.UseVisualStyleBackColor = true;
             this.materialFlatButton4.Click += new System.EventHandler(this.materialFlatButton4_Click);
             // 
+            // materialTabPage5
+            // 
+            this.materialTabPage5.Closable = true;
+            this.materialTabPage5.Depth = 0;
+            this.materialTabPage5.Location = new System.Drawing.Point(4, 22);
+            this.materialTabPage5.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialTabPage5.Name = "materialTabPage5";
+            this.materialTabPage5.Size = new System.Drawing.Size(775, 555);
+            this.materialTabPage5.TabIndex = 4;
+            this.materialTabPage5.Text = "spImportExportArtikelStücklisteHofmeier";
+            // 
             // mcm_ComboBox1
             // 
             this.mcm_ComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
@@ -1453,8 +1488,8 @@ namespace MaterialWinformsExample
             this.materialActionBar1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialActionBar1.Name = "materialActionBar1";
             this.materialActionBar1.SearchBarFilterIcon = true;
-            graphicsPath8.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialActionBar1.ShadowBorder = graphicsPath8;
+            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialActionBar1.ShadowBorder = graphicsPath10;
             this.materialActionBar1.Size = new System.Drawing.Size(993, 42);
             this.materialActionBar1.TabIndex = 26;
             // 
@@ -1504,7 +1539,7 @@ namespace MaterialWinformsExample
             // materialTabSelectorClosable1
             // 
             this.materialTabSelectorClosable1.BaseTabControl = this.materialTabControl1;
-            this.materialTabSelectorClosable1.CenterTabs = true;
+            this.materialTabSelectorClosable1.CenterTabs = false;
             this.materialTabSelectorClosable1.Depth = 0;
             this.materialTabSelectorClosable1.Dock = System.Windows.Forms.DockStyle.Top;
             this.materialTabSelectorClosable1.Elevation = 10;
@@ -1513,8 +1548,8 @@ namespace MaterialWinformsExample
             this.materialTabSelectorClosable1.MaxTabWidht = 0;
             this.materialTabSelectorClosable1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialTabSelectorClosable1.Name = "materialTabSelectorClosable1";
-            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath9;
+            graphicsPath11.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialTabSelectorClosable1.ShadowBorder = graphicsPath11;
             this.materialTabSelectorClosable1.Size = new System.Drawing.Size(993, 35);
             this.materialTabSelectorClosable1.TabIndex = 32;
             this.materialTabSelectorClosable1.TabPadding = 24;
@@ -1533,8 +1568,8 @@ namespace MaterialWinformsExample
             this.materialSideDrawer1.MouseState = MaterialWinforms.MouseState.HOVER;
             this.materialSideDrawer1.Name = "materialSideDrawer1";
             this.materialSideDrawer1.SelectOnClick = false;
-            graphicsPath10.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
-            this.materialSideDrawer1.ShadowBorder = graphicsPath10;
+            graphicsPath12.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialSideDrawer1.ShadowBorder = graphicsPath12;
             this.materialSideDrawer1.SideDrawer = this.SideDrawerList;
             this.materialSideDrawer1.SideDrawerFixiert = false;
             this.materialSideDrawer1.SideDrawerUnterActionBar = false;
@@ -1558,6 +1593,21 @@ namespace MaterialWinformsExample
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(783, 6);
             this.panel2.TabIndex = 36;
+            // 
+            // materialRaisedButton2
+            // 
+            this.materialRaisedButton2.Depth = 0;
+            this.materialRaisedButton2.Elevation = 5;
+            this.materialRaisedButton2.Location = new System.Drawing.Point(354, 483);
+            this.materialRaisedButton2.MouseState = MaterialWinforms.MouseState.HOVER;
+            this.materialRaisedButton2.Name = "materialRaisedButton2";
+            this.materialRaisedButton2.Primary = true;
+            graphicsPath9.FillMode = System.Drawing.Drawing2D.FillMode.Alternate;
+            this.materialRaisedButton2.ShadowBorder = graphicsPath9;
+            this.materialRaisedButton2.Size = new System.Drawing.Size(117, 47);
+            this.materialRaisedButton2.TabIndex = 5;
+            this.materialRaisedButton2.Text = "materialRaisedButton2";
+            this.materialRaisedButton2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -1720,5 +1770,8 @@ namespace MaterialWinformsExample
         private ToolStripMenuItem toolStripMenuItem1;
         private MaterialTreeControl materialTreeControl1;
         private TreeView treeView1;
+        private MaterialAvatarView materialAvatarView1;
+        private MaterialTabPage materialTabPage5;
+        private MaterialRaisedButton materialRaisedButton2;
     }
 }
