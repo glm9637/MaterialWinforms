@@ -182,9 +182,11 @@ namespace MaterialWinforms.Controls
         {
             base.OnParentChanged(e);
             Dock = DockStyle.Top;
+            if(Parent is MaterialForm) { 
             DrawBackArrow = ((MaterialForm)Parent).SideDrawer != null;
             if(DrawBackArrow)
                 DrawBackArrow = ((MaterialForm)Parent).SideDrawer.SideDrawerFixiert;
+            }
             Refresh();
         }
 
@@ -455,7 +457,7 @@ namespace MaterialWinforms.Controls
                 }
 
 
-                MaterialForm objParent = (MaterialForm)Parent;
+                Control objParent = (Control)Parent;
                 if (DrawBackArrow)
                 {
 
